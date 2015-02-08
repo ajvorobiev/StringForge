@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using RHSStringTableTools.Model;
 using StringForge.ViewModel;
 
 namespace StringForge.View
@@ -27,7 +16,30 @@ namespace StringForge.View
 
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            ((StringTableEditorViewModel) this.DataContext).SelectedNode = projectTreeView.SelectedItem;
+            if (projectTreeView.SelectedItem != null)
+            {
+                // pass on key selection
+                ((StringTableEditorViewModel)this.DataContext).SelectedNode = projectTreeView.SelectedItem;
+
+
+                // assign context menu
+                if (projectTreeView.SelectedItem.GetType() == typeof(Project))
+                {
+                    projectTreeView.ContextMenu = projectTreeView.Resources["ProjectContext"] as System.Windows.Controls.ContextMenu;
+                }
+                else if (projectTreeView.SelectedItem.GetType() == typeof(Package))
+                {
+                    projectTreeView.ContextMenu = projectTreeView.Resources["PackageContext"] as System.Windows.Controls.ContextMenu;
+                }
+                else if (projectTreeView.SelectedItem.GetType() == typeof(Container))
+                {
+                    projectTreeView.ContextMenu = projectTreeView.Resources["ContainerContext"] as System.Windows.Controls.ContextMenu;
+                }
+                else if (projectTreeView.SelectedItem.GetType() == typeof(Key))
+                {
+                    projectTreeView.ContextMenu = projectTreeView.Resources["KeyContext"] as System.Windows.Controls.ContextMenu;
+                } 
+            }
         }
     }
 }

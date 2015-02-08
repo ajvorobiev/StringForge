@@ -98,7 +98,17 @@ namespace RHSStringTableTools.Model
                 return;
             }
 
-            string replacement = string.IsNullOrWhiteSpace(this.English) ? this.Original : this.English;
+            string replacement;
+            if (string.IsNullOrWhiteSpace(this.English))
+            {
+                replacement = this.Original;
+                this.English = replacement;
+            }
+            else
+            {
+                replacement = this.English;
+                this.Original = replacement;
+            }
 
             if (string.IsNullOrWhiteSpace(this.Czech))
             {

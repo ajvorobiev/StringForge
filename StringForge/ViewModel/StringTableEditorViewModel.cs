@@ -7,19 +7,18 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Diagnostics;
-using System.Reflection;
-using StringForge.View;
-
 namespace StringForge.ViewModel
 {
     using Microsoft.WindowsAPICodePack.Dialogs;
     using ReactiveUI;
     using RHSStringTableTools;
     using RHSStringTableTools.Model;
+    using StringForge.View;
     using System;
     using System.Collections.ObjectModel;
     using System.IO;
+    using System.Reflection;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The view model for the string table editor
@@ -77,6 +76,8 @@ namespace StringForge.ViewModel
 
         public ReactiveCommand<object> StringTableConvertCommand { get; protected set; }
 
+        public ReactiveCommand<object> FillMissingCommand { get; protected set; } 
+
         public string WindowTitle
         {
             get { return string.Format("StringForge v{0}", Assembly.GetEntryAssembly().GetName().Version.ToString()); }
@@ -100,11 +101,36 @@ namespace StringForge.ViewModel
             this.StringTableConvertCommand = ReactiveCommand.Create();
             this.StringTableConvertCommand.Subscribe(_ => StringTableConvertCommandExecute());
 
+            var canFill = this.WhenAny(x => x.Keys, x => x.Value.Count > 0);
+            this.FillMissingCommand = ReactiveCommand.Create(canFill);
+            this.FillMissingCommand.Subscribe(_ => FillMissingInSelectionCommandExecute());
+
             this.WhenAny(vm => vm.SelectedNode, vm => vm.Value != null).Subscribe(_ => this.RecomputeGridKeys());
 
             this.SetPropertis();
         }
 
+        /// <summary>
+        /// Fills the missing keys in the entire collection of keys that is displayed in the grid.
+        /// </summary>
+        private async void FillMissingInSelectionCommandExecute()
+        {
+            await Task.Run(() =>
+            {
+                foreach (var key in this.Keys)
+                {
+                    key.FillEmptyKeysWithEnglishOrOriginal();
+                }
+
+                RecomputeGridKeys();
+            });
+
+            
+        }
+
+        /// <summary>
+        /// Brings up the converter
+        /// </summary>
         private void StringTableConvertCommandExecute()
         {
             var converterV = new StringTableConverterView();
@@ -114,29 +140,32 @@ namespace StringForge.ViewModel
         /// <summary>
         /// Recomputes the <see cref="Key"/> collection required by the grid based on the selected mode
         /// </summary>
-        private void RecomputeGridKeys()
+        private async void RecomputeGridKeys()
         {
             if (this.SelectedNode != null)
             {
                 var item = this.SelectedNode;
-                var collectionOfKeys = new ObservableCollection<Key>();
 
-                if (item.GetType() == typeof(Project))
+                ObservableCollection<Key> collectionOfKeys = new ObservableCollection<Key>();
+
+                await Task.Run(() => ExtractKeyCollection(item, collectionOfKeys));
+
+                this.Keys = collectionOfKeys;
+            }
+        }
+
+        /// <summary>
+        /// Extracts the collection of keys from the selected parent
+        /// </summary>
+        /// <param name="item">The slected item</param>
+        /// <param name="collectionOfKeys">The collectio of keys to be filled</param>
+        public static void ExtractKeyCollection(object item, ObservableCollection<Key> collectionOfKeys)
+        {
+            if (item.GetType() == typeof(Project))
+            {
+                foreach (var package in ((Project)item).Packages)
                 {
-                    foreach (var package in ((Project)item).Packages)
-                    {
-                        foreach (var container in package.Containers)
-                        {
-                            foreach (var key in container.Keys)
-                            {
-                                collectionOfKeys.Add(key);
-                            }
-                        }
-                    }
-                }
-                else if (item.GetType() == typeof(Package))
-                {
-                    foreach (var container in ((Package)item).Containers)
+                    foreach (var container in package.Containers)
                     {
                         foreach (var key in container.Keys)
                         {
@@ -144,19 +173,27 @@ namespace StringForge.ViewModel
                         }
                     }
                 }
-                else if (item.GetType() == typeof(Container))
+            }
+            else if (item.GetType() == typeof(Package))
+            {
+                foreach (var container in ((Package)item).Containers)
                 {
-                    foreach (var key in ((Container)item).Keys)
+                    foreach (var key in container.Keys)
                     {
                         collectionOfKeys.Add(key);
                     }
                 }
-                else if (item.GetType() == typeof(Key))
+            }
+            else if (item.GetType() == typeof(Container))
+            {
+                foreach (var key in ((Container)item).Keys)
                 {
-                    collectionOfKeys.Add((Key)item);
+                    collectionOfKeys.Add(key);
                 }
-
-                this.Keys = collectionOfKeys;
+            }
+            else if (item.GetType() == typeof(Key))
+            {
+                collectionOfKeys.Add((Key)item);
             }
         }
 

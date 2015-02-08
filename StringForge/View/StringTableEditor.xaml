@@ -59,6 +59,40 @@
                         <xcad:LayoutAnchorablePane>
                             <xcad:LayoutAnchorable ContentId="tree" Title="Nodes" CanClose="False" CanHide="False" IconSource="Images/project.png" >
                                 <TreeView Name="projectTreeView"  ItemsSource="{Binding Project}" SelectedItemChanged="TreeView_SelectedItemChanged" >
+                                    <TreeView.Resources>
+                                        <ContextMenu x:Key ="ProjectContext"  StaysOpen="true">
+                                            <MenuItem Header="Edit Project..." />
+                                            <Separator/>
+                                            <MenuItem Header="Fill Missing In Selected" Command="{Binding FillMissingCommand}" />
+                                            <Separator/>
+                                            <MenuItem Header="Add Package..."/>
+                                        </ContextMenu>
+                                        <ContextMenu x:Key="PackageContext"  StaysOpen="true">
+                                            <MenuItem Header="Add Package..." />
+                                            <MenuItem Header="Edit Package..."/>
+                                            <MenuItem Header="Remove Package"/>
+                                            <Separator/>
+                                            <MenuItem Header="Fill Missing In Selected" Command="{Binding FillMissingCommand}" />
+                                            <Separator/>
+                                            <MenuItem Header="Add Container..."/>
+                                        </ContextMenu>
+                                        <ContextMenu x:Key="ContainerContext"  StaysOpen="true">
+                                            <MenuItem Header="Add Container..." />
+                                            <MenuItem Header="Edit Container..."/>
+                                            <MenuItem Header="Remove Container"/>
+                                            <Separator/>
+                                            <MenuItem Header="Fill Missing In Selected" Command="{Binding FillMissingCommand}" />
+                                            <Separator/>
+                                            <MenuItem Header="Add Key..."/>
+                                        </ContextMenu>
+                                        <ContextMenu x:Key="KeyContext"  StaysOpen="true">
+                                            <MenuItem Header="Add Key..." />
+                                            <MenuItem Header="Remove Key"/>
+                                            <MenuItem Header="Duplicate Key..."/>
+                                            <Separator/>
+                                            <MenuItem Header="Fill Missing In Selected" Command="{Binding FillMissingCommand}" />
+                                        </ContextMenu>
+                                    </TreeView.Resources>
                                     <TreeView.ItemTemplate>
                                         <HierarchicalDataTemplate DataType="Demo:Project" ItemsSource="{Binding Packages}">
                                             <StackPanel Orientation="Horizontal">
