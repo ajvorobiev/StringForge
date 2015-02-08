@@ -327,3 +327,8 @@ StringForge/packages/WindowsAPICodePack-ShellExtensions.1.1.1/lib/Microsoft.Wind
 StringForge/packages/WindowsAPICodePack-ShellExtensions.1.1.1/lib/Microsoft.WindowsAPICodePack.ShellExtensions.xml
 StringForge/packages/WindowsAPICodePack-ShellExtensions.1.1.1/WindowsAPICodePack-ShellExtensions.1.1.1.nupkg
 StringForge/packages/WindowsAPICodePack-ShellExtensions.1.1.1/WindowsAPICodePack-ShellExtensions.1.1.1.nuspec
+RHSStringTableTools.Test/bin/Debug/testoutput/save/Stringtable.xml
+RHSStringTableTools.Test/obj/Debug/build.force
+RHSStringTableTools.Test/obj/Debug/build.force
+RHSStringTableTools.Test/obj/Debug/build.force
+RHSStringTableTools/obj/Debug/RHSStringTableTools.csprojResolveAssemblyReference.cache

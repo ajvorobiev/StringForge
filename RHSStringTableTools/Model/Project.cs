@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.IO;
+
 namespace RHSStringTableTools.Model
 {
     using System.Collections.Generic;
@@ -36,5 +38,29 @@ namespace RHSStringTableTools.Model
         /// </summary>
         [XmlElement("Package")]
         public List<Package> Packages { get; set; }
+
+        /// <summary>
+        /// Gets or sets the filepath to the xml that the project belongs to
+        /// </summary>
+        [XmlIgnore]
+        public string FileName { get; set; }
+
+        /// <summary>
+        /// Gets the short path of the file
+        /// </summary>
+        [XmlIgnore]
+        public string NodeName
+        {
+            get { return GetNodeName(); }
+        }
+
+        /// <summary>
+        /// Creates a node name to be displayed in the tree
+        /// </summary>
+        /// <returns>A node name suitable for a tree.</returns>
+        public string GetNodeName()
+        {
+            return string.Format("{0} ({1}\\{2})", this.Name, new DirectoryInfo(Path.GetDirectoryName(this.FileName)).Name, Path.GetFileName(this.FileName));
+        }
     }
 }

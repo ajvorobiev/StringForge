@@ -40,6 +40,10 @@ namespace RHSStringTableTools
         /// <param name="path">The path to the xml file.</param>
         public static void WriteXml(Project project, string path)
         {
+            // create the directories of the path if they dont exist
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+
+            // remove default namespace information
             var ns = new XmlSerializerNamespaces();
             ns.Add("", ""); 
 
@@ -64,6 +68,9 @@ namespace RHSStringTableTools
             var XmlData = (Project)obj;
             
             reader.Close();
+
+            // assign path to file
+            XmlData.FileName = path;
 
             return XmlData;
         }

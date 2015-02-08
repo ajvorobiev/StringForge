@@ -12,6 +12,7 @@ namespace RHSStringTableTools.Test
     public class XmlDeSerializerTestFixture
     {
         private const string pathToXml = @"testoutput\Stringtable.xml";
+        private const string pathToSaveXml = @"testoutput\save\Stringtable.xml";
 
         [Test]
         public void VerifyThatSerializeDeSerializeWorks()
@@ -29,6 +30,11 @@ namespace RHSStringTableTools.Test
 
             Assert.IsNotNull(obj2);
             Assert.AreEqual(2, obj2.Packages.Count);
+
+            Assert.IsTrue(pathToXml.Equals(obj2.FileName));
+            Assert.AreEqual("testdata (testoutput\\Stringtable.xml)", obj2.NodeName);
+
+            XmlDeSerializer.WriteXml(obj, pathToSaveXml);
 
         }
     }

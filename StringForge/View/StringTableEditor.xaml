@@ -56,7 +56,7 @@
                                 <TreeView Name="projectTreeView"  ItemsSource="{Binding Project}" SelectedItemChanged="TreeView_SelectedItemChanged" >
                                     <TreeView.ItemTemplate>
                                         <HierarchicalDataTemplate DataType="Demo:Project" ItemsSource="{Binding Packages}">
-                                            <TextBlock Text="{Binding Name}" />
+                                            <TextBlock Text="{Binding NodeName}" />
                                             <HierarchicalDataTemplate.ItemTemplate>
                                                 <HierarchicalDataTemplate DataType="{x:Type Demo:Package}" ItemsSource="{Binding Containers}">
                                                     <TextBlock Text="{Binding Name}" />
