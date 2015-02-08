@@ -88,48 +88,56 @@ namespace RHSStringTableTools.Model
         }
 
         /// <summary>
-        /// Fills all empty values with english translation with english.
+        /// Fills all empty values with english translation with english or original.
         /// </summary>
-        public void FillEmptyKeysWithEnglish()
+        public void FillEmptyKeysWithEnglishOrOriginal()
         {
+            if (string.IsNullOrWhiteSpace(this.English) && string.IsNullOrWhiteSpace(this.Original))
+            {
+                // if stringtable doesnt have english or original then you cannot fill empty languages
+                return;
+            }
+
+            string replacement = string.IsNullOrWhiteSpace(this.English) ? this.Original : this.English;
+
             if (string.IsNullOrWhiteSpace(this.Czech))
             {
-                this.Czech = this.English;
+                this.Czech = replacement;
             }
 
             if (string.IsNullOrWhiteSpace(this.French))
             {
-                this.French = this.English;
+                this.French = replacement;
             }
 
             if (string.IsNullOrWhiteSpace(this.Spanish))
             {
-                this.Spanish = this.English;
+                this.Spanish = replacement;
             }
 
             if (string.IsNullOrWhiteSpace(this.Italian))
             {
-                this.Italian = this.English;
+                this.Italian = replacement;
             }
 
             if (string.IsNullOrWhiteSpace(this.Polish))
             {
-                this.Polish = this.English;
+                this.Polish = replacement;
             }
 
             if (string.IsNullOrWhiteSpace(this.Portuguese))
             {
-                this.Portuguese = this.English;
+                this.Portuguese = replacement;
             }
 
             if (string.IsNullOrWhiteSpace(this.Russian))
             {
-                this.Russian = this.English;
+                this.Russian = replacement;
             }
 
             if (string.IsNullOrWhiteSpace(this.German))
             {
-                this.German = this.English;
+                this.German = replacement;
             }
         }
 

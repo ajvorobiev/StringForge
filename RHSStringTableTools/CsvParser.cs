@@ -201,7 +201,7 @@ namespace RHSStringTableTools
             // fill the languages that were not found
             if (fillMissing)
             {
-                result.FillEmptyKeysWithEnglish(); 
+                result.FillEmptyKeysWithEnglishOrOriginal(); 
             }
 
             return result;
