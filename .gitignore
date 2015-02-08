@@ -332,3 +332,7 @@ RHSStringTableTools.Test/obj/Debug/build.force
 RHSStringTableTools.Test/obj/Debug/build.force
 RHSStringTableTools.Test/obj/Debug/build.force
 RHSStringTableTools/obj/Debug/RHSStringTableTools.csprojResolveAssemblyReference.cache
+RHSStringTableTools.Test/bin/Debug/xmltestdata/addons/folder1/Stringtable.xml
+RHSStringTableTools.Test/bin/Debug/xmltestdata/addons/folder2/Stringtable.xml
+RHSStringTableTools.Test/bin/Debug/xmltestdata/addons/folder2/subfolder2/Stringtable.xml
+StringForge/obj/Debug/StringForge_MarkupCompile.i.lref

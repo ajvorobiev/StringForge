@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -73,6 +75,34 @@ namespace RHSStringTableTools
             XmlData.FileName = path;
 
             return XmlData;
+        }
+
+        /// <summary>
+        /// Loads all xml files from a folder path recursively
+        /// </summary>
+        /// <param name="folderPath">The path to the folder</param>
+        /// <returns>An <see cref="ObservableCollection{T}"/> of <see cref="Project"/>s found in that folder.</returns>
+        public static ObservableCollection<Project> LoadXmlFolder(string folderPath)
+        {
+            var result = new ObservableCollection<Project>();
+
+            if (!Directory.Exists(folderPath)) throw new ApplicationException(string.Format("The specified folder does not exist: {0}", folderPath));
+
+            // get all stringtables
+            foreach (var stringtablefile in Directory.EnumerateFiles(folderPath, "Stringtable.xml", SearchOption.AllDirectories))
+            {
+                try
+                {
+                    var project = LoadXml(stringtablefile);
+                    result.Add(project);
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException(string.Format("Failed parsing file: {0} Error: {1}", stringtablefile, ex.Message));
+                }
+            }
+
+            return result;
         }
     }
 }

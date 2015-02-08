@@ -15,3 +15,7 @@ The program has all the necessary tools to deal with translation stringtables fo
 The software is built in C#, .NET (Framework 4.5) and WPF. The MVVM architectural pattern is utilized where possible but without the use of any perticular MVVM framework. Some advanced 3rd party libraries are used, such as ReactiveUI and Extended WPF Toolkit (CE).
 
 The tool is built and maintained by Alex Vorobiev.
+
+# Accreditation
+
+Icons used from: https://www.iconfinder.com/

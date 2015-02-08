@@ -67,6 +67,8 @@ namespace StringForge.ViewModel
 
         public ReactiveCommand<object> OpenCommand { get; protected set; }
 
+        public ReactiveCommand<object> OpenFolderCommand { get; protected set; }
+
         public ReactiveCommand<object> SaveCommand { get; protected set; }
 
         public ReactiveCommand<object> StringTableConvertCommand { get; protected set; }
@@ -75,6 +77,8 @@ namespace StringForge.ViewModel
         {
             this.OpenCommand = ReactiveCommand.Create();
             this.OpenCommand.Subscribe(_ => this.OpenCommandExecute());
+            this.OpenFolderCommand = ReactiveCommand.Create();
+            this.OpenFolderCommand.Subscribe(_ => this.OpenFolderCommandExecute());
 
             this.StringTableConvertCommand = ReactiveCommand.Create();
             this.StringTableConvertCommand.Subscribe(_ => StringTableConvertCommandExecute());
@@ -159,6 +163,20 @@ namespace StringForge.ViewModel
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok && File.Exists(dlg.FileName))
             {
                 this.Project.Add(XmlDeSerializer.LoadXml(dlg.FileName));
+            }
+        }
+
+        /// <summary>
+        /// Execute the open command
+        /// </summary>
+        private void OpenFolderCommandExecute()
+        {
+            var dlg = new CommonOpenFileDialog();
+            dlg.IsFolderPicker = true;
+
+            if (dlg.ShowDialog() == CommonFileDialogResult.Ok && Directory.Exists(dlg.FileName))
+            {
+                this.Project = XmlDeSerializer.LoadXmlFolder(dlg.FileName);
             }
         }
     }

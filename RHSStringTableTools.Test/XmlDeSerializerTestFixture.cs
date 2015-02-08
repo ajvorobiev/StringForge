@@ -1,5 +1,6 @@
 ﻿
 using System.IO;
+using System.Xml;
 
 namespace RHSStringTableTools.Test
 {
@@ -36,6 +37,19 @@ namespace RHSStringTableTools.Test
 
             XmlDeSerializer.WriteXml(obj, pathToSaveXml);
 
+        }
+
+        [Test]
+        public void VerifyThatLoadingFromFoldersWorks()
+        {
+            var projects = XmlDeSerializer.LoadXmlFolder("xmltestdata");
+
+            Assert.IsNotNull(projects);
+            Assert.AreEqual(3, projects.Count);
+
+            Assert.IsTrue(projects[0].Name.Equals("testdata"));
+            Assert.IsTrue(projects[1].Name.Equals("testdata2"));
+            Assert.IsTrue(projects[2].Name.Equals("testdata3"));
         }
     }
 }
