@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Diagnostics;
+using System.Reflection;
 using StringForge.View;
 
 namespace StringForge.ViewModel
@@ -74,6 +76,11 @@ namespace StringForge.ViewModel
         public ReactiveCommand<object> SaveAsCommand { get; protected set; }
 
         public ReactiveCommand<object> StringTableConvertCommand { get; protected set; }
+
+        public string WindowTitle
+        {
+            get { return string.Format("StringForge v{0}", Assembly.GetEntryAssembly().GetName().Version.ToString()); }
+        }
 
         public StringTableEditorViewModel()
         {

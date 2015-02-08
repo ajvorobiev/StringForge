@@ -7,7 +7,7 @@
         xmlns:ViewModel="clr-namespace:StringForge.ViewModel"
         xmlns:Demo="clr-namespace:RHSStringTableTools.Model;assembly=RHSStringTableTools"
         x:Class="StringForge.View.StringTableEditor"
-        Title="StringForge" Height="493.8" Width="1190.425" WindowState="Maximized">
+        Title="{Binding WindowTitle}" Height="493.8" Width="1190.425" WindowState="Maximized" Icon="/StringForge;component/icon.ico">
     <Window.Background>
         <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
     </Window.Background>
