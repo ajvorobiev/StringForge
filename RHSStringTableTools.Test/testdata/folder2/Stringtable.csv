@@ -1,0 +1,59 @@
+﻿////////////////////////////////////////////////////////////////////////////////,,,
+"// Localization file (i18n).													//",,,
+"// Write only in UTF-8 charset!!!												//",,,
+"//																				//",,,
+"// $Id:: Stringtable.csv 121 2009-03-24 00:25:33Z ist						$:	//",,,
+////////////////////////////////////////////////////////////////////////////////,,,
+LANGUAGE,"					English","				Russian","					German"
+// Object names: ///////////////////////////////////////////////////////////////,,,
+STR_RHSUSF_INF_RIFLEMAN,	Rifleman,				Rifleman,				Rifleman
+STR_RHSUSF_INF_RIFLEMAN_M16,	Rifleman (M16),				Rifleman (M16),				Rifleman (M16)
+STR_RHSUSF_INF_RIFLEMAN_M590,	Rifleman (M590),				Rifleman (M590),				Rifleman (M590)
+STR_RHSUSF_INF_ENGINEER,	Engineer,				Engineer,				Engineer
+STR_RHSUSF_INF_OFFICER,		Officer,				Officer,				Officer
+STR_RHSUSF_INF_TEAMLEADER,	Team Leader,				Rifleman,				Rifleman
+STR_RHSUSF_INF_SQUADLEADER,	Squad Leader,				Rifleman,				Rifleman
+STR_RHSUSF_INF_RIFLEMAN_L,	Rifleman (Light),		Rifleman (Light),		Rifleman (Light)
+STR_RHSUSF_INF_RIFLEMAN_AT,	Rifleman (M136),		Rifleman (M136),		Rifleman (M136)
+STR_RHSUSF_INF_GRENADIERA,	Grenadier,				Grenadier,				Grenadier
+STR_RHSUSF_INF_ARIFLEMAN,	Automatic Rifleman (M249),		Automatic Rifleman (M249),		Automatic Rifleman (M249)
+STR_RHSUSF_INF_AARIFLEMAN,	Automatic Rifleman Ass. (M249),		Automatic Rifleman Ass. (M249),		Automatic Rifleman Ass. (M249)
+STR_RHSUSF_INF_ARIFLEMAN2,	Automatic Rifleman (Mk.48),		Automatic Rifleman (Mk.48),		Automatic Rifleman (Mk.48)
+STR_RHSUSF_INF_MG,			Machine Gunner,			Machine Gunner,			Machine Gunner
+STR_RHSUSF_INF_AMG,			Machine Gunner Assistant,	Machine Gunner Assistant,	Machine Gunner Assistant
+STR_RHSUSF_INF_AT,			AT Specialist (Javelin), AT Specialist (Javelin), AT Specialist (Javelin)
+STR_RHSUSF_INF_AA,			AA Specialist (FIM-92F),			Специалист ПВО,			Luftabwehr Spezialist,		Spécialiste AA
+STR_RHSUSF_INF_UAV,			UAV Operator,			UAV Operator,			UAV Operator,		UAV Operator
+STR_RHSUSF_INF_CREW,				Crew,					Экипаж,						Besatzung,									Membre d'équipage
+STR_RHSUSF_INF_CREW_COMBAT,		Crew (Combat),			Экипаж (Разгр.),			Besatzung (Kampf),							Membre d'équipage (Brelage)
+STR_RHSUSF_INF_DRIVER,		Driver,					Driver,					Driver
+STR_RHSUSF_INF_MEDIC,		Medic,					Medic,					Medic
+STR_RHSUSF_INF_MARKSMAN,	Marksman,				Marksman,				Marksman
+STR_RHSUSF_INF_SL,			Squad Leader,			Squad Leader,			Squad Leader
+STR_RHSUSF_INF_TL,			Team Leader,			Team Leader,			Team Leader
+STR_RHSUSF_INF_SPOTTER,		Spotter,				Spotter,				Spotter
+STR_RHSUSF_INF_SNIPER,		Sniper,					Sniper,					Sniper
+
+
+STR_RHS_GROUP_USARMY_Infantry,		Infantry,	Пехота,	Infantry,	Infantry
+STR_RHS_GROUP_USARMY_M113,		Mech. Inf. (M113),	Пехота,	Infantry,	Infantry
+STR_RHS_GROUP_USARMY_Bradley,		Mech. Inf. (M2A2),	Пехота,	Infantry,	Infantry
+STR_RHS_GROUP_USARMY_BradleyA3,		Mech. Inf. (M2A3),	Пехота,	Infantry,	Infantry
+
+
+// Groups: /////////////////////////////////////////////////////////////////////
+STR_RHSUSF_GROUPS_SQUAD,	Squad, Отряд, Squad, Squad
+STR_RHSUSF_GROUPS_WEAPONSQUAD,	Weapon Squad, Отряд (2x ПКМ), Weapon Squad, Weapon Squad
+STR_RHSUSF_GROUPS_SQUAD_SNIPER,	Squad (Marksman), Отряд (Снайпер), Squad (Marksman), Squad (Marksman)
+STR_RHSUSF_GROUPS_SQUAD_2MG,	Squad (2x GPMG), Отряд (2x ПКМ), Squad (2x GPMG), Squad (2x GPMG)
+STR_RHSUSF_GROUPS_SQUAD_SNIPER,	Squad (Marksman), Отряд (Снайпер), Squad (Marksman), Squad (Marksman)
+STR_RHSUSF_GROUPS_SQUAD_MG_SNIPER,	Squad (GPMG + Marksman), Отряд (Снайпер + ПКМ), Squad (GPMG + Marksman), Squad (GPMG + Marksman)
+STR_RHSUSF_GROUPS_TEAM,	Team, Отряд (Снайпер), Team, Team
+STR_RHSUSF_GROUPS_TEAM_MG,	Team (MG), Отряд (Снайпер + ПКМ), Team (MG), Team (MG)
+STR_RHSUSF_GROUPS_TEAM_AA,	Team (AA), Отряд (ПВО), Team (AA), Team (AA)
+STR_RHSUSF_GROUPS_TEAM_AT,	Team (AT), Отряд (РПГ), Team (AT), Team (AT)
+STR_RHSUSF_GROUPS_TEAM_SUPPORT,	Team (Support), Отряд (ПВО), Team (Support), Team (Support)
+
+
+STR_RHS_GOOGLES_BLACK_NAME,		Ballistic Glasses (Black),					Ballistic Glasses (Black),					Ballistic Glasses (Black)
+STR_RHS_GOOGLES_CLEAR_NAME,		Ballistic Glasses (Clear),					Ballistic Glasses (Clear),					Ballistic Glasses (Clear)

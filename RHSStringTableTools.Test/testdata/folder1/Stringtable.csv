@@ -1,0 +1,33 @@
+﻿////////////////////////////////////////////////////////////////////////////////
+// Localization file (i18n).													//
+// Write only in UTF-8 charset!!!												//
+//																				//
+// $Id:: Stringtable.csv 121 2009-03-24 00:25:33Z ist						$:	//
+////////////////////////////////////////////////////////////////////////////////
+LANGUAGE,					English,				Russian,					German
+// Object names: ///////////////////////////////////////////////////////////////
+STR_BMD2_Name,				BMD-2,					БМД-2,						BMD-2
+STR_BMD2M_Name,				BMD-2M,					БМД-2M,						BMD-2M
+STR_BMD1_Name,				BMD-1,					БМД-1,						BMD-1
+STR_BMD1PK_Name,			BMD-1PK,				БМД-1ПК,					BMD-1PK
+STR_BMD1K_Name,				BMD-1K,					БМД-1К,						BMD-1K
+STR_BMD1P_Name,				BMD-1P,					БМД-1П,						BMD-1P
+STR_BMD1R_Name,				BMD-1R,					БМД-1Р,						BMD-1R
+STR_BMD2K_Name,				BMD-2K,					БМД-2K,						BMD-2K
+STR_BMD4_Name,				BMD-4,					БМД-4,						BMD-4
+STR_BMD4M_Name,				BMD-4M,					БМД-4M,						BMD-4M
+STR_BMD4MA_Name,			BMD-4M (A),				БМД-4M (ДБ),				BMD-4M (A)
+// Vehicle actions /////////////////////////////////////////////////////////////
+STR_UA_LowerSusp,			Lower Suspension,		Уменьшить клиренс,			Fahrwerk senken
+STR_UA_RaiseSusp,			Raise Suspension,		Увеличить клиренс,			Fahrwerk heben
+STR_BMD2_LibDesc,			The BMD-vehicle is the soul of the Soviet Airborne forces.,	БМД - ну кто её не знает?! =),	Das Fahrzeug BMD-ist die Seele der Russischen Fallschirmjäger
+// Crew ////////////////////////////////////////////////////////////////////////
+STR_RHS_Commander,			commander,				командир,					kommandier
+STR_MGFrontRight,			Right Hull Gunner,		Пулемётчик,					Bugschütze rechts
+STR_CargoBackLeft,			Left Cargo,				Десант слева,				Passagierraum links
+STR_CargoBackRight,			Right Cargo,			Десант справа,				Passagierraum rechts
+STR_CargoBackCenter,		Back Cargo,				Десант по центру,			Passagierraum mitte
+STR_RHS_GetInCargo,			Get in as cargo,		Сесть на место десанта,	Einsteigen zum Passagierraum
+STR_RHS_GetInRGPMG,			Get in a righ hull gunner, Сесть на место пулемётчикa, Einsteigen zum Bugschütze rechts
+
+ 
