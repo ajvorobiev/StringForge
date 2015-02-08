@@ -54,6 +54,9 @@ namespace RHSStringTableTools
             {
                 serializer.Serialize(writer, project, ns);
             }
+
+            // assign path to the project
+            project.FileName = path;
         }
 
         /// <summary>

@@ -35,7 +35,9 @@ namespace RHSStringTableTools.Test
             Assert.IsTrue(pathToXml.Equals(obj2.FileName));
             Assert.AreEqual("testdata (testoutput\\Stringtable.xml)", obj2.NodeName);
 
-            XmlDeSerializer.WriteXml(obj, pathToSaveXml);
+            XmlDeSerializer.WriteXml(obj2, pathToSaveXml);
+
+            Assert.IsTrue(obj2.FileName.Equals(pathToSaveXml));
 
         }
 

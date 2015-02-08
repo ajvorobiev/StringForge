@@ -64,7 +64,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Width="10" Height="10" 
                                                     Margin="3,0" Source="Images\project.png" />
-                                                <TextBlock Text="{Binding NodeName}" />
+                                                <TextBlock Text="{Binding NodeName}" ToolTip="{Binding FileName}"/>
                                             </StackPanel>
                                             <HierarchicalDataTemplate.ItemTemplate>
                                                 <HierarchicalDataTemplate DataType="{x:Type Demo:Package}" ItemsSource="{Binding Containers}">
@@ -108,7 +108,7 @@
                             </xcad:LayoutDocument>
                         </xcad:LayoutDocumentPane>
                     </xcad:LayoutDocumentPaneGroup>
-                    <xcad:LayoutAnchorablePane DockWidth="200">
+                    <xcad:LayoutAnchorablePane DockWidth="250">
                         <xcad:LayoutAnchorable ContentId="properties" Title="Properties" CanHide="False" CanClose="False" AutoHideWidth="240" IconSource="Images/key.png" IsMaximized="True">
                             <xctk:PropertyGrid NameColumnWidth="110" SelectedObject="{Binding SelectedKey}"/>
                         </xcad:LayoutAnchorable>

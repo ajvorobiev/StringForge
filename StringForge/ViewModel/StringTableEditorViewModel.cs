@@ -71,6 +71,8 @@ namespace StringForge.ViewModel
 
         public ReactiveCommand<object> SaveCommand { get; protected set; }
 
+        public ReactiveCommand<object> SaveAsCommand { get; protected set; }
+
         public ReactiveCommand<object> StringTableConvertCommand { get; protected set; }
 
         public StringTableEditorViewModel()
@@ -79,6 +81,14 @@ namespace StringForge.ViewModel
             this.OpenCommand.Subscribe(_ => this.OpenCommandExecute());
             this.OpenFolderCommand = ReactiveCommand.Create();
             this.OpenFolderCommand.Subscribe(_ => this.OpenFolderCommandExecute());
+
+            var canSave = this.WhenAny(x => x.Project, x => x.Value.Count >= 1);
+            this.SaveCommand = ReactiveCommand.Create(canSave);
+            this.SaveCommand.Subscribe(_ => this.QuickSaveCommandExecute());
+
+            var canSaveAs = this.WhenAny(x => x.Project, x => x.Value.Count == 1);
+            this.SaveAsCommand = ReactiveCommand.Create(canSaveAs);
+            this.SaveAsCommand.Subscribe(_ => this.SaveAsCommandExecute());
 
             this.StringTableConvertCommand = ReactiveCommand.Create();
             this.StringTableConvertCommand.Subscribe(_ => StringTableConvertCommandExecute());
@@ -156,18 +166,23 @@ namespace StringForge.ViewModel
         /// </summary>
         private void OpenCommandExecute()
         {
+            // clear previous
+            var collection = new ObservableCollection<Project>();
+
             var dlg = new CommonOpenFileDialog();
             dlg.Filters.Add(new CommonFileDialogFilter("XML file", "*.xml"));
             dlg.DefaultFileName = "Stringtable.xml";
 
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok && File.Exists(dlg.FileName))
             {
-                this.Project.Add(XmlDeSerializer.LoadXml(dlg.FileName));
+                collection.Add(XmlDeSerializer.LoadXml(dlg.FileName));
             }
+
+            this.Project = collection;
         }
 
         /// <summary>
-        /// Execute the open command
+        /// Execute the open folder command
         /// </summary>
         private void OpenFolderCommandExecute()
         {
@@ -177,6 +192,40 @@ namespace StringForge.ViewModel
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok && Directory.Exists(dlg.FileName))
             {
                 this.Project = XmlDeSerializer.LoadXmlFolder(dlg.FileName);
+            }
+        }
+
+        /// <summary>
+        /// Execute the quick save command
+        /// </summary>
+        private void QuickSaveCommandExecute()
+        {
+            if (this.Project.Count < 1) return;
+
+            foreach (var prj in this.Project)
+            {
+                if (!string.IsNullOrWhiteSpace(prj.FileName))
+                {
+                    XmlDeSerializer.WriteXml(prj, prj.FileName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Execute the save as command
+        /// </summary>
+        private void SaveAsCommandExecute()
+        {
+            if (this.Project.Count != 1) return;
+
+            var prjct = this.Project[0];
+
+            var dlg = new CommonSaveFileDialog();
+            dlg.DefaultFileName = "Stringtable.xml";
+
+            if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                XmlDeSerializer.WriteXml(prjct, dlg.FileName);
             }
         }
     }
