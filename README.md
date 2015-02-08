@@ -1,6 +1,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/ajvorobiev/StringForge.svg?style=flat-square)](https://github.com/ajvorobiev/StringForge/issues)
 [![GitHub forks](https://img.shields.io/github/forks/ajvorobiev/StringForge.svg?style=flat-square)](https://github.com/ajvorobiev/StringForge/network)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/ajvorobiev/StringForge/master/LICENSE)
+[![Build Status](http://jenkins.rhsmods.org/job/StringForge/badge/icon)](http://jenkins.rhsmods.org/job/StringForge/)
 
 # StringForge
 A tool to work with Arma game series stringtables which are used for translations.
