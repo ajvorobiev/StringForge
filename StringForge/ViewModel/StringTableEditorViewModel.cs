@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Windows;
+
 namespace StringForge.ViewModel
 {
     using Microsoft.WindowsAPICodePack.Dialogs;
@@ -78,7 +80,9 @@ namespace StringForge.ViewModel
 
         public ReactiveCommand<object> FillMissingCommand { get; protected set; }
 
-        public ReactiveCommand<object> AboutCommand { get; protected set; } 
+        public ReactiveCommand<object> AboutCommand { get; protected set; }
+
+        public ReactiveCommand<object> UnloadProjectCommand { get; protected set; } 
 
         public string WindowTitle
         {
@@ -93,6 +97,9 @@ namespace StringForge.ViewModel
                 var aboutV = new AboutView();
                 aboutV.ShowDialog();
             });
+
+            this.UnloadProjectCommand = ReactiveCommand.Create();
+            this.UnloadProjectCommand.Subscribe(_=> this.UnloadProjectCommandExecute());
 
             this.OpenCommand = ReactiveCommand.Create();
             this.OpenCommand.Subscribe(_ => this.OpenCommandExecute());
@@ -117,6 +124,35 @@ namespace StringForge.ViewModel
             this.WhenAny(vm => vm.SelectedNode, vm => vm.Value != null).Subscribe(_ => this.RecomputeGridKeys());
 
             this.SetPropertis();
+        }
+
+        /// <summary>
+        /// Execute an unload project command on selected note
+        /// </summary>
+        private void UnloadProjectCommandExecute()
+        {
+            if (this.SelectedNode != null && this.SelectedNode.GetType() == typeof(Project))
+            {
+                var dlg = MessageBox.Show("Would you like to save the project before unloading it?", "Warning",
+                    MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+                var selectedProject = (Project)this.SelectedNode;
+
+                var projects = new ObservableCollection<Project>(this.Project);
+
+                // canceling will return
+                if(dlg == MessageBoxResult.Cancel) return;
+                else if (dlg == MessageBoxResult.Yes)
+                {
+                    QuickSaveProject(selectedProject);
+                }
+
+                // remove the selected project
+                projects.Remove(selectedProject);
+
+                // force ui refresh
+                this.Project = projects;
+            }
         }
 
         /// <summary>
@@ -257,10 +293,19 @@ namespace StringForge.ViewModel
 
             foreach (var prj in this.Project)
             {
-                if (!string.IsNullOrWhiteSpace(prj.FileName))
-                {
-                    XmlDeSerializer.WriteXml(prj, prj.FileName);
-                }
+                QuickSaveProject(prj);
+            }
+        }
+
+        /// <summary>
+        /// Quick save a single project
+        /// </summary>
+        /// <param name="prj">The project to save</param>
+        private static void QuickSaveProject(Project prj)
+        {
+            if (!string.IsNullOrWhiteSpace(prj.FileName))
+            {
+                XmlDeSerializer.WriteXml(prj, prj.FileName);
             }
         }
 

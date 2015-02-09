@@ -62,6 +62,7 @@
                                     <TreeView.Resources>
                                         <ContextMenu x:Key ="ProjectContext"  StaysOpen="true">
                                             <MenuItem Header="Edit Project..." />
+                                            <MenuItem Header="Unload Project" Command="{Binding UnloadProjectCommand}" />
                                             <Separator/>
                                             <MenuItem Header="Fill Missing In Selected" Command="{Binding FillMissingCommand}" />
                                             <Separator/>
