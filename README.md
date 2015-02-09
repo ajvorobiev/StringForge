@@ -1,10 +1,10 @@
+# StringForge
+A tool to work with Arma game series stringtables which are used for translations.
+
 [![GitHub issues](https://img.shields.io/github/issues/ajvorobiev/StringForge.svg?style=plastic)](https://github.com/ajvorobiev/StringForge/issues)
 [![GitHub forks](https://img.shields.io/github/forks/ajvorobiev/StringForge.svg?style=plastic)](https://github.com/ajvorobiev/StringForge/network)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=plastic)](https://raw.githubusercontent.com/ajvorobiev/StringForge/master/LICENSE)
 [![Build Status](http://jenkins.rhsmods.org/job/StringForge/badge/icon)](http://jenkins.rhsmods.org/job/StringForge/)
-
-# StringForge
-A tool to work with Arma game series stringtables which are used for translations.
 
 # Background
 The program is written as a part of advanced tools utilized by Red Hammer Studios (http://www.rhsmods.org).
