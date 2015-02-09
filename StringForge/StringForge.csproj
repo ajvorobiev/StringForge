@@ -111,8 +111,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\StringTableConverterViewModel.cs" />
     <Compile Include="ViewModel\StringTableEditorViewModel.cs" />
+    <Compile Include="View\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\StringTableConverterView.xaml.cs">
       <DependentUpon>StringTableConverterView.xaml</DependentUpon>
     </Compile>
@@ -123,6 +127,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\StringTableConverterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

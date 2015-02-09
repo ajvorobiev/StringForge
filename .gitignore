@@ -337,3 +337,6 @@ RHSStringTableTools.Test/bin/Debug/xmltestdata/addons/folder2/Stringtable.xml
 RHSStringTableTools.Test/bin/Debug/xmltestdata/addons/folder2/subfolder2/Stringtable.xml
 StringForge/obj/Debug/StringForge_MarkupCompile.i.lref
 RHSStringTableTools.Test/bin/Debug/xmltestdata/addons/folder2/Stringtable2.xml
+StringForge/obj/Debug/View/AboutView.baml
+StringForge/obj/Debug/View/AboutView.g.cs
+StringForge/obj/Debug/View/AboutView.g.i.cs

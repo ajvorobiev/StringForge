@@ -76,7 +76,9 @@ namespace StringForge.ViewModel
 
         public ReactiveCommand<object> StringTableConvertCommand { get; protected set; }
 
-        public ReactiveCommand<object> FillMissingCommand { get; protected set; } 
+        public ReactiveCommand<object> FillMissingCommand { get; protected set; }
+
+        public ReactiveCommand<object> AboutCommand { get; protected set; } 
 
         public string WindowTitle
         {
@@ -85,6 +87,13 @@ namespace StringForge.ViewModel
 
         public StringTableEditorViewModel()
         {
+            this.AboutCommand = ReactiveCommand.Create();
+            this.AboutCommand.Subscribe(_ =>
+            {
+                var aboutV = new AboutView();
+                aboutV.ShowDialog();
+            });
+
             this.OpenCommand = ReactiveCommand.Create();
             this.OpenCommand.Subscribe(_ => this.OpenCommandExecute());
             this.OpenFolderCommand = ReactiveCommand.Create();
