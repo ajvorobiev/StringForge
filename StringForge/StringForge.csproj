@@ -112,10 +112,23 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
+    <Compile Include="ViewModel\ContainerEditViewModel.cs" />
+    <Compile Include="ViewModel\EditViewModel.cs" />
+    <Compile Include="ViewModel\KeyEditViewModel.cs" />
+    <Compile Include="ViewModel\PackageEditViewModel.cs" />
     <Compile Include="ViewModel\StringTableConverterViewModel.cs" />
     <Compile Include="ViewModel\StringTableEditorViewModel.cs" />
     <Compile Include="View\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContainerEditView.xaml.cs">
+      <DependentUpon>ContainerEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KeyEditView.xaml.cs">
+      <DependentUpon>KeyEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PackageEditView.xaml.cs">
+      <DependentUpon>PackageEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StringTableConverterView.xaml.cs">
       <DependentUpon>StringTableConverterView.xaml</DependentUpon>
@@ -128,6 +141,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ContainerEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\KeyEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PackageEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

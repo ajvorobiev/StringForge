@@ -340,3 +340,12 @@ RHSStringTableTools.Test/bin/Debug/xmltestdata/addons/folder2/Stringtable2.xml
 StringForge/obj/Debug/View/AboutView.baml
 StringForge/obj/Debug/View/AboutView.g.cs
 StringForge/obj/Debug/View/AboutView.g.i.cs
+StringForge/obj/Debug/View/ContainerEditView.baml
+StringForge/obj/Debug/View/ContainerEditView.g.cs
+StringForge/obj/Debug/View/ContainerEditView.g.i.cs
+StringForge/obj/Debug/View/KeyEditView.baml
+StringForge/obj/Debug/View/KeyEditView.g.cs
+StringForge/obj/Debug/View/KeyEditView.g.i.cs
+StringForge/obj/Debug/View/PackageEditView.baml
+StringForge/obj/Debug/View/PackageEditView.g.cs
+StringForge/obj/Debug/View/PackageEditView.g.i.cs

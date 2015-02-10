@@ -82,12 +82,19 @@ namespace StringForge.ViewModel
 
         public ReactiveCommand<object> AboutCommand { get; protected set; }
 
-        public ReactiveCommand<object> UnloadProjectCommand { get; protected set; } 
+        public ReactiveCommand<object> UnloadProjectCommand { get; protected set; }
+
+        public ReactiveCommand<object> FillMissingFromLanguageCommand { get; protected set; }
+
+        public ReactiveCommand<object> FindInTreeCommand { get; protected set; }
 
         public string WindowTitle
         {
             get { return string.Format("StringForge v{0}", Assembly.GetEntryAssembly().GetName().Version.ToString()); }
         }
+
+        
+
 
         public StringTableEditorViewModel()
         {
@@ -120,6 +127,13 @@ namespace StringForge.ViewModel
             var canFill = this.WhenAny(x => x.Keys, x => x.Value.Count > 0);
             this.FillMissingCommand = ReactiveCommand.Create(canFill);
             this.FillMissingCommand.Subscribe(_ => FillMissingInSelectionCommandExecute());
+
+            var canFindInTree = this.WhenAny(x => x.SelectedKey, x => x.Value != null);
+            this.FindInTreeCommand = ReactiveCommand.Create(canFindInTree);
+            this.FindInTreeCommand.Subscribe(_ =>
+            {
+                this.SelectedNode = this.SelectedKey;
+            });
 
             this.WhenAny(vm => vm.SelectedNode, vm => vm.Value != null).Subscribe(_ => this.RecomputeGridKeys());
 
