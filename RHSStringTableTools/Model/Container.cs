@@ -7,7 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.ObjectModel;
 using System.Xml.Serialization;
+using ReactiveUI;
 
 namespace RHSStringTableTools.Model
 {
@@ -16,26 +18,32 @@ namespace RHSStringTableTools.Model
     /// <summary>
     /// The container class. Used for grouping.
     /// </summary>
-    public class Container
+    public class Container : ReactiveObject
     {
+        private string name;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Container"/> class.
         /// </summary>
         public Container()
         {
-            this.Keys = new List<Key>();
+            this.Keys = new ObservableCollection<Key>();
         }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         [XmlAttribute("name")]
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return name; }
+            set { this.RaiseAndSetIfChanged(ref this.name, value); }
+        }
 
         /// <summary>
         /// Gets or sets the keys.
         /// </summary>
         [XmlElement("Key")]
-        public List<Key> Keys { get; set; }
+        public ObservableCollection<Key> Keys { get; set; }
     }
 }

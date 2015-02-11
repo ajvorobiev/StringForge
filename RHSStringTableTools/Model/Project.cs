@@ -7,7 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.ObjectModel;
 using System.IO;
+using ReactiveUI;
 
 namespace RHSStringTableTools.Model
 {
@@ -17,27 +19,33 @@ namespace RHSStringTableTools.Model
     /// <summary>
     /// The project class.
     /// </summary>
-    public class Project
+    public class Project : ReactiveObject
     {
+        private string name;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Project"/> class.
         /// </summary>
         public Project()
         {
-            this.Packages = new List<Package>();
+            this.Packages = new ObservableCollection<Package>();
         }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         [XmlAttribute("name")]
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return name; }
+            set { this.RaiseAndSetIfChanged(ref this.name, value); }
+        }
 
         /// <summary>
         /// Gets or sets the packages.
         /// </summary>
         [XmlElement("Package")]
-        public List<Package> Packages { get; set; }
+        public ObservableCollection<Package> Packages { get; set; }
 
         /// <summary>
         /// Gets or sets the filepath to the xml that the project belongs to

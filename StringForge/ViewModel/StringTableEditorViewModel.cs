@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Windows;
+using System.Windows.Controls;
 
 namespace StringForge.ViewModel
 {
@@ -68,6 +69,8 @@ namespace StringForge.ViewModel
             set { this.RaiseAndSetIfChanged(ref this.selectedNode, value); }
         }
 
+        public TreeView Tree { get; set; }
+
         public ReactiveCommand<object> OpenCommand { get; protected set; }
 
         public ReactiveCommand<object> OpenFolderCommand { get; protected set; }
@@ -87,6 +90,26 @@ namespace StringForge.ViewModel
         public ReactiveCommand<object> FillMissingFromLanguageCommand { get; protected set; }
 
         public ReactiveCommand<object> FindInTreeCommand { get; protected set; }
+
+        public ReactiveCommand<object> EditProjectCommand { get; protected set; }
+
+        public ReactiveCommand<object> AddPackageCommand { get; protected set; }
+
+        public ReactiveCommand<object> EditPackageCommand { get; protected set; }
+
+        public ReactiveCommand<object> RemovePackageCommand { get; protected set; }
+
+        public ReactiveCommand<object> AddContainerCommand { get; protected set; }
+
+        public ReactiveCommand<object> EditContainerCommand { get; protected set; }
+
+        public ReactiveCommand<object> RemoveContainerCommand { get; protected set; }
+
+        public ReactiveCommand<object> AddKeyCommand { get; protected set; }
+
+        public ReactiveCommand<object> DuplicateKeyCommand { get; protected set; }
+
+        public ReactiveCommand<object> RemoveKeyCommand { get; protected set; }
 
         public string WindowTitle
         {
@@ -135,9 +158,111 @@ namespace StringForge.ViewModel
                 this.SelectedNode = this.SelectedKey;
             });
 
-            this.WhenAny(vm => vm.SelectedNode, vm => vm.Value != null).Subscribe(_ => this.RecomputeGridKeys());
+            this.WhenAny(vm => vm.SelectedNode, vm => vm.Value != null).Subscribe(async _ =>
+            {
+                await Task.Run(() => this.RecomputeGridKeys());
+            });
+
+            this.EditProjectCommand = ReactiveCommand.Create();
+            this.EditProjectCommand.Subscribe(_ => this.ExecuteEditProjectCommand());
+
+            this.AddPackageCommand = ReactiveCommand.Create();
+            this.AddPackageCommand.Subscribe(_ => this.ExecuteAddPackageCommand());
+
+            this.EditPackageCommand = ReactiveCommand.Create();
+            this.EditPackageCommand.Subscribe(_ => this.ExecuteEditPackageCommand());
+
+            this.RemovePackageCommand = ReactiveCommand.Create();
+            this.RemovePackageCommand.Subscribe(_ => this.ExecuteRemovePackageCommand());
+            
+            this.AddContainerCommand = ReactiveCommand.Create();
+            this.AddContainerCommand.Subscribe(_ => this.ExecuteAddContainerCommand());
+
+            this.EditContainerCommand = ReactiveCommand.Create();
+            this.EditContainerCommand.Subscribe(_ => this.ExecuteEditContainerommand());
+            
+            this.RemoveContainerCommand = ReactiveCommand.Create();
+            this.RemoveContainerCommand.Subscribe(_ => this.ExecuteRemoveContainerCommand());
+            
+            this.AddKeyCommand = ReactiveCommand.Create();
+            this.AddKeyCommand.Subscribe(_ => this.ExecuteAddKeyCommand());
+            
+            this.DuplicateKeyCommand = ReactiveCommand.Create();
+            this.DuplicateKeyCommand.Subscribe(_ => this.ExecuteDuplicateKeyCommand());
+
+            this.RemoveKeyCommand = ReactiveCommand.Create();
+            this.RemoveKeyCommand.Subscribe(_ => this.ExecuteRemoveKeyCommand());
 
             this.SetPropertis();
+        }
+
+        private object ExecuteRemoveKeyCommand()
+        {
+            throw new NotImplementedException();
+        }
+
+        private object ExecuteDuplicateKeyCommand()
+        {
+            throw new NotImplementedException();
+        }
+
+        private object ExecuteAddKeyCommand()
+        {
+            throw new NotImplementedException();
+        }
+
+        private object ExecuteRemoveContainerCommand()
+        {
+            throw new NotImplementedException();
+        }
+
+        private object ExecuteEditContainerommand()
+        {
+            throw new NotImplementedException();
+        }
+
+        private object ExecuteAddContainerCommand()
+        {
+            throw new NotImplementedException();
+        }
+
+        private object ExecuteRemovePackageCommand()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ExecuteEditPackageCommand()
+        {
+            var viewModel = new PackageEditViewModel((Package)this.SelectedNode);
+
+            var view = new PackageEditView();
+            view.DataContext = viewModel;
+
+            view.ShowDialog();
+
+            //this.UpdateTree();
+        }
+
+        private void ExecuteAddPackageCommand()
+        {
+            var newObject = new Package();
+            var viewModel = new PackageEditViewModel(newObject, (Project) this.SelectedNode);
+
+            var view = new PackageEditView();
+            view.DataContext = viewModel;
+
+            view.ShowDialog();
+        }
+
+        private object ExecuteEditProjectCommand()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void UpdateTree()
+        {
+            this.Tree.Items.Refresh();
+            //this.Tree.UpdateLayout();
         }
 
         /// <summary>
@@ -183,8 +308,6 @@ namespace StringForge.ViewModel
 
                 RecomputeGridKeys();
             });
-
-            
         }
 
         /// <summary>

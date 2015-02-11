@@ -349,3 +349,7 @@ StringForge/obj/Debug/View/KeyEditView.g.i.cs
 StringForge/obj/Debug/View/PackageEditView.baml
 StringForge/obj/Debug/View/PackageEditView.g.cs
 StringForge/obj/Debug/View/PackageEditView.g.i.cs
+RHSStringTableTools/bin/Debug/ReactiveUI.dll
+RHSStringTableTools/bin/Debug/ReactiveUI.xml
+RHSStringTableTools/bin/Debug/Splat.dll
+RHSStringTableTools/bin/Debug/Splat.pdb

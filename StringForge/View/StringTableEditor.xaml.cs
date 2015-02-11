@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using RHSStringTableTools.Model;
 using StringForge.ViewModel;
 
@@ -12,6 +14,8 @@ namespace StringForge.View
         public StringTableEditor()
         {
             InitializeComponent();
+
+            ((StringTableEditorViewModel) this.DataContext).Tree = this.projectTreeView;
         }
 
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -40,6 +44,25 @@ namespace StringForge.View
                     projectTreeView.ContextMenu = projectTreeView.Resources["KeyContext"] as System.Windows.Controls.ContextMenu;
                 } 
             }
+        }
+
+        private void projectTreeView_PreviewMouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            TreeViewItem treeViewItem = VisualUpwardSearch(e.OriginalSource as DependencyObject);
+
+            if (treeViewItem != null)
+            {
+                treeViewItem.Focus();
+                e.Handled = true;
+            }
+        }
+
+        static TreeViewItem VisualUpwardSearch(DependencyObject source)
+        {
+            while (source != null && !(source is TreeViewItem))
+                source = VisualTreeHelper.GetParent(source);
+
+            return source as TreeViewItem;
         }
     }
 }
