@@ -179,7 +179,7 @@ namespace StringForge.ViewModel
             this.AddContainerCommand.Subscribe(_ => this.ExecuteAddContainerCommand());
 
             this.EditContainerCommand = ReactiveCommand.Create();
-            this.EditContainerCommand.Subscribe(_ => this.ExecuteEditContainerommand());
+            this.EditContainerCommand.Subscribe(_ => this.ExecuteEditContainerCommand());
             
             this.RemoveContainerCommand = ReactiveCommand.Create();
             this.RemoveContainerCommand.Subscribe(_ => this.ExecuteRemoveContainerCommand());
@@ -216,14 +216,25 @@ namespace StringForge.ViewModel
             throw new NotImplementedException();
         }
 
-        private object ExecuteEditContainerommand()
+        private void ExecuteEditContainerCommand()
         {
-            throw new NotImplementedException();
+            var viewModel = new ContainerEditViewModel((Container)this.SelectedNode);
+
+            var view = new ContainerEditView();
+            view.DataContext = viewModel;
+
+            view.ShowDialog();
         }
 
-        private object ExecuteAddContainerCommand()
+        private void ExecuteAddContainerCommand()
         {
-            throw new NotImplementedException();
+            var newObject = new Container();
+            var viewModel = new ContainerEditViewModel(newObject, (Package)this.SelectedNode);
+
+            var view = new ContainerEditView();
+            view.DataContext = viewModel;
+
+            view.ShowDialog();
         }
 
         private object ExecuteRemovePackageCommand()
