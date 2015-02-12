@@ -49,6 +49,7 @@
     <Compile Include="CsvParser.cs" />
     <Compile Include="Model\Container.cs" />
     <Compile Include="Model\Key.cs" />
+    <Compile Include="Model\ObjectExt.cs" />
     <Compile Include="Model\Package.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\SourceAction.cs" />

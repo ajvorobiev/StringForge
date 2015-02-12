@@ -70,14 +70,38 @@ namespace RHSStringTableTools
             TextReader reader = new StreamReader(path);
             
             object obj = deserializer.Deserialize(reader);
-            var XmlData = (Project)obj;
+            var xmlData = (Project)obj;
             
             reader.Close();
 
             // assign path to file
-            XmlData.FileName = path;
+            xmlData.FileName = path;
 
-            return XmlData;
+            SetParentChildRelationship(xmlData);
+            xmlData.RecalculateNodeName();
+
+            return xmlData;
+        }
+
+        /// <summary>
+        /// Sets the parent child relationship in the deserialized model
+        /// TODO: Could be more elegant
+        /// </summary>
+        /// <param name="xmlData">The deserialized <see cref="Project"/></param>
+        private static void SetParentChildRelationship(Project xmlData)
+        {
+            foreach (var package in xmlData.Packages)
+            {
+                package.Parent = xmlData;
+                foreach (var container in package.Containers)
+                {
+                    container.Parent = package;
+                    foreach (var key in container.Keys)
+                    {
+                        key.Parent = container;
+                    }
+                }
+            }
         }
 
         /// <summary>

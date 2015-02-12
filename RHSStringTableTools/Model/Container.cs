@@ -45,5 +45,11 @@ namespace RHSStringTableTools.Model
         /// </summary>
         [XmlElement("Key")]
         public ObservableCollection<Key> Keys { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent
+        /// </summary>
+        [XmlIgnore]
+        public Package Parent { get; set; }
     }
 }

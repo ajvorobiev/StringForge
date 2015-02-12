@@ -74,6 +74,12 @@ namespace RHSStringTableTools.Model
         public string German { get; set; }
 
         /// <summary>
+        /// Gets or sets the parent
+        /// </summary>
+        [XmlIgnore]
+        public Container Parent { get; set; }
+
+        /// <summary>
         /// Gets the string based on the language string.
         /// </summary>
         /// <param name="language">

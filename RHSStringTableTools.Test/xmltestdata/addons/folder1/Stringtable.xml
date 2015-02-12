@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project name="testdata">
+<Project name="rhs">
   <Package name="folder1">
     <Container name="folder1_container">
       <Key ID="STR_BMD2_Name">
@@ -129,8 +129,6 @@
         <German>Einsteigen zum Bugschütze rechts</German>
       </Key>
     </Container>
-    <Container name="vx" />
-    <Container name="xcnxm" />
   </Package>
   <Package name="folder2">
     <Container name="folder2_container">
@@ -399,6 +397,5 @@
         <German>Ballistic Glasses (Clear)</German>
       </Key>
     </Container>
-    <Container name="gn" />
   </Package>
 </Project>

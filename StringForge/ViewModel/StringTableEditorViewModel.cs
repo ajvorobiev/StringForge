@@ -116,9 +116,6 @@ namespace StringForge.ViewModel
             get { return string.Format("StringForge v{0}", Assembly.GetEntryAssembly().GetName().Version.ToString()); }
         }
 
-        
-
-
         public StringTableEditorViewModel()
         {
             this.AboutCommand = ReactiveCommand.Create();
@@ -129,7 +126,7 @@ namespace StringForge.ViewModel
             });
 
             this.UnloadProjectCommand = ReactiveCommand.Create();
-            this.UnloadProjectCommand.Subscribe(_=> this.UnloadProjectCommandExecute());
+            this.UnloadProjectCommand.Subscribe(_ => this.UnloadProjectCommandExecute());
 
             this.OpenCommand = ReactiveCommand.Create();
             this.OpenCommand.Subscribe(_ => this.OpenCommandExecute());
@@ -174,19 +171,19 @@ namespace StringForge.ViewModel
 
             this.RemovePackageCommand = ReactiveCommand.Create();
             this.RemovePackageCommand.Subscribe(_ => this.ExecuteRemovePackageCommand());
-            
+
             this.AddContainerCommand = ReactiveCommand.Create();
             this.AddContainerCommand.Subscribe(_ => this.ExecuteAddContainerCommand());
 
             this.EditContainerCommand = ReactiveCommand.Create();
             this.EditContainerCommand.Subscribe(_ => this.ExecuteEditContainerCommand());
-            
+
             this.RemoveContainerCommand = ReactiveCommand.Create();
             this.RemoveContainerCommand.Subscribe(_ => this.ExecuteRemoveContainerCommand());
-            
+
             this.AddKeyCommand = ReactiveCommand.Create();
             this.AddKeyCommand.Subscribe(_ => this.ExecuteAddKeyCommand());
-            
+
             this.DuplicateKeyCommand = ReactiveCommand.Create();
             this.DuplicateKeyCommand.Subscribe(_ => this.ExecuteDuplicateKeyCommand());
 
@@ -196,32 +193,65 @@ namespace StringForge.ViewModel
             this.SetPropertis();
         }
 
-        private object ExecuteRemoveKeyCommand()
+        private void ExecuteRemoveKeyCommand()
         {
-            throw new NotImplementedException();
+            if (MessageBox.Show("This is an irreversable command, are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
+            {
+                var key = this.SelectedNode as Key;
+
+                if (key != null)
+                {
+                    key.Parent.Keys.Remove(key);
+                    key = null;
+                }
+            }
         }
 
-        private object ExecuteDuplicateKeyCommand()
+        private void ExecuteDuplicateKeyCommand()
         {
-            throw new NotImplementedException();
+            var original = this.SelectedNode as Key;
+
+            if (original != null)
+            {
+                var parentContainer = original.Parent;
+
+                var newKey = original.Clone();
+
+                newKey.Id = string.Format("{0}_COPY", original.Id);
+
+                parentContainer.Keys.Insert(parentContainer.Keys.IndexOf(original) + 1, newKey);
+            }
         }
 
-        private object ExecuteAddKeyCommand()
+        private void ExecuteAddKeyCommand()
         {
-            throw new NotImplementedException();
+            var newObject = new Key();
+            var viewModel = new KeyEditViewModel(newObject, (Container)this.SelectedNode);
+
+            var view = new KeyEditView {DataContext = viewModel};
+
+            view.ShowDialog();
         }
 
-        private object ExecuteRemoveContainerCommand()
+        private void ExecuteRemoveContainerCommand()
         {
-            throw new NotImplementedException();
+            if (MessageBox.Show("This is an irreversable command, are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
+            {
+                var container = this.SelectedNode as Container;
+
+                if (container != null)
+                {
+                    container.Parent.Containers.Remove(container);
+                    container = null;
+                }
+            }
         }
 
         private void ExecuteEditContainerCommand()
         {
             var viewModel = new ContainerEditViewModel((Container)this.SelectedNode);
 
-            var view = new ContainerEditView();
-            view.DataContext = viewModel;
+            var view = new ContainerEditView {DataContext = viewModel};
 
             view.ShowDialog();
         }
@@ -231,49 +261,54 @@ namespace StringForge.ViewModel
             var newObject = new Container();
             var viewModel = new ContainerEditViewModel(newObject, (Package)this.SelectedNode);
 
-            var view = new ContainerEditView();
-            view.DataContext = viewModel;
+            var view = new ContainerEditView {DataContext = viewModel};
 
             view.ShowDialog();
         }
 
-        private object ExecuteRemovePackageCommand()
+        private void ExecuteRemovePackageCommand()
         {
-            throw new NotImplementedException();
+            if (MessageBox.Show("This is an irreversable command, are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
+            {
+                var package = this.SelectedNode as Package;
+
+                if (package != null)
+                {
+                    package.Parent.Packages.Remove(package);
+                    package = null;
+                }
+            }
         }
 
         private void ExecuteEditPackageCommand()
         {
             var viewModel = new PackageEditViewModel((Package)this.SelectedNode);
 
-            var view = new PackageEditView();
-            view.DataContext = viewModel;
+            var view = new PackageEditView {DataContext = viewModel};
 
             view.ShowDialog();
-
-            //this.UpdateTree();
         }
 
         private void ExecuteAddPackageCommand()
         {
             var newObject = new Package();
-            var viewModel = new PackageEditViewModel(newObject, (Project) this.SelectedNode);
+            var viewModel = new PackageEditViewModel(newObject, (Project)this.SelectedNode);
 
-            var view = new PackageEditView();
-            view.DataContext = viewModel;
+            var view = new PackageEditView {DataContext = viewModel};
 
             view.ShowDialog();
         }
 
-        private object ExecuteEditProjectCommand()
+        private void ExecuteEditProjectCommand()
         {
-            throw new NotImplementedException();
-        }
+            var viewModel = new ProjectEditViewModel((Project)this.SelectedNode);
 
-        private void UpdateTree()
-        {
-            this.Tree.Items.Refresh();
-            //this.Tree.UpdateLayout();
+            var view = new ProjectEditView {DataContext = viewModel};
+
+            view.ShowDialog();
+
+            // recalculate node name based on new package name
+            viewModel.Thing.RecalculateNodeName();
         }
 
         /// <summary>
@@ -291,7 +326,7 @@ namespace StringForge.ViewModel
                 var projects = new ObservableCollection<Project>(this.Project);
 
                 // canceling will return
-                if(dlg == MessageBoxResult.Cancel) return;
+                if (dlg == MessageBoxResult.Cancel) return;
                 else if (dlg == MessageBoxResult.Yes)
                 {
                     QuickSaveProject(selectedProject);

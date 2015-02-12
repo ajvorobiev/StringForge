@@ -353,3 +353,6 @@ RHSStringTableTools/bin/Debug/ReactiveUI.dll
 RHSStringTableTools/bin/Debug/ReactiveUI.xml
 RHSStringTableTools/bin/Debug/Splat.dll
 RHSStringTableTools/bin/Debug/Splat.pdb
+StringForge/obj/Debug/View/ProjectEditView.baml
+StringForge/obj/Debug/View/ProjectEditView.g.cs
+StringForge/obj/Debug/View/ProjectEditView.g.i.cs

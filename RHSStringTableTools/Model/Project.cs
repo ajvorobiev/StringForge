@@ -13,7 +13,6 @@ using ReactiveUI;
 
 namespace RHSStringTableTools.Model
 {
-    using System.Collections.Generic;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -22,6 +21,7 @@ namespace RHSStringTableTools.Model
     public class Project : ReactiveObject
     {
         private string name;
+        private string nodeName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Project"/> class.
@@ -59,16 +59,17 @@ namespace RHSStringTableTools.Model
         [XmlIgnore]
         public string NodeName
         {
-            get { return GetNodeName(); }
+            get { return this.nodeName; }
+            set { this.RaiseAndSetIfChanged(ref this.nodeName, value); }
         }
 
         /// <summary>
         /// Creates a node name to be displayed in the tree
         /// </summary>
         /// <returns>A node name suitable for a tree.</returns>
-        public string GetNodeName()
+        public void RecalculateNodeName()
         {
-            return string.Format("{0} ({1}\\{2})", this.Name, new DirectoryInfo(Path.GetDirectoryName(this.FileName)).Name, Path.GetFileName(this.FileName));
+            this.NodeName = string.Format("{0} ({1}\\{2})", this.Name, new DirectoryInfo(Path.GetDirectoryName(this.FileName)).Name, Path.GetFileName(this.FileName));
         }
     }
 }

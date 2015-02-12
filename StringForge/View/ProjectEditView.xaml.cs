@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace StringForge.View
 {
     /// <summary>
-    /// Interaction logic for KeyEditView.xaml
+    /// Interaction logic for ProjectEditView.xaml
     /// </summary>
-    public partial class KeyEditView : Window
+    public partial class ProjectEditView : Window
     {
-        public KeyEditView()
+        public ProjectEditView()
         {
             InitializeComponent();
         }

@@ -48,5 +48,11 @@ namespace RHSStringTableTools.Model
         /// </summary>
         [XmlElement("Container")]
         public ObservableCollection<Container> Containers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent
+        /// </summary>
+        [XmlIgnore]
+        public Project Parent { get; set; }
     }
 }

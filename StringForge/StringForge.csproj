@@ -115,6 +115,7 @@
     <Compile Include="ViewModel\ContainerEditViewModel.cs" />
     <Compile Include="ViewModel\EditViewModel.cs" />
     <Compile Include="ViewModel\KeyEditViewModel.cs" />
+    <Compile Include="ViewModel\ProjectEditViewModel.cs" />
     <Compile Include="ViewModel\PackageEditViewModel.cs" />
     <Compile Include="ViewModel\StringTableConverterViewModel.cs" />
     <Compile Include="ViewModel\StringTableEditorViewModel.cs" />
@@ -129,6 +130,9 @@
     </Compile>
     <Compile Include="View\PackageEditView.xaml.cs">
       <DependentUpon>PackageEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProjectEditView.xaml.cs">
+      <DependentUpon>ProjectEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StringTableConverterView.xaml.cs">
       <DependentUpon>StringTableConverterView.xaml</DependentUpon>
@@ -153,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PackageEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProjectEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
