@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Windows;
 using RHSStringTableTools.Model;
 
@@ -118,12 +119,18 @@ namespace StringForge.ViewModel
             set { this.RaiseAndSetIfChanged(ref this.german, value); }
         }
 
+        /// <summary>
+        /// Gets or sets whether the form is auto filling from <see cref="Original"/>
+        /// </summary>
         public bool AutoFill
         {
             get { return this.autoFill; }
             set { this.RaiseAndSetIfChanged(ref this.autoFill, value); }
         }
 
+        /// <summary>
+        /// Gets or sets whether the russian key text is being transliterated in real time
+        /// </summary>
         public bool Translit
         {
             get { return translit; }
@@ -149,7 +156,29 @@ namespace StringForge.ViewModel
             this.OkCommand = ReactiveCommand.Create(canOk);
             this.OkCommand.Subscribe(this.OkCommandExecute);
 
+
+            this.WhenAnyValue(vm=>vm.Original).Subscribe(_=>this.FillLanguages());
+
             this.SetProperties();
+        }
+
+        /// <summary>
+        /// Auto fills the languages from <see cref="Original"/>
+        /// </summary>
+        private void FillLanguages()
+        {
+            if (this.AutoFill)
+            {
+                this.English = this.Original;
+                this.Czech = this.Original;
+                this.French = this.Original;
+                this.Spanish = this.Original;
+                this.Italian = this.Original;
+                this.Polish = this.Original;
+                this.Portuguese = this.Original;
+                this.Russian = this.Original;
+                this.German = this.Original; 
+            }
         }
 
         /// <summary>
