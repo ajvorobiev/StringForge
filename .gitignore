@@ -356,3 +356,14 @@ RHSStringTableTools/bin/Debug/Splat.pdb
 StringForge/obj/Debug/View/ProjectEditView.baml
 StringForge/obj/Debug/View/ProjectEditView.g.cs
 StringForge/obj/Debug/View/ProjectEditView.g.i.cs
+StringForge/packages/gong-wpf-dragdrop.0.1.4.3/gong-wpf-dragdrop.0.1.4.3.nupkg
+StringForge/packages/gong-wpf-dragdrop.0.1.4.3/gong-wpf-dragdrop.0.1.4.3.nuspec
+StringForge/packages/gong-wpf-dragdrop.0.1.4.3/lib/net35/GongSolutions.Wpf.DragDrop.dll
+StringForge/packages/gong-wpf-dragdrop.0.1.4.3/lib/net35/GongSolutions.Wpf.DragDrop.pdb
+StringForge/packages/gong-wpf-dragdrop.0.1.4.3/lib/net35/GongSolutions.Wpf.DragDrop.xml
+StringForge/packages/gong-wpf-dragdrop.0.1.4.3/lib/net40/GongSolutions.Wpf.DragDrop.dll
+StringForge/packages/gong-wpf-dragdrop.0.1.4.3/lib/net40/GongSolutions.Wpf.DragDrop.pdb
+StringForge/packages/gong-wpf-dragdrop.0.1.4.3/lib/net40/GongSolutions.Wpf.DragDrop.xml
+StringForge/bin/Debug/GongSolutions.Wpf.DragDrop.dll
+StringForge/bin/Debug/GongSolutions.Wpf.DragDrop.pdb
+StringForge/bin/Debug/GongSolutions.Wpf.DragDrop.xml

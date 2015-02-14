@@ -39,6 +39,9 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>packages\gong-wpf-dragdrop.0.1.4.3\lib\net40\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack">
       <HintPath>packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
@@ -125,6 +128,7 @@
     <Compile Include="View\ContainerEditView.xaml.cs">
       <DependentUpon>ContainerEditView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Extensions\TreeViewExtensions.cs" />
     <Compile Include="View\KeyEditView.xaml.cs">
       <DependentUpon>KeyEditView.xaml</DependentUpon>
     </Compile>

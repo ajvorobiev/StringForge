@@ -5,7 +5,9 @@
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:ViewModel="clr-namespace:StringForge.ViewModel"
+        xmlns:c ="clr-namespace:StringForge.View.Extensions"
         xmlns:Demo="clr-namespace:RHSStringTableTools.Model;assembly=RHSStringTableTools"
+        xmlns:dragDrop="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         x:Class="StringForge.View.StringTableEditor"
         Title="{Binding WindowTitle}" Height="493.8" Width="1190.425" WindowState="Maximized" Icon="/StringForge;component/icon.ico">
     <Window.Background>
@@ -58,7 +60,7 @@
                     <xcad:LayoutAnchorablePaneGroup DockWidth="250">
                         <xcad:LayoutAnchorablePane>
                             <xcad:LayoutAnchorable ContentId="tree" Title="Nodes" CanClose="False" CanHide="False" IconSource="Images/project.png" >
-                                <TreeView Name="projectTreeView"  ItemsSource="{Binding Project}" SelectedItemChanged="TreeView_SelectedItemChanged" Margin="5" PreviewMouseRightButtonDown="projectTreeView_PreviewMouseRightButtonDown" >
+                                <TreeView dragDrop:DragDrop.IsDragSource="True" dragDrop:DragDrop.IsDropTarget="True" Name="projectTreeView"  ItemsSource="{Binding Project}" SelectedItemChanged="TreeView_SelectedItemChanged" Margin="5" PreviewMouseRightButtonDown="projectTreeView_PreviewMouseRightButtonDown" >
                                     <TreeView.Resources>
                                         <ContextMenu x:Key ="ProjectContext"  StaysOpen="true">
                                             <MenuItem Header="Edit Project..." Command="{Binding EditProjectCommand}"/>
@@ -104,24 +106,24 @@
                                                         <Image Width="10" Height="10" 
                                                     Margin="3,0" Source="Images\package.png" />
                                                         <TextBlock Text="{Binding Name}" />
-                                                        </StackPanel>
+                                                    </StackPanel>
                                                     <HierarchicalDataTemplate.ItemTemplate>
                                                         <HierarchicalDataTemplate DataType="{x:Type Demo:Container}" ItemsSource="{Binding Keys}">
                                                             <StackPanel Orientation="Horizontal">
                                                                 <Image Width="10" Height="10" 
                                                     Margin="3,0" Source="Images\container.png" />
                                                                 <TextBlock Text="{Binding Name}" />
-                                                                </StackPanel>
+                                                            </StackPanel>
                                                             <HierarchicalDataTemplate.ItemTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel Orientation="Horizontal">
                                                                         <Image Width="10" Height="10" 
                                                     Margin="3,0" Source="Images\key.png" />
                                                                         <TextBlock Text="{Binding Id}" />
-                                                                        </StackPanel>
+                                                                    </StackPanel>
                                                                 </DataTemplate>
                                                             </HierarchicalDataTemplate.ItemTemplate>
-                                                                
+
                                                         </HierarchicalDataTemplate>
                                                     </HierarchicalDataTemplate.ItemTemplate>
 

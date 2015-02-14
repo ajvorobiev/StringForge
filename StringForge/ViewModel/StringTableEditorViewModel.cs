@@ -374,7 +374,7 @@ namespace StringForge.ViewModel
             {
                 var item = this.SelectedNode;
 
-                ObservableCollection<Key> collectionOfKeys = new ObservableCollection<Key>();
+                var collectionOfKeys = new ObservableCollection<Key>();
 
                 await Task.Run(() => ExtractKeyCollection(item, collectionOfKeys));
 
@@ -383,7 +383,7 @@ namespace StringForge.ViewModel
         }
 
         /// <summary>
-        /// Extracts the collection of keys from the selected parent
+        /// Extracts the collection of keys from the selected parent. Using shallow clones to prevent throwns on modified collection
         /// </summary>
         /// <param name="item">The slected item</param>
         /// <param name="collectionOfKeys">The collectio of keys to be filled</param>
@@ -391,7 +391,7 @@ namespace StringForge.ViewModel
         {
             if (item.GetType() == typeof(Project))
             {
-                foreach (var package in ((Project)item).Packages)
+                foreach (var package in ((Project)item).Clone().Packages)
                 {
                     foreach (var container in package.Containers)
                     {
@@ -404,7 +404,7 @@ namespace StringForge.ViewModel
             }
             else if (item.GetType() == typeof(Package))
             {
-                foreach (var container in ((Package)item).Containers)
+                foreach (var container in ((Package)item).Clone().Containers)
                 {
                     foreach (var key in container.Keys)
                     {
@@ -414,7 +414,7 @@ namespace StringForge.ViewModel
             }
             else if (item.GetType() == typeof(Container))
             {
-                foreach (var key in ((Container)item).Keys)
+                foreach (var key in ((Container)item).Clone().Keys)
                 {
                     collectionOfKeys.Add(key);
                 }
