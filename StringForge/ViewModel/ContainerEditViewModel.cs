@@ -41,6 +41,7 @@ namespace StringForge.ViewModel
         {
             this.Thing = item;
             this.Parent = container;
+            this.Thing.Parent = container;
 
             var canOk = this.WhenAny(vm => vm.Name, vm => !string.IsNullOrWhiteSpace(vm.Value));
             this.OkCommand = ReactiveCommand.Create(canOk);

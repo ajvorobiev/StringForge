@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RHSStringTableTools.Services
 {
@@ -17,6 +14,7 @@ namespace RHSStringTableTools.Services
         /// The words.
         /// </summary>
         private Dictionary<string, string> words = new Dictionary<string, string>();
+
         private Dictionary<string, string> wordsTwoLetter = new Dictionary<string, string>();
         private Dictionary<string, string> wordsThreeLetter = new Dictionary<string, string>();
 
@@ -113,14 +111,21 @@ namespace RHSStringTableTools.Services
         /// </returns>
         public string Transliterate(string capturedString)
         {
-            // three letter subs first
-            capturedString = this.wordsThreeLetter.Aggregate(capturedString, (current, pair) => current.Replace(pair.Value, pair.Key));
+            string result = null;
 
-            // two letter subs later
-            capturedString = this.wordsTwoLetter.Aggregate(capturedString, (current, pair) => current.Replace(pair.Value, pair.Key));
+            if (!string.IsNullOrWhiteSpace(capturedString))
+            {
+                // three letter subs first
+                capturedString = this.wordsThreeLetter.Aggregate(capturedString, (current, pair) => current.Replace(pair.Value, pair.Key));
+
+                // two letter subs later
+                capturedString = this.wordsTwoLetter.Aggregate(capturedString, (current, pair) => current.Replace(pair.Value, pair.Key));
+
+                result = this.words.Aggregate(capturedString, (current, pair) => current.Replace(pair.Value, pair.Key));
+            }
 
             // finally one letter
-            return this.words.Aggregate(capturedString, (current, pair) => current.Replace(pair.Value, pair.Key));
+            return result;
         }
     }
 }

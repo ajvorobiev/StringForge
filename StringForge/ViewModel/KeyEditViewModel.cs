@@ -2,6 +2,7 @@
 using System.Reactive.Linq;
 using System.Windows;
 using RHSStringTableTools.Model;
+using RHSStringTableTools.Services;
 
 namespace StringForge.ViewModel
 {
@@ -150,6 +151,7 @@ namespace StringForge.ViewModel
         public KeyEditViewModel(Key item, Container container)
         {
             this.Thing = item;
+            this.Thing.Parent = container;
             this.Parent = container;
 
             var canOk = this.WhenAny(x => x.Id, y => y.Original, z => z.English, (x, y, z) => !string.IsNullOrWhiteSpace(x.Value) && !string.IsNullOrWhiteSpace(y.Value) && !string.IsNullOrWhiteSpace(z.Value));
@@ -158,8 +160,17 @@ namespace StringForge.ViewModel
 
 
             this.WhenAnyValue(vm=>vm.Original).Subscribe(_=>this.FillLanguages());
+            this.WhenAnyValue(vm => vm.Russian).Subscribe(_ => this.Transliterate());
 
             this.SetProperties();
+        }
+
+        private void Transliterate()
+        {
+            if (this.Translit)
+            {
+                this.Russian = TranslitService.Singleton.Transliterate(this.Russian);
+            }
         }
 
         /// <summary>

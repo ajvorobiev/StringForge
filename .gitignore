@@ -367,3 +367,5 @@ StringForge/packages/gong-wpf-dragdrop.0.1.4.3/lib/net40/GongSolutions.Wpf.DragD
 StringForge/bin/Debug/GongSolutions.Wpf.DragDrop.dll
 StringForge/bin/Debug/GongSolutions.Wpf.DragDrop.pdb
 StringForge/bin/Debug/GongSolutions.Wpf.DragDrop.xml
+RHSStringTableTools/bin/Debug/System.Reactive.Core.dll
+RHSStringTableTools/bin/Debug/System.Reactive.Core.xml

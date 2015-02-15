@@ -7,16 +7,21 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using ReactiveUI;
+using RHSStringTableTools.Services;
+
 namespace RHSStringTableTools.Model
 {
-    using System.Collections.Generic;
     using System.Xml.Serialization;
 
     /// <summary>
     /// The key model class.
     /// </summary>
-    public class Key
+    public class Key : ReactiveObject
     {
+        private string russian;
+
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
@@ -66,7 +71,11 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets the russian language.
         /// </summary>
-        public string Russian { get; set; }
+        public string Russian
+        {
+            get { return russian; }
+            set { this.RaiseAndSetIfChanged(ref this.russian, value); }
+        }
 
         /// <summary>
         /// Gets or sets the german language.
@@ -78,6 +87,16 @@ namespace RHSStringTableTools.Model
         /// </summary>
         [XmlIgnore]
         public Container Parent { get; set; }
+
+        public Key()
+        {
+            this.WhenAnyValue(vm => vm.Russian).Subscribe(_ => this.Transliterate());
+        }
+
+        private void Transliterate()
+        {
+            this.Russian = TranslitService.Singleton.Transliterate(this.Russian);
+        }
 
         /// <summary>
         /// Gets the string based on the language string.
