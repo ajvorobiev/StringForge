@@ -9,7 +9,7 @@
         xmlns:Demo="clr-namespace:RHSStringTableTools.Model;assembly=RHSStringTableTools"
         xmlns:dragDrop="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         x:Class="StringForge.View.StringTableEditor"
-        Title="{Binding WindowTitle}" Height="493.8" Width="1190.425" WindowState="Maximized" Icon="/StringForge;component/icon.ico">
+        Title="{Binding WindowTitle}" Height="493.8" Width="1190.425" WindowState="Maximized" Icon="/StringForge;component/icon.ico" Closing="Window_Closing">
     <Window.Background>
         <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
     </Window.Background>

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Security.AccessControl;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using RHSStringTableTools.Model;
@@ -63,6 +64,28 @@ namespace StringForge.View
                 source = VisualTreeHelper.GetParent(source);
 
             return source as TreeViewItem;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var viewModel = (StringTableEditorViewModel)DataContext;
+
+            if (viewModel.Project != null && viewModel.Project.Count > 0)
+            {
+                var dlg = MessageBox.Show("Do you want to save the stringtables before exiting?", "Save",
+                        MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                
+                if (dlg == MessageBoxResult.Yes)
+                {
+
+                    if (viewModel.SaveCommand.CanExecute(null))
+                        viewModel.SaveCommand.Execute(null);
+                }
+                else if (dlg == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }
