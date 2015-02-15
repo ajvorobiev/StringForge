@@ -13,7 +13,6 @@ namespace StringForge.Model
         public ViolationLevel Level
         {
             get { return ViolationLevel.Error; }
-            
         }
 
         public string Message

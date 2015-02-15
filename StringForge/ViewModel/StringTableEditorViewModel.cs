@@ -7,8 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using StringForge.Model;
 
 namespace StringForge.ViewModel
 {
@@ -32,6 +35,7 @@ namespace StringForge.ViewModel
         private ObservableCollection<Project> project;
         private ObservableCollection<Key> keys;
         private object selectedNode;
+        private ObservableCollection<IViolation> violations;
 
         /// <summary>
         /// Get or sets the selected key
@@ -65,8 +69,14 @@ namespace StringForge.ViewModel
         /// </summary>
         public object SelectedNode
         {
-            get { return selectedNode; }
+            get { return this.selectedNode; }
             set { this.RaiseAndSetIfChanged(ref this.selectedNode, value); }
+        }
+
+        public IViolation SelectedViolation
+        {
+            get { return this.selectedViolation; }
+            set { this.RaiseAndSetIfChanged(ref this.selectedViolation, value); }
         }
 
         public TreeView Tree { get; set; }
@@ -116,8 +126,25 @@ namespace StringForge.ViewModel
             get { return string.Format("StringForge v{0}", Assembly.GetEntryAssembly().GetName().Version.ToString()); }
         }
 
+        public ObservableCollection<IViolation> Violations
+        {
+            get { return violations; }
+            set { this.RaiseAndSetIfChanged(ref this.violations, value); }
+        }
+
+        private BackgroundWorker violationsBackgroundWorker;
+        private IViolation selectedViolation;
+
         public StringTableEditorViewModel()
         {
+            violationsBackgroundWorker = new BackgroundWorker();
+            violationsBackgroundWorker.WorkerSupportsCancellation = true;
+            violationsBackgroundWorker.WorkerReportsProgress = true;
+            violationsBackgroundWorker.DoWork += violationsBackgroundWorker_DoWork;
+            violationsBackgroundWorker.RunWorkerCompleted += violationsBackgroundWorker_RunWorkerCompleted;
+
+            this.Violations = new ObservableCollection<IViolation>();
+
             this.AboutCommand = ReactiveCommand.Create();
             this.AboutCommand.Subscribe(_ =>
             {
@@ -158,8 +185,18 @@ namespace StringForge.ViewModel
             this.WhenAny(vm => vm.SelectedNode, vm => vm.Value != null).Subscribe(async _ =>
             {
                 await Task.Run(() => this.RecomputeGridKeys());
+                this.RunViolationsCheck();
             });
 
+            // display the violation keys
+            this.WhenAny(vm => vm.SelectedViolation, vm => vm.Value != null).Subscribe(async _ =>
+            {
+                if (this.SelectedViolation != null)
+                {
+                    this.Keys = this.SelectedViolation.Keys; 
+                }
+            });
+            
             this.EditProjectCommand = ReactiveCommand.Create();
             this.EditProjectCommand.Subscribe(_ => this.ExecuteEditProjectCommand());
 
@@ -193,6 +230,67 @@ namespace StringForge.ViewModel
             this.SetPropertis();
         }
 
+        private void RunViolationsCheck()
+        {
+            this.violationsBackgroundWorker.RunWorkerAsync(this.Project);
+        }
+
+        private void violationsBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            var violationsList = new ObservableCollection<IViolation>();
+            var keyList = new Dictionary<string,Key>();
+
+            foreach (var project in (ObservableCollection<Project>)e.Argument)
+            {
+                if ((worker.CancellationPending == true))
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    foreach (var package in project.Packages)
+                    {
+                        foreach (var container in package.Containers)
+                        {
+                            foreach (var key in container.Keys)
+                            {
+                                try
+                                {
+                                    keyList.Add(key.Id, key);
+                                }
+                                catch (Exception ex)
+                                {
+                                    // create the violation with the two keys
+                                    violationsList.Add(new DuplicateKeyViolation(new List<Key>(){ key, keyList[key.Id] }));
+                                    
+                                    // remove the key to stop it causing the violation and move on
+                                    keyList.Remove(key.Id);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            e.Result = violationsList;
+        }
+
+        private void violationsBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if ((e.Cancelled == true))
+            {
+            }
+            else if (!(e.Error == null))
+            {
+            }
+            else
+            {
+                this.Violations = (ObservableCollection<IViolation>)e.Result;
+            }
+        }
         private void ExecuteRemoveKeyCommand()
         {
             if (MessageBox.Show("This is an irreversable command, are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)

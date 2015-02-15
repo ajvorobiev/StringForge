@@ -51,7 +51,7 @@
                     <xcad:LayoutAnchorSide>
                         <xcad:LayoutAnchorGroup>
                             <xcad:LayoutAnchorable Title="Violation" ContentId="violations" CanClose="False" CanHide="False" IsMaximized="True" IsActive="True" IconSource="Images/violation.png">
-                                <DataGrid />
+                                <DataGrid ItemsSource="{Binding Violations}" SelectedItem="{Binding SelectedViolation}"/>
                             </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorGroup>
                     </xcad:LayoutAnchorSide>
