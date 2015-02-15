@@ -16,6 +16,9 @@ namespace StringForge.ViewModel
 
     internal class PackageEditViewModel : EditViewModel
     {
+        /// <summary>
+        /// BAcking field for the the name
+        /// </summary>
         private string name;
 
         /// <summary>
@@ -37,6 +40,11 @@ namespace StringForge.ViewModel
         /// </summary>
         public Project Parent { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PackageEditViewModel"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="container">The container.</param>
         public PackageEditViewModel(Package item, Project container = null)
         {
             this.Thing = item;

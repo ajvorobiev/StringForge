@@ -7,11 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
 namespace RHSStringTableTools.Model
 {
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     /// <summary>
     /// The <see cref="SourceAction" /> enum specifying the things you can do with source csv files
     /// </summary>
@@ -20,9 +20,11 @@ namespace RHSStringTableTools.Model
         [Display(Name = "Nothing")]
         [Description("Nothing will be done to the source file.")]
         Nothing,
+
         [Display(Name = "Rename")]
         [Description("The source files will be renamed so the game no longer recognises them.")]
         Rename,
+
         [Display(Name = "Delete")]
         [Description("The source files will be completely removed.")]
         Delete

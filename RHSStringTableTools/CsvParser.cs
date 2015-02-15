@@ -50,19 +50,21 @@ namespace RHSStringTableTools
                     // perform action on the source files
                     switch (sourceAction)
                     {
-                            case SourceAction.Delete:
-                                File.Delete(stringtablefile);
-                                break;
-                            case SourceAction.Rename:
-                                File.Move(stringtablefile,string.Format("{0}.bkup",stringtablefile));
-                                break;
-                            case SourceAction.Nothing:
-                                break;
+                        case SourceAction.Delete:
+                            File.Delete(stringtablefile);
+                            break;
+
+                        case SourceAction.Rename:
+                            File.Move(stringtablefile, string.Format("{0}.bkup", stringtablefile));
+                            break;
+
+                        case SourceAction.Nothing:
+                            break;
                     }
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException(string.Format("Failed parsing file: {0} Error: {1}", stringtablefile,ex.Message));
+                    throw new ApplicationException(string.Format("Failed parsing file: {0} Error: {1}", stringtablefile, ex.Message));
                 }
             }
 
@@ -92,11 +94,11 @@ namespace RHSStringTableTools
                 Name = packageName
             };
 
-            result.Containers.Add(new Container(){Name=string.Format("{0}_{1}",packageName,"container")});
+            result.Containers.Add(new Container() { Name = string.Format("{0}_{1}", packageName, "container") });
 
             // read the file in to strings
             List<string> lines = File.ReadAllLines(filePath).ToList();
-            
+
             // parse languages
             var languageString = lines.Where(l => l.Contains("LANGUAGE,")).FirstOrDefault();
 
@@ -105,13 +107,13 @@ namespace RHSStringTableTools
             var fileLanguages = ParseLanguages(languageString);
 
             // check that languages are indeed allowed
-            foreach(var language in fileLanguages)
+            foreach (var language in fileLanguages)
             {
                 if (!XmlDeSerializer.AllowedLanguages.Contains(language)) throw new ApplicationException(string.Format("The specified csv file contains an unrecognised language: {0} -> {1}", filePath, language));
             }
 
             // parse by line
-            foreach(var line in lines)
+            foreach (var line in lines)
             {
                 var key = ParseLine(line, fileLanguages, fillMissing);
 
@@ -137,7 +139,7 @@ namespace RHSStringTableTools
             languageString = Regex.Replace(languageString, @"\s+", "");
 
             var languageArray = languageString.Split(new char[] { ',' });
-            
+
             // remove the first entry
             result = languageArray.ToList();
             result.RemoveAt(0);
@@ -173,7 +175,7 @@ namespace RHSStringTableTools
             // if (resultArray.GetLength(0) - 1 != languages.Count) throw new ApplicationException(string.Format("The provided line contains more values than specified languages: {0}", line));
 
             // add the languages and the values to the dictionary
-            for(int i = 1; i <= languages.Count; i++)
+            for (int i = 1; i <= languages.Count; i++)
             {
                 // trim
                 resultArray[i] = resultArray[i].Trim();
@@ -187,21 +189,19 @@ namespace RHSStringTableTools
                 try
                 {
                     result.GetType().GetProperty(languages[i - 1]).SetValue(result, resultArray[i]);
-
                 }
                 catch (Exception ex)
                 {
-                    
-                    throw new ApplicationException(string.Format("Could not set key value. Lang: {1}, Val: {2}. Error: {0}", ex.Message, languages[i - 1], resultArray[i] ));
+                    throw new ApplicationException(string.Format("Could not set key value. Lang: {1}, Val: {2}. Error: {0}", ex.Message, languages[i - 1], resultArray[i]));
                 }
             }
 
-            result.FillOriginalKeyWithEnglish(); 
+            result.FillOriginalKeyWithEnglish();
 
             // fill the languages that were not found
             if (fillMissing)
             {
-                result.FillEmptyKeysWithEnglishOrOriginal(); 
+                result.FillEmptyKeysWithEnglishOrOriginal();
             }
 
             return result;

@@ -24,13 +24,29 @@ namespace StringForge.ViewModel
     /// </summary>
     internal class StringTableConverterViewModel : ReactiveObject
     {
+        /// <summary>
+        /// Backing field the source path
+        /// </summary>
         private string sourcePath;
 
+        /// <summary>
+        /// Backing field for the destination name
+        /// </summary>
         private string destinationPath;
 
+        /// <summary>
+        /// The selected source action
+        /// </summary>
         private SourceAction selectedSourceAction;
 
+        /// <summary>
+        /// Backing fields to fill missing
+        /// </summary>
         private bool fillMissing;
+
+        /// <summary>
+        /// The is progress visible
+        /// </summary>
         private Visibility isProgressVisible;
         private bool isBusy;
 
@@ -96,6 +112,9 @@ namespace StringForge.ViewModel
 
         public ReactiveCommand<object> CloseCommand { get; protected set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringTableConverterViewModel"/> class.
+        /// </summary>
         public StringTableConverterViewModel()
         {
             // connect subscriptions

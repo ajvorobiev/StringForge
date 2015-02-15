@@ -1,8 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TranslitService.cs" company="RHS">
+//   Red Hammer Studios
+// </copyright>
+// <summary>
+//   The <see cref="TranslitService" /> transliterates from latin to cyrillic
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace RHSStringTableTools.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public sealed class TranslitService
     {
         /// <summary>

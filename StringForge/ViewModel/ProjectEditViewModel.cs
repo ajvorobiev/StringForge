@@ -16,6 +16,9 @@ namespace StringForge.ViewModel
 
     internal class ProjectEditViewModel : EditViewModel
     {
+        /// <summary>
+        /// Backing field for the name
+        /// </summary>
         private string name;
 
         /// <summary>
@@ -32,6 +35,10 @@ namespace StringForge.ViewModel
         /// </summary>
         public Project Thing { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectEditViewModel"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
         public ProjectEditViewModel(Project item)
         {
             this.Thing = item;

@@ -19,3 +19,8 @@ The tool is built and maintained by Alex Vorobiev.
 # Accreditation
 
 Icons used from: https://www.iconfinder.com/
+
+# Changelog
+
+v1.0
+- Basing stringtable handling and conversion

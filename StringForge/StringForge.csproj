@@ -114,7 +114,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\EnumHelper.cs" />
-    <Compile Include="Model\Base\Violation.cs" />
+    <Compile Include="Model\Base\IViolation.cs" />
     <Compile Include="Model\Base\ViolationLevel.cs" />
     <Compile Include="Model\DuplicateKeyViolation.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />

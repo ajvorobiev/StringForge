@@ -7,19 +7,20 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.ObjectModel;
-using System.Xml.Serialization;
-using ReactiveUI;
-
 namespace RHSStringTableTools.Model
 {
-    using System.Collections.Generic;
+    using ReactiveUI;
+    using System.Collections.ObjectModel;
+    using System.Xml.Serialization;
 
     /// <summary>
     /// The container class. Used for grouping.
     /// </summary>
     public class Container : ReactiveObject
     {
+        /// <summary>
+        /// Backing field for <see cref="Name"/>
+        /// </summary>
         private string name;
 
         /// <summary>

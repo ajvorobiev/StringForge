@@ -7,22 +7,20 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
-using ReactiveUI;
-using RHSStringTableTools.Annotations;
-
 namespace RHSStringTableTools.Model
 {
-    using System.Collections.Generic;
+    using ReactiveUI;
+    using System.Collections.ObjectModel;
+    using System.Xml.Serialization;
 
     /// <summary>
     /// The package class. Used only for grouping.
     /// </summary>
     public class Package : ReactiveObject
     {
+        /// <summary>
+        /// Backing field for the <see cref="Name"/>
+        /// </summary>
         private string name;
 
         /// <summary>

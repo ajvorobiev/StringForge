@@ -14,8 +14,14 @@ namespace StringForge.ViewModel
     using System;
     using System.Windows;
 
-    class ContainerEditViewModel : EditViewModel
+    /// <summary>
+    /// The container edit view model
+    /// </summary>
+    internal class ContainerEditViewModel : EditViewModel
     {
+        /// <summary>
+        /// Backing fields for the name
+        /// </summary>
         private string name;
 
         /// <summary>
@@ -37,6 +43,11 @@ namespace StringForge.ViewModel
         /// </summary>
         public Package Parent { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerEditViewModel"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="container">The container.</param>
         public ContainerEditViewModel(Container item, Package container = null)
         {
             this.Thing = item;

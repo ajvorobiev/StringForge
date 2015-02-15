@@ -7,12 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using ReactiveUI;
-using RHSStringTableTools.Services;
-
 namespace RHSStringTableTools.Model
 {
+    using ReactiveUI;
+    using Services;
+    using System;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -20,6 +19,9 @@ namespace RHSStringTableTools.Model
     /// </summary>
     public class Key : ReactiveObject
     {
+        /// <summary>
+        /// Backing field for the <see cref="Russian"/> language.
+        /// </summary>
         private string russian;
 
         /// <summary>
@@ -88,11 +90,17 @@ namespace RHSStringTableTools.Model
         [XmlIgnore]
         public Container Parent { get; set; }
 
+        /// <summary>
+        /// Creates an instance of the <see cref="Key"/> class.
+        /// </summary>
         public Key()
         {
             this.WhenAnyValue(vm => vm.Russian).Subscribe(_ => this.Transliterate());
         }
 
+        /// <summary>
+        /// Calls on the <see cref="TranslitService"/> to transliterate the <see cref="Russian"/> string.
+        /// </summary>
         private void Transliterate()
         {
             this.Russian = TranslitService.Singleton.Transliterate(this.Russian);

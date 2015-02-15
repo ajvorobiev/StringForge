@@ -1,16 +1,30 @@
-﻿using System;
-using System.Reactive.Linq;
-using System.Windows;
-using RHSStringTableTools.Model;
-using RHSStringTableTools.Services;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="KeyEditViewModel.cs" company="RHS">
+//   Red Hammer Studios
+// </copyright>
+// <summary>
+//   The <see cref="KeyEditViewModel" /> viewmodel for the keys winddow
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace StringForge.ViewModel
 {
     using ReactiveUI;
+    using RHSStringTableTools.Model;
+    using RHSStringTableTools.Services;
+    using System;
+    using System.Windows;
 
-    class KeyEditViewModel : EditViewModel
+    /// <summary>
+    /// The <see cref="KeyEditViewModel" /> viewmodel for the keys winddow
+    /// </summary>
+    internal class KeyEditViewModel : EditViewModel
     {
+        /// <summary>
+        /// Backing fields fro the languages
+        /// </summary>
         private string id;
+
         private string original;
         private string english;
         private string czech;
@@ -24,6 +38,9 @@ namespace StringForge.ViewModel
         private bool autoFill;
         private bool translit;
 
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
         public string Id
         {
             get { return this.id; }
@@ -148,6 +165,11 @@ namespace StringForge.ViewModel
         /// </summary>
         public Container Parent { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyEditViewModel"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="container">The container.</param>
         public KeyEditViewModel(Key item, Container container)
         {
             this.Thing = item;
@@ -158,13 +180,15 @@ namespace StringForge.ViewModel
             this.OkCommand = ReactiveCommand.Create(canOk);
             this.OkCommand.Subscribe(this.OkCommandExecute);
 
-
-            this.WhenAnyValue(vm=>vm.Original).Subscribe(_=>this.FillLanguages());
+            this.WhenAnyValue(vm => vm.Original).Subscribe(_ => this.FillLanguages());
             this.WhenAnyValue(vm => vm.Russian).Subscribe(_ => this.Transliterate());
 
             this.SetProperties();
         }
 
+        /// <summary>
+        /// Transliterates this instance.
+        /// </summary>
         private void Transliterate()
         {
             if (this.Translit)
@@ -188,7 +212,7 @@ namespace StringForge.ViewModel
                 this.Polish = this.Original;
                 this.Portuguese = this.Original;
                 this.Russian = this.Original;
-                this.German = this.Original; 
+                this.German = this.Original;
             }
         }
 

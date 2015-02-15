@@ -7,12 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.ObjectModel;
-using System.IO;
-using ReactiveUI;
-
 namespace RHSStringTableTools.Model
 {
+    using ReactiveUI;
+    using System.Collections.ObjectModel;
+    using System.IO;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -20,7 +19,14 @@ namespace RHSStringTableTools.Model
     /// </summary>
     public class Project : ReactiveObject
     {
+        /// <summary>
+        /// Backing field for the <see cref="Name"/>
+        /// </summary>
         private string name;
+
+        /// <summary>
+        /// Backing field for the <see cref="NodeName"/>
+        /// </summary>
         private string nodeName;
 
         /// <summary>

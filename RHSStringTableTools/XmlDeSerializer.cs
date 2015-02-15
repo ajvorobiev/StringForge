@@ -7,15 +7,14 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml.Serialization;
-
 namespace RHSStringTableTools
 {
     using RHSStringTableTools.Model;
+    using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Xml.Serialization;
 
     /// <summary>
     /// Deals with xml stringtables
@@ -47,7 +46,7 @@ namespace RHSStringTableTools
 
             // remove default namespace information
             var ns = new XmlSerializerNamespaces();
-            ns.Add("", ""); 
+            ns.Add("", "");
 
             var serializer = new XmlSerializer(typeof(Project));
             using (TextWriter writer = new StreamWriter(path))
@@ -68,10 +67,10 @@ namespace RHSStringTableTools
         {
             var deserializer = new XmlSerializer(typeof(Project));
             TextReader reader = new StreamReader(path);
-            
+
             object obj = deserializer.Deserialize(reader);
             var xmlData = (Project)obj;
-            
+
             reader.Close();
 
             // assign path to file

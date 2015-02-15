@@ -1,11 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace StringForge.Helpers
+﻿namespace StringForge.Helpers
 {
+    using System;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Windows;
+    using System.Windows.Controls;
+
     public class EnumHelper : DependencyObject
     {
         public static Type GetEnum(DependencyObject obj)
@@ -77,13 +77,13 @@ namespace StringForge.Helpers
                 {
                     if (o is DescriptionAttribute)
                     {
-                        control.ToolTip = ((DescriptionAttribute) o).Description;
+                        control.ToolTip = ((DescriptionAttribute)o).Description;
                     }
                     else if (o is DisplayAttribute)
                     {
                         if (control is TextBlock)
                         {
-                            ((TextBlock) control).Text = ((DisplayAttribute) o).Name;
+                            ((TextBlock)control).Text = ((DisplayAttribute)o).Name;
                         }
                         else if (control is ContentControl)
                         {

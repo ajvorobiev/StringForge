@@ -7,11 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using StringForge.Model;
 
 namespace StringForge.ViewModel
 {
@@ -19,12 +15,16 @@ namespace StringForge.ViewModel
     using ReactiveUI;
     using RHSStringTableTools;
     using RHSStringTableTools.Model;
+    using StringForge.Model;
     using StringForge.View;
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Reflection;
     using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
 
     /// <summary>
     /// The view model for the string table editor
@@ -73,12 +73,18 @@ namespace StringForge.ViewModel
             set { this.RaiseAndSetIfChanged(ref this.selectedNode, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the selected violation.
+        /// </summary>
         public IViolation SelectedViolation
         {
             get { return this.selectedViolation; }
             set { this.RaiseAndSetIfChanged(ref this.selectedViolation, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the tree.
+        /// </summary>
         public TreeView Tree { get; set; }
 
         public ReactiveCommand<object> OpenCommand { get; protected set; }
@@ -121,20 +127,36 @@ namespace StringForge.ViewModel
 
         public ReactiveCommand<object> RemoveKeyCommand { get; protected set; }
 
+        /// <summary>
+        /// Gets the window title.
+        /// </summary>
         public string WindowTitle
         {
             get { return string.Format("StringForge v{0}", Assembly.GetEntryAssembly().GetName().Version.ToString()); }
         }
 
+        /// <summary>
+        /// Gets or sets the violations.
+        /// </summary>
         public ObservableCollection<IViolation> Violations
         {
             get { return violations; }
             set { this.RaiseAndSetIfChanged(ref this.violations, value); }
         }
 
+        /// <summary>
+        /// Backing field for the violations background worker
+        /// </summary>
         private BackgroundWorker violationsBackgroundWorker;
+
+        /// <summary>
+        /// Backing field for selected violation
+        /// </summary>
         private IViolation selectedViolation;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringTableEditorViewModel"/> class.
+        /// </summary>
         public StringTableEditorViewModel()
         {
             violationsBackgroundWorker = new BackgroundWorker();
@@ -193,10 +215,10 @@ namespace StringForge.ViewModel
             {
                 if (this.SelectedViolation != null)
                 {
-                    this.Keys = this.SelectedViolation.Keys; 
+                    this.Keys = this.SelectedViolation.Keys;
                 }
             });
-            
+
             this.EditProjectCommand = ReactiveCommand.Create();
             this.EditProjectCommand.Subscribe(_ => this.ExecuteEditProjectCommand());
 
@@ -240,7 +262,7 @@ namespace StringForge.ViewModel
             BackgroundWorker worker = sender as BackgroundWorker;
 
             var violationsList = new ObservableCollection<IViolation>();
-            var keyList = new Dictionary<string,Key>();
+            var keyList = new Dictionary<string, Key>();
 
             foreach (var project in (ObservableCollection<Project>)e.Argument)
             {
@@ -264,8 +286,8 @@ namespace StringForge.ViewModel
                                 catch (Exception ex)
                                 {
                                     // create the violation with the two keys
-                                    violationsList.Add(new DuplicateKeyViolation(new List<Key>(){ key, keyList[key.Id] }));
-                                    
+                                    violationsList.Add(new DuplicateKeyViolation(new List<Key>() { key, keyList[key.Id] }));
+
                                     // remove the key to stop it causing the violation and move on
                                     keyList.Remove(key.Id);
                                 }
@@ -278,6 +300,11 @@ namespace StringForge.ViewModel
             e.Result = violationsList;
         }
 
+        /// <summary>
+        /// Handles the RunWorkerCompleted event of the violationsBackgroundWorker control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RunWorkerCompletedEventArgs"/> instance containing the event data.</param>
         private void violationsBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if ((e.Cancelled == true))
@@ -291,6 +318,10 @@ namespace StringForge.ViewModel
                 this.Violations = (ObservableCollection<IViolation>)e.Result;
             }
         }
+
+        /// <summary>
+        /// Executes the remove key command.
+        /// </summary>
         private void ExecuteRemoveKeyCommand()
         {
             if (MessageBox.Show("This is an irreversable command, are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
@@ -305,6 +336,9 @@ namespace StringForge.ViewModel
             }
         }
 
+        /// <summary>
+        /// Executes the duplicate key command.
+        /// </summary>
         private void ExecuteDuplicateKeyCommand()
         {
             var original = this.SelectedNode as Key;
@@ -321,16 +355,22 @@ namespace StringForge.ViewModel
             }
         }
 
+        /// <summary>
+        /// Executes the add key command.
+        /// </summary>
         private void ExecuteAddKeyCommand()
         {
             var newObject = new Key();
             var viewModel = new KeyEditViewModel(newObject, (Container)this.SelectedNode);
 
-            var view = new KeyEditView {DataContext = viewModel};
+            var view = new KeyEditView { DataContext = viewModel };
 
             view.ShowDialog();
         }
 
+        /// <summary>
+        /// Executes the remove container command.
+        /// </summary>
         private void ExecuteRemoveContainerCommand()
         {
             if (MessageBox.Show("This is an irreversable command, are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
@@ -345,25 +385,34 @@ namespace StringForge.ViewModel
             }
         }
 
+        /// <summary>
+        /// Executes the edit container command.
+        /// </summary>
         private void ExecuteEditContainerCommand()
         {
             var viewModel = new ContainerEditViewModel((Container)this.SelectedNode);
 
-            var view = new ContainerEditView {DataContext = viewModel};
+            var view = new ContainerEditView { DataContext = viewModel };
 
             view.ShowDialog();
         }
 
+        /// <summary>
+        /// Executes the add container command.
+        /// </summary>
         private void ExecuteAddContainerCommand()
         {
             var newObject = new Container();
             var viewModel = new ContainerEditViewModel(newObject, (Package)this.SelectedNode);
 
-            var view = new ContainerEditView {DataContext = viewModel};
+            var view = new ContainerEditView { DataContext = viewModel };
 
             view.ShowDialog();
         }
 
+        /// <summary>
+        /// Executes the remove package command.
+        /// </summary>
         private void ExecuteRemovePackageCommand()
         {
             if (MessageBox.Show("This is an irreversable command, are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
@@ -378,30 +427,39 @@ namespace StringForge.ViewModel
             }
         }
 
+        /// <summary>
+        /// Executes the edit package command.
+        /// </summary>
         private void ExecuteEditPackageCommand()
         {
             var viewModel = new PackageEditViewModel((Package)this.SelectedNode);
 
-            var view = new PackageEditView {DataContext = viewModel};
+            var view = new PackageEditView { DataContext = viewModel };
 
             view.ShowDialog();
         }
 
+        /// <summary>
+        /// Executes the add package command.
+        /// </summary>
         private void ExecuteAddPackageCommand()
         {
             var newObject = new Package();
             var viewModel = new PackageEditViewModel(newObject, (Project)this.SelectedNode);
 
-            var view = new PackageEditView {DataContext = viewModel};
+            var view = new PackageEditView { DataContext = viewModel };
 
             view.ShowDialog();
         }
 
+        /// <summary>
+        /// Executes the edit project command.
+        /// </summary>
         private void ExecuteEditProjectCommand()
         {
             var viewModel = new ProjectEditViewModel((Project)this.SelectedNode);
 
-            var view = new ProjectEditView {DataContext = viewModel};
+            var view = new ProjectEditView { DataContext = viewModel };
 
             view.ShowDialog();
 
