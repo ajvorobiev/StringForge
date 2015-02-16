@@ -51,7 +51,12 @@
                     <xcad:LayoutAnchorSide>
                         <xcad:LayoutAnchorGroup>
                             <xcad:LayoutAnchorable Title="Violation" ContentId="violations" CanClose="False" CanHide="False" IsMaximized="True" IsActive="True" IconSource="Images/violation.png">
-                                <DataGrid ItemsSource="{Binding Violations}" SelectedItem="{Binding SelectedViolation}"/>
+                                <DataGrid ItemsSource="{Binding Violations}" SelectedItem="{Binding SelectedViolation}" AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Level}" ClipboardContentBinding="{x:Null}" Header="Level"/>
+                                        <DataGridTextColumn Binding="{Binding Message}" ClipboardContentBinding="{x:Null}" Header="Message"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorGroup>
                     </xcad:LayoutAnchorSide>
@@ -138,13 +143,26 @@
                     <xcad:LayoutDocumentPaneGroup >
                         <xcad:LayoutDocumentPane>
                             <xcad:LayoutDocument ContentId="table" Title="StringTable" CanClose="False" >
-                                <xcdg:DataGridControl View="TableView" Name="DataGrid" ItemsSource="{Binding Keys}" SelectedItem="{Binding SelectedKey}" CellEditorDisplayConditions="RowIsBeingEdited" ItemScrollingBehavior="Immediate" NavigationBehavior="RowOrCell" MaxGroupLevels="0" MaxSortLevels="1" SelectionMode="Single" AllowDetailToggle="False" AlternationCount="1" EditTriggers="ClickOnCurrentCell" UpdateSourceTrigger="CellEndingEdit">
+                                <xcdg:DataGridControl View="TableView" Name="DataGrid" ItemsSource="{Binding Keys}" SelectedItem="{Binding SelectedKey}" CellEditorDisplayConditions="RowIsBeingEdited" ItemScrollingBehavior="Immediate" NavigationBehavior="RowOrCell" MaxGroupLevels="0" MaxSortLevels="1" SelectionMode="Single" AllowDetailToggle="False" AlternationCount="1" EditTriggers="ClickOnCurrentCell" UpdateSourceTrigger="CellEndingEdit" AutoCreateColumns="False">
                                     <xcdg:DataGridControl.Resources>
                                         <Style TargetType="{x:Type xcdg:GroupByControl}">
                                             <Setter Property="AllowGroupingModification" Value="False"/>
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </Style>
                                     </xcdg:DataGridControl.Resources>
+                                    <xcdg:DataGridControl.Columns>
+                                        <xcdg:Column FieldName="Id" Title="Id"/>
+                                        <xcdg:Column FieldName="Original" Title="Original"/>
+                                        <xcdg:Column FieldName="English" Title="English"/>
+                                        <xcdg:Column FieldName="Czech" Title="Czech"/>
+                                        <xcdg:Column FieldName="Spanish" Title="Spanish"/>
+                                        <xcdg:Column FieldName="Italian" Title="Italian"/>
+                                        <xcdg:Column FieldName="French" Title="French"/>
+                                        <xcdg:Column FieldName="Portuguese" Title="Portuguese"/>
+                                        <xcdg:Column FieldName="Polish" Title="Polish"/>
+                                        <xcdg:Column FieldName="Russian" Title="Russian"/>
+                                        <xcdg:Column FieldName="German" Title="German"/>
+                                    </xcdg:DataGridControl.Columns>
                                     <!--<xcdg:DataGridControl.ContextMenu>
                                         <xcad:ContextMenuEx>
                                             <MenuItem Header="Find In Tree" Command="{Binding FindInTreeCommand}"/>
