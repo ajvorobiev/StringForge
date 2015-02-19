@@ -194,5 +194,26 @@ namespace RHSStringTableTools.Model
                 this.Original = this.English;
             }
         }
+
+        public void WipeAllExceptEnglishOrOriginal()
+        {
+            var replacement = string.Empty;
+
+            this.Czech = replacement;
+
+            this.French = replacement;
+
+            this.Spanish = replacement;
+
+            this.Italian = replacement;
+
+            this.Polish = replacement;
+
+            this.Portuguese = replacement;
+
+            this.Russian = replacement;
+
+            this.German = replacement;
+        }
     }
 }

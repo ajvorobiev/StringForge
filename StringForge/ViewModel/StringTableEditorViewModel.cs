@@ -7,24 +7,25 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.ComponentModel;
+using GongSolutions.Wpf.DragDrop;
 
 namespace StringForge.ViewModel
 {
-    using Microsoft.WindowsAPICodePack.Dialogs;
-    using ReactiveUI;
-    using RHSStringTableTools;
-    using RHSStringTableTools.Model;
-    using StringForge.Model;
-    using StringForge.View;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.IO;
     using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
+    using Microsoft.WindowsAPICodePack.Dialogs;
+    using ReactiveUI;
+    using RHSStringTableTools;
+    using RHSStringTableTools.Model;
+    using Model;
+    using View;
 
     /// <summary>
     /// The view model for the string table editor
@@ -98,6 +99,8 @@ namespace StringForge.ViewModel
         public ReactiveCommand<object> StringTableConvertCommand { get; protected set; }
 
         public ReactiveCommand<object> FillMissingCommand { get; protected set; }
+
+        public ReactiveCommand<object> WipeCommand { get; protected set; }
 
         public ReactiveCommand<object> AboutCommand { get; protected set; }
 
@@ -191,11 +194,14 @@ namespace StringForge.ViewModel
             this.SaveAsCommand.Subscribe(_ => this.SaveAsCommandExecute());
 
             this.StringTableConvertCommand = ReactiveCommand.Create();
-            this.StringTableConvertCommand.Subscribe(_ => StringTableConvertCommandExecute());
+            this.StringTableConvertCommand.Subscribe(_ => this.StringTableConvertCommandExecute());
 
             var canFill = this.WhenAny(x => x.Keys, x => x.Value.Count > 0);
             this.FillMissingCommand = ReactiveCommand.Create(canFill);
-            this.FillMissingCommand.Subscribe(_ => FillMissingInSelectionCommandExecute());
+            this.FillMissingCommand.Subscribe(_ => this.FillMissingInSelectionCommandExecute());
+
+            this.WipeCommand = ReactiveCommand.Create(canFill);
+            this.WipeCommand.Subscribe(_ => this.WipeCommandExecute());
 
             var canFindInTree = this.WhenAny(x => x.SelectedKey, x => x.Value != null);
             this.FindInTreeCommand = ReactiveCommand.Create(canFindInTree);
@@ -252,11 +258,23 @@ namespace StringForge.ViewModel
             this.SetPropertis();
         }
 
+        /// <summary>
+        /// Runs a violations check
+        /// </summary>
         private void RunViolationsCheck()
         {
             this.violationsBackgroundWorker.RunWorkerAsync(this.Project);
         }
 
+        /// <summary>
+        /// The workerexecution method.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The arguments.
+        /// </param>
         private void violationsBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
@@ -361,7 +379,7 @@ namespace StringForge.ViewModel
         private void ExecuteAddKeyCommand()
         {
             var newObject = new Key();
-            var viewModel = new KeyEditViewModel(newObject, (Container)this.SelectedNode);
+            var viewModel = new KeyEditViewModel(newObject, (RHSStringTableTools.Model.Container)this.SelectedNode);
 
             var view = new KeyEditView { DataContext = viewModel };
 
@@ -375,7 +393,7 @@ namespace StringForge.ViewModel
         {
             if (MessageBox.Show("This is an irreversable command, are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
             {
-                var container = this.SelectedNode as Container;
+                var container = this.SelectedNode as RHSStringTableTools.Model.Container;
 
                 if (container != null)
                 {
@@ -390,7 +408,7 @@ namespace StringForge.ViewModel
         /// </summary>
         private void ExecuteEditContainerCommand()
         {
-            var viewModel = new ContainerEditViewModel((Container)this.SelectedNode);
+            var viewModel = new ContainerEditViewModel((RHSStringTableTools.Model.Container)this.SelectedNode);
 
             var view = new ContainerEditView { DataContext = viewModel };
 
@@ -402,7 +420,7 @@ namespace StringForge.ViewModel
         /// </summary>
         private void ExecuteAddContainerCommand()
         {
-            var newObject = new Container();
+            var newObject = new RHSStringTableTools.Model.Container();
             var viewModel = new ContainerEditViewModel(newObject, (Package)this.SelectedNode);
 
             var view = new ContainerEditView { DataContext = viewModel };
@@ -482,7 +500,10 @@ namespace StringForge.ViewModel
                 var projects = new ObservableCollection<Project>(this.Project);
 
                 // canceling will return
-                if (dlg == MessageBoxResult.Cancel) return;
+                if (dlg == MessageBoxResult.Cancel)
+                {
+                    return;
+                }
                 else if (dlg == MessageBoxResult.Yes)
                 {
                     QuickSaveProject(selectedProject);
@@ -506,6 +527,22 @@ namespace StringForge.ViewModel
                 foreach (var key in this.Keys)
                 {
                     key.FillEmptyKeysWithEnglishOrOriginal();
+                }
+
+                RecomputeGridKeys();
+            });
+        }
+
+        /// <summary>
+        /// Wipe all languages except original and english
+        /// </summary>
+        private async void WipeCommandExecute()
+        {
+            await Task.Run(() =>
+            {
+                foreach (var key in this.Keys)
+                {
+                    key.WipeAllExceptEnglishOrOriginal();
                 }
 
                 RecomputeGridKeys();
@@ -568,9 +605,9 @@ namespace StringForge.ViewModel
                     }
                 }
             }
-            else if (item.GetType() == typeof(Container))
+            else if (item.GetType() == typeof(RHSStringTableTools.Model.Container))
             {
-                foreach (var key in ((Container)item).Clone().Keys)
+                foreach (var key in ((RHSStringTableTools.Model.Container)item).Clone().Keys)
                 {
                     collectionOfKeys.Add(key);
                 }

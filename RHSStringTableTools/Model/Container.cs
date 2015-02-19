@@ -7,6 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Windows;
+using GongSolutions.Wpf.DragDrop;
+
 namespace RHSStringTableTools.Model
 {
     using ReactiveUI;

@@ -80,6 +80,9 @@ namespace StringForge.ViewModel
             if (this.Parent != null)
             {
                 this.Parent.Containers.Add(this.Thing);
+
+                // add empty key with a magic id
+                this.Thing.Keys.Add(new Key { Id = string.Empty });
             }
 
             ((Window)window).Close();
