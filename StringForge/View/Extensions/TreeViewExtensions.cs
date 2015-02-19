@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-
-namespace StringForge.View.Extensions
+﻿namespace StringForge.View.Extensions
 {
-    class TreeViewExtensions : DependencyObject
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+
+    internal class TreeViewExtensions : DependencyObject
     {
         public static bool GetEnableMultiSelect(DependencyObject obj)
         {
@@ -45,25 +43,21 @@ namespace StringForge.View.Extensions
         public static readonly DependencyProperty SelectedItemsProperty =
             DependencyProperty.RegisterAttached("SelectedItems", typeof(IList), typeof(TreeViewExtensions), new PropertyMetadata(null));
 
-
-
-        static TreeViewItem GetAnchorItem(DependencyObject obj)
+        private static TreeViewItem GetAnchorItem(DependencyObject obj)
         {
             return (TreeViewItem)obj.GetValue(AnchorItemProperty);
         }
 
-        static void SetAnchorItem(DependencyObject obj, TreeViewItem value)
+        private static void SetAnchorItem(DependencyObject obj, TreeViewItem value)
         {
             obj.SetValue(AnchorItemProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for AnchorItem.  This enables animation, styling, binding, etc...
-        static readonly DependencyProperty AnchorItemProperty =
+        private static readonly DependencyProperty AnchorItemProperty =
             DependencyProperty.RegisterAttached("AnchorItem", typeof(TreeViewItem), typeof(TreeViewExtensions), new PropertyMetadata(null));
 
-
-
-        static void EnableMultiSelectChanged(DependencyObject s, DependencyPropertyChangedEventArgs args)
+        private static void EnableMultiSelectChanged(DependencyObject s, DependencyPropertyChangedEventArgs args)
         {
             TreeView tree = (TreeView)s;
             var wasEnable = (bool)args.OldValue;
@@ -80,7 +74,7 @@ namespace StringForge.View.Extensions
             }
         }
 
-        static TreeView GetTree(TreeViewItem item)
+        private static TreeView GetTree(TreeViewItem item)
         {
             Func<DependencyObject, DependencyObject> getParent = (o) => VisualTreeHelper.GetParent(o);
             FrameworkElement currentItem = item;
@@ -89,9 +83,7 @@ namespace StringForge.View.Extensions
             return (TreeView)getParent(currentItem);
         }
 
-
-
-        static void RealSelectedChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+        private static void RealSelectedChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             TreeViewItem item = (TreeViewItem)sender;
             var selectedItems = GetSelectedItems(GetTree(item));
@@ -111,7 +103,7 @@ namespace StringForge.View.Extensions
             }
         }
 
-        static void KeyDown(object sender, KeyEventArgs e)
+        private static void KeyDown(object sender, KeyEventArgs e)
         {
             TreeView tree = (TreeView)sender;
             if (e.Key == Key.A && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
@@ -124,7 +116,7 @@ namespace StringForge.View.Extensions
             }
         }
 
-        static void ItemClicked(object sender, MouseButtonEventArgs e)
+        private static void ItemClicked(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = FindTreeViewItem(e.OriginalSource);
             if (item == null)
@@ -175,7 +167,6 @@ namespace StringForge.View.Extensions
             }
             //MakeAnchorSelection(item, false);
 
-
             //SetIsSelected(tree.SelectedItem
         }
 
@@ -188,8 +179,6 @@ namespace StringForge.View.Extensions
                 return (TreeViewItem)dpObj;
             return FindTreeViewItem(VisualTreeHelper.GetParent(dpObj));
         }
-
-
 
         private static IEnumerable<TreeViewItem> GetExpandedTreeViewItems(ItemsControl tree)
         {
@@ -228,7 +217,7 @@ namespace StringForge.View.Extensions
 
             var items = GetExpandedTreeViewItems(tree);
             bool betweenBoundary = false;
-            bool end = false;
+
             foreach (var item in items)
             {
                 bool isBoundary = item == anchor || item == actionItem;
@@ -243,7 +232,6 @@ namespace StringForge.View.Extensions
                         SetIsSelected(item, false);
                     else
                         break;
-
             }
         }
 
@@ -295,7 +283,5 @@ namespace StringForge.View.Extensions
             {
                 PropertyChangedCallback = RealSelectedChanged
             });
-
-
     }
 }

@@ -217,7 +217,7 @@ namespace StringForge.ViewModel
             });
 
             // display the violation keys
-            this.WhenAny(vm => vm.SelectedViolation, vm => vm.Value != null).Subscribe(async _ =>
+            this.WhenAny(vm => vm.SelectedViolation, vm => vm.Value != null).Subscribe(_ =>
             {
                 if (this.SelectedViolation != null)
                 {
@@ -301,7 +301,7 @@ namespace StringForge.ViewModel
                                 {
                                     keyList.Add(key.Id, key);
                                 }
-                                catch (Exception ex)
+                                catch (Exception)
                                 {
                                     // create the violation with the two keys
                                     violationsList.Add(new DuplicateKeyViolation(new List<Key>() { key, keyList[key.Id] }));
