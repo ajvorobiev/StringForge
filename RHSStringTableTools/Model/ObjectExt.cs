@@ -19,15 +19,34 @@ namespace RHSStringTableTools.Model
     /// </summary>
     public static class ObjectExt
     {
+        /// <summary>
+        /// The clone.
+        /// </summary>
+        /// <param name="obj">
+        /// The object.
+        /// </param>
+        /// <typeparam name="T">
+        /// </typeparam>
+        /// <returns>
+        /// The <see cref="T"/>.
+        /// </returns>
         public static T Clone<T>(this T obj) where T : new()
         {
             return ObjectExtCache<T>.Clone(obj);
         }
 
+        /// <summary>
+        /// The object ext cache.
+        /// </summary>
+        /// <typeparam name="T">
+        /// </typeparam>
         private static class ObjectExtCache<T> where T : new()
         {
             private static readonly Func<T, T> cloner;
 
+            /// <summary>
+            /// Initializes static members of the <see cref="ObjectExtCache"/> class.
+            /// </summary>
             static ObjectExtCache()
             {
                 ParameterExpression param = Expression.Parameter(typeof(T), "in");
@@ -43,6 +62,15 @@ namespace RHSStringTableTools.Model
                         Expression.New(typeof(T)), bindings), param).Compile();
             }
 
+            /// <summary>
+            /// The clone.
+            /// </summary>
+            /// <param name="obj">
+            /// The object.
+            /// </param>
+            /// <returns>
+            /// The <see cref="T"/>.
+            /// </returns>
             public static T Clone(T obj)
             {
                 return cloner(obj);

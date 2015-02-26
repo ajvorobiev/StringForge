@@ -70,7 +70,7 @@ namespace StringForge.View
         {
             var viewModel = (StringTableEditorViewModel)DataContext;
 
-            if (viewModel.Project != null && viewModel.Project.Count > 0)
+            if (viewModel.Projects != null && viewModel.Projects.Count > 0)
             {
                 var dlg = MessageBox.Show("Do you want to save the stringtables before exiting?", "Save",
                         MessageBoxButton.YesNoCancel, MessageBoxImage.Question);

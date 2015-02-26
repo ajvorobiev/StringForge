@@ -1,17 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Package.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="Package" /> class specifying the package container
+//   The  class specifying the package container
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace RHSStringTableTools.Model
 {
-    using ReactiveUI;
     using System.Collections.ObjectModel;
     using System.Xml.Serialization;
+    using ReactiveUI;
 
     /// <summary>
     /// The package class. Used only for grouping.
@@ -37,7 +37,7 @@ namespace RHSStringTableTools.Model
         [XmlAttribute("name")]
         public string Name
         {
-            get { return name; }
+            get { return this.name; }
             set { this.RaiseAndSetIfChanged(ref this.name, value); }
         }
 

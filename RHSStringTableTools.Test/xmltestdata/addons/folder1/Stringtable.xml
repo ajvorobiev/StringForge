@@ -2,7 +2,7 @@
 <Project name="rhs">
   <Package name="folder1">
     <Container name="folder1_container">
-      <Key ID="STR_BMD2_Name">
+      <Key ID="STR_BMD2s_Name">
         <Original>BMD-2</Original>
         <English>BMD-2</English>
         <Russian>БМД-2</Russian>
@@ -11,11 +11,11 @@
       <Key ID="STR_BMD2M_Name">
         <Original>BMD-2M</Original>
         <English>BMD-2M</English>
-        <Russian>БМД-2M</Russian>
+        <Russian>БМД-2М</Russian>
         <German>BMD-2M</German>
       </Key>
       <Key ID="STR_BMD1_Name">
-        <Original>BMD-1</Original>
+        <Original>BMD-1s</Original>
         <English>BMD-1</English>
         <Russian>БМД-1</Russian>
         <German>BMD-1</German>
@@ -47,7 +47,7 @@
       <Key ID="STR_BMD2K_Name">
         <Original>BMD-2K</Original>
         <English>BMD-2K</English>
-        <Russian>БМД-2K</Russian>
+        <Russian>БМД-2К</Russian>
         <German>BMD-2K</German>
       </Key>
       <Key ID="STR_BMD4_Name">
@@ -59,13 +59,13 @@
       <Key ID="STR_BMD4M_Name">
         <Original>BMD-4M</Original>
         <English>BMD-4M</English>
-        <Russian>БМД-4M</Russian>
+        <Russian>БМД-4М</Russian>
         <German>BMD-4M</German>
       </Key>
       <Key ID="STR_BMD4MA_Name">
         <Original>BMD-4M (A)</Original>
         <English>BMD-4M (A)</English>
-        <Russian>БМД-4M (ДБ)</Russian>
+        <Russian>БМД-4М (ДБ)</Russian>
         <German>BMD-4M (A)</German>
       </Key>
       <Key ID="STR_UA_LowerSusp">
@@ -125,7 +125,7 @@
       <Key ID="STR_RHS_GetInRGPMG">
         <Original>Get in a righ hull gunner</Original>
         <English>Get in a righ hull gunner</English>
-        <Russian>Сесть на место пулемётчикa</Russian>
+        <Russian>Сесть на место пулемётчика</Russian>
         <German>Einsteigen zum Bugschütze rechts</German>
       </Key>
     </Container>
@@ -135,97 +135,97 @@
       <Key ID="STR_RHSUSF_INF_RIFLEMAN">
         <Original>Rifleman</Original>
         <English>Rifleman</English>
-        <Russian>Rifleman</Russian>
+        <Russian>Рифлеман</Russian>
         <German>Rifleman</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_RIFLEMAN_M16">
         <Original>Rifleman (M16)</Original>
         <English>Rifleman (M16)</English>
-        <Russian>Rifleman (M16)</Russian>
+        <Russian>Рифлеман (М16)</Russian>
         <German>Rifleman (M16)</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_RIFLEMAN_M590">
         <Original>Rifleman (M590)</Original>
         <English>Rifleman (M590)</English>
-        <Russian>Rifleman (M590)</Russian>
+        <Russian>Рифлеман (М590)</Russian>
         <German>Rifleman (M590)</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_ENGINEER">
         <Original>Engineer</Original>
         <English>Engineer</English>
-        <Russian>Engineer</Russian>
+        <Russian>Енгинеер</Russian>
         <German>Engineer</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_OFFICER">
         <Original>Officer</Original>
         <English>Officer</English>
-        <Russian>Officer</Russian>
+        <Russian>Оффицер</Russian>
         <German>Officer</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_TEAMLEADER">
         <Original>Team Leader</Original>
         <English>Team Leader</English>
-        <Russian>Rifleman</Russian>
+        <Russian>Рифлеман</Russian>
         <German>Rifleman</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_SQUADLEADER">
         <Original>Squad Leader</Original>
         <English>Squad Leader</English>
-        <Russian>Rifleman</Russian>
+        <Russian>Рифлеман</Russian>
         <German>Rifleman</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_RIFLEMAN_L">
         <Original>Rifleman (Light)</Original>
         <English>Rifleman (Light)</English>
-        <Russian>Rifleman (Light)</Russian>
+        <Russian>Рифлеман (Лигхт)</Russian>
         <German>Rifleman (Light)</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_RIFLEMAN_AT">
         <Original>Rifleman (M136)</Original>
         <English>Rifleman (M136)</English>
-        <Russian>Rifleman (M136)</Russian>
+        <Russian>Рифлеман (М136)</Russian>
         <German>Rifleman (M136)</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_GRENADIERA">
         <Original>Grenadier</Original>
         <English>Grenadier</English>
-        <Russian>Grenadier</Russian>
+        <Russian>Гренадиер</Russian>
         <German>Grenadier</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_ARIFLEMAN">
         <Original>Automatic Rifleman (M249)</Original>
         <English>Automatic Rifleman (M249)</English>
-        <Russian>Automatic Rifleman (M249)</Russian>
+        <Russian>Аутоматиц Рифлеман (М249)</Russian>
         <German>Automatic Rifleman (M249)</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_AARIFLEMAN">
         <Original>Automatic Rifleman Ass. (M249)</Original>
         <English>Automatic Rifleman Ass. (M249)</English>
-        <Russian>Automatic Rifleman Ass. (M249)</Russian>
+        <Russian>Аутоматиц Рифлеман Асс. (М249)</Russian>
         <German>Automatic Rifleman Ass. (M249)</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_ARIFLEMAN2">
         <Original>Automatic Rifleman (Mk.48)</Original>
         <English>Automatic Rifleman (Mk.48)</English>
-        <Russian>Automatic Rifleman (Mk.48)</Russian>
+        <Russian>Аутоматиц Рифлеман (Мк.48)</Russian>
         <German>Automatic Rifleman (Mk.48)</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_MG">
         <Original>Machine Gunner</Original>
         <English>Machine Gunner</English>
-        <Russian>Machine Gunner</Russian>
+        <Russian>Мачине Гуннер</Russian>
         <German>Machine Gunner</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_AMG">
         <Original>Machine Gunner Assistant</Original>
         <English>Machine Gunner Assistant</English>
-        <Russian>Machine Gunner Assistant</Russian>
+        <Russian>Мачине Гуннер Ассистант</Russian>
         <German>Machine Gunner Assistant</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_AT">
         <Original>AT Specialist (Javelin)</Original>
         <English>AT Specialist (Javelin)</English>
-        <Russian>AT Specialist (Javelin)</Russian>
+        <Russian>АТ Специалист (Ьавелин)</Russian>
         <German>AT Specialist (Javelin)</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_AA">
@@ -237,7 +237,7 @@
       <Key ID="STR_RHSUSF_INF_UAV">
         <Original>UAV Operator</Original>
         <English>UAV Operator</English>
-        <Russian>UAV Operator</Russian>
+        <Russian>УАВ Оператор</Russian>
         <German>UAV Operator</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_CREW">
@@ -255,43 +255,43 @@
       <Key ID="STR_RHSUSF_INF_DRIVER">
         <Original>Driver</Original>
         <English>Driver</English>
-        <Russian>Driver</Russian>
+        <Russian>Дривер</Russian>
         <German>Driver</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_MEDIC">
         <Original>Medic</Original>
         <English>Medic</English>
-        <Russian>Medic</Russian>
+        <Russian>Медиц</Russian>
         <German>Medic</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_MARKSMAN">
         <Original>Marksman</Original>
         <English>Marksman</English>
-        <Russian>Marksman</Russian>
+        <Russian>Марксман</Russian>
         <German>Marksman</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_SL">
         <Original>Squad Leader</Original>
         <English>Squad Leader</English>
-        <Russian>Squad Leader</Russian>
+        <Russian>Скуад Леадер</Russian>
         <German>Squad Leader</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_TL">
         <Original>Team Leader</Original>
         <English>Team Leader</English>
-        <Russian>Team Leader</Russian>
+        <Russian>Теам Леадер</Russian>
         <German>Team Leader</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_SPOTTER">
         <Original>Spotter</Original>
         <English>Spotter</English>
-        <Russian>Spotter</Russian>
+        <Russian>Споттер</Russian>
         <German>Spotter</German>
       </Key>
       <Key ID="STR_RHSUSF_INF_SNIPER">
         <Original>Sniper</Original>
         <English>Sniper</English>
-        <Russian>Sniper</Russian>
+        <Russian>Снипер</Russian>
         <German>Sniper</German>
       </Key>
       <Key ID="STR_RHS_GROUP_USARMY_Infantry">
@@ -330,7 +330,7 @@
         <Russian>Отряд (2x ПКМ)</Russian>
         <German>Weapon Squad</German>
       </Key>
-      <Key ID="STR_RHSUSF_GROUPS_SQUAD_SNIPER">
+      <Key ID="STR_RHSUSF_GROUPS_SQUAD_SNIPERs">
         <Original>Squad (Marksman)</Original>
         <English>Squad (Marksman)</English>
         <Russian>Отряд (Снайпер)</Russian>
@@ -387,13 +387,13 @@
       <Key ID="STR_RHS_GOOGLES_BLACK_NAME">
         <Original>Ballistic Glasses (Black)</Original>
         <English>Ballistic Glasses (Black)</English>
-        <Russian>Ballistic Glasses (Black)</Russian>
+        <Russian>Баллистиц Глассес (Блацк)</Russian>
         <German>Ballistic Glasses (Black)</German>
       </Key>
       <Key ID="STR_RHS_GOOGLES_CLEAR_NAME">
         <Original>Ballistic Glasses (Clear)</Original>
         <English>Ballistic Glasses (Clear)</English>
-        <Russian>Ballistic Glasses (Clear)</Russian>
+        <Russian>Баллистиц Глассес (Цлеар)</Russian>
         <German>Ballistic Glasses (Clear)</German>
       </Key>
     </Container>

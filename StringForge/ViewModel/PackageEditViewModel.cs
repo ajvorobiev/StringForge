@@ -1,23 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="PackageEditViewModel.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="Package" /> class specifying the package container
+//   The  class specifying the package container
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace StringForge.ViewModel
 {
-    using ReactiveUI;
-    using RHSStringTableTools.Model;
     using System;
     using System.Windows;
+    using ReactiveUI;
+    using RHSStringTableTools.Model;
 
+    /// <summary>
+    /// The package edit view model.
+    /// </summary>
     internal class PackageEditViewModel : EditViewModel
     {
         /// <summary>
-        /// BAcking field for the the name
+        /// Backing field for the the name
         /// </summary>
         private string name;
 
@@ -69,6 +72,9 @@ namespace StringForge.ViewModel
         /// <summary>
         /// Execute the ok command
         /// </summary>
+        /// <param name="window">
+        /// The window.
+        /// </param>
         private void OkCommandExecute(object window)
         {
             this.Thing.Name = this.Name;

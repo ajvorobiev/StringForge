@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TranslitService.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="TranslitService" /> transliterates from latin to cyrillic
+//   The  transliterates from latin to cyrillic
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,6 +12,9 @@ namespace RHSStringTableTools.Services
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// The transliteration service.
+    /// </summary>
     public sealed class TranslitService
     {
         /// <summary>
@@ -24,9 +27,15 @@ namespace RHSStringTableTools.Services
         /// </summary>
         private Dictionary<string, string> words = new Dictionary<string, string>();
 
+        /// <summary>
+        /// The words two letter.
+        /// </summary>
         private Dictionary<string, string> wordsTwoLetter = new Dictionary<string, string>();
+
+        /// <summary>
+        /// The words three letter.
+        /// </summary>
         private Dictionary<string, string> wordsThreeLetter = new Dictionary<string, string>();
-        private List<string> holdLetters = new List<string>();
 
         /// <summary>
         /// Prevents a default instance of the <see cref="TranslitService"/> class from being created.
@@ -44,10 +53,12 @@ namespace RHSStringTableTools.Services
             this.words.Add("e", "е");
             this.wordsTwoLetter.Add("ыo", "ё");
             this.wordsTwoLetter.Add("yo", "ё");
-            //this.holdLetters.Add("y");
+
+            // this.holdLetters.Add("y");
             this.wordsTwoLetter.Add("зh", "ж");
             this.wordsTwoLetter.Add("zh", "ж");
-            //this.holdLetters.Add("z");
+
+            // this.holdLetters.Add("z");
             this.words.Add("z", "з");
             this.words.Add("i", "и");
             this.wordsTwoLetter.Add("ij", "й");
@@ -58,6 +69,7 @@ namespace RHSStringTableTools.Services
             this.words.Add("n", "н");
             this.words.Add("o", "о");
             this.words.Add("p", "п");
+            this.wordsTwoLetter.Add("q", "к");
             this.words.Add("r", "р");
             this.words.Add("s", "с");
             this.words.Add("t", "т");
@@ -67,14 +79,17 @@ namespace RHSStringTableTools.Services
             this.words.Add("c", "ц");
             this.wordsTwoLetter.Add("цh", "ч");
             this.wordsTwoLetter.Add("ch", "ч");
-            //this.holdLetters.Add("c");
+
+            // this.holdLetters.Add("c");
             this.wordsTwoLetter.Add("сh", "ш");
             this.wordsTwoLetter.Add("sh", "ш");
-            //this.holdLetters.Add("s");
+
+            // this.holdLetters.Add("s");
             this.wordsThreeLetter.Add("сцh", "щ");
             this.wordsThreeLetter.Add("сch", "щ");
             this.wordsThreeLetter.Add("sch", "щ");
-            //this.holdLetters.Add("sc");
+
+            // this.holdLetters.Add("sc");
             this.wordsTwoLetter.Add("j'", "ъ");
             this.wordsTwoLetter.Add("ь'", "ъ");
             this.words.Add("y", "ы");
@@ -96,10 +111,12 @@ namespace RHSStringTableTools.Services
             this.words.Add("E", "Е");
             this.wordsTwoLetter.Add("Ыo", "Ё");
             this.wordsTwoLetter.Add("Yo", "Ё");
-            //this.holdLetters.Add("Y");
+
+            // this.holdLetters.Add("Y");
             this.wordsTwoLetter.Add("Зh", "Ж");
             this.wordsTwoLetter.Add("Zh", "Ж");
-            //this.holdLetters.Add("Z");
+
+            // this.holdLetters.Add("Z");
             this.words.Add("Z", "З");
             this.words.Add("I", "И");
             this.wordsTwoLetter.Add("Ij", "Й");
@@ -110,6 +127,7 @@ namespace RHSStringTableTools.Services
             this.words.Add("N", "Н");
             this.words.Add("O", "О");
             this.words.Add("P", "П");
+            this.wordsTwoLetter.Add("Q", "К");
             this.words.Add("R", "Р");
             this.words.Add("S", "С");
             this.words.Add("T", "Т");
@@ -119,14 +137,17 @@ namespace RHSStringTableTools.Services
             this.words.Add("C", "Ц");
             this.wordsTwoLetter.Add("Цh", "Ч");
             this.wordsTwoLetter.Add("Ch", "Ч");
-            //this.holdLetters.Add("C");
+
+            // this.holdLetters.Add("C");
             this.wordsTwoLetter.Add("Сh", "Ш");
             this.wordsTwoLetter.Add("Sh", "Ш");
-            //this.holdLetters.Add("S");
+
+            // this.holdLetters.Add("S");
             this.wordsThreeLetter.Add("Сцh", "Щ");
             this.wordsThreeLetter.Add("Sch", "Щ");
             this.wordsThreeLetter.Add("Сch", "Щ");
-            //this.holdLetters.Add("Sc");
+
+            // this.holdLetters.Add("Sc");
             this.wordsTwoLetter.Add("J'", "Ъ");
             this.wordsTwoLetter.Add("Ь'", "Ъ");
             this.words.Add("Y", "Ы");
@@ -143,6 +164,8 @@ namespace RHSStringTableTools.Services
             this.words.Add("&lt;br/&gt;", "&lt;br/&gt;");
             this.words.Add("&амп;лт;бр/&амп;гт;", "&lt;br/&gt;");
             this.words.Add("&лт;бр/&гт;", "&lt;br/&gt;");
+            this.words.Add("&lt;бр/&gt;", "&lt;br/&gt;");
+            this.words.Add("&amp;lt;бр/&amp;gt;", "&lt;br/&gt;");
         }
 
         /// <summary>
@@ -175,8 +198,7 @@ namespace RHSStringTableTools.Services
                 capturedString = this.wordsTwoLetter.Aggregate(capturedString, (current, pair) => current.Replace(pair.Key, pair.Value));
 
                 // first pass
-                capturedString = this.words.Aggregate(capturedString,
-                    (current, pair) => current.Replace(pair.Key, pair.Value));
+                capturedString = this.words.Aggregate(capturedString, (current, pair) => current.Replace(pair.Key, pair.Value));
 
                 result = this.words.Aggregate(capturedString, (current, pair) => current.Replace(pair.Key, pair.Value));
             }

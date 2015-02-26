@@ -1,25 +1,25 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="CsvParser.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="CsvParser" /> class provides the methods neede to parse a CSV file into a package.
+//   The  class provides the methods neede to parse a CSV file into a package.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace RHSStringTableTools
 {
-    using RHSStringTableTools.Model;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using Model;
 
     /// <summary>
     /// The CSV file parser
     /// </summary>
-    public class CsvParser
+    public static class CsvParser
     {
         /// <summary>
         /// Parses a given folder into a Project
@@ -28,11 +28,12 @@ namespace RHSStringTableTools
         /// <param name="sourceAction">The action to be performed on the source files</param>
         /// <param name="fillMissing">Whether to fill the missing values</param>
         /// <returns>
-        /// A <see cref="Project"/> containing a <see cref="Package"/> per found stringtable csv file.
+        /// A <see cref="Project"/> containing a <see cref="Package"/> per found string table csv file.
         /// </returns>
         public static Project ParseProject(string folderPath, SourceAction sourceAction = SourceAction.Nothing, bool fillMissing = false)
         {
-            if (!Directory.Exists(folderPath)) throw new ApplicationException(string.Format("The specified folder does not exist: {0}", folderPath));
+            if (!Directory.Exists(folderPath))
+                throw new ApplicationException(string.Format("The specified folder does not exist: {0}", folderPath));
 
             var project = new Project()
             {
@@ -77,39 +78,47 @@ namespace RHSStringTableTools
         /// <param name="filePath">The path to a csv file</param>
         /// <param name="fillMissing">Whether to fill the missing values</param>
         /// <returns>
-        /// A package containing a <see cref="Container"/> with all the keys or null if unsuccessfull.
+        /// A package containing a <see cref="Container"/> with all the keys or null if unsuccessful.
         /// </returns>
         public static Package Parse(string filePath, bool fillMissing = false)
         {
             // check that the file is valid
-            if (!File.Exists(filePath)) throw new ApplicationException(string.Format("The specified csv file does not exist: {0}", filePath));
-            if (!Path.GetExtension(filePath).Equals(".csv")) throw new ApplicationException(string.Format("The specified file is not a csv file: {0}", filePath));
+            if (!File.Exists(filePath))
+                throw new ApplicationException(string.Format("The specified csv file does not exist: {0}", filePath));
+            var extension = Path.GetExtension(filePath);
+            if (extension != null && !extension.Equals(".csv"))
+                throw new ApplicationException(string.Format("The specified file is not a csv file: {0}", filePath));
 
             // get package name from the folder that the file is in
             var packageName = Path.GetFileName(Path.GetDirectoryName(filePath));
 
             // create the package with the container
-            var result = new Package()
+            var result = new Package
             {
                 Name = packageName
             };
 
-            result.Containers.Add(new Container() { Name = string.Format("{0}_{1}", packageName, "container") });
+            result.Containers.Add(new Container { Name = string.Format("{0}_{1}", packageName, "container") });
 
             // read the file in to strings
             List<string> lines = File.ReadAllLines(filePath).ToList();
 
             // parse languages
-            var languageString = lines.Where(l => l.Contains("LANGUAGE,")).FirstOrDefault();
+            var languageString = lines.FirstOrDefault(l => l.Contains("LANGUAGE,"));
 
-            if (languageString == null) throw new ApplicationException(string.Format("The specified csv file does not have language line: {0}", filePath));
+            if (languageString == null)
+                throw new ApplicationException(string.Format("The specified csv file does not have language line: {0}",
+                    filePath));
 
             var fileLanguages = ParseLanguages(languageString);
 
             // check that languages are indeed allowed
             foreach (var language in fileLanguages)
             {
-                if (!XmlDeSerializer.AllowedLanguages.Contains(language)) throw new ApplicationException(string.Format("The specified csv file contains an unrecognised language: {0} -> {1}", filePath, language));
+                if (!XmlDeSerializer.AllowedLanguages.Contains(language))
+                    throw new ApplicationException(
+                        string.Format("The specified csv file contains an unrecognised language: {0} -> {1}", filePath,
+                            language));
             }
 
             // parse by line
@@ -117,7 +126,10 @@ namespace RHSStringTableTools
             {
                 var key = ParseLine(line, fileLanguages, fillMissing);
 
-                if (key != null) result.Containers[0].Keys.Add(key);
+                if (key != null)
+                {
+                    result.Containers[0].Keys.Add(key);
+                }
             }
 
             return result;
@@ -126,29 +138,27 @@ namespace RHSStringTableTools
         /// <summary>
         /// Parses a string into the languages it contains
         /// </summary>
-        /// <param name="languageString">The string from the stringtable file that contains all the languages.</param>
+        /// <param name="languageString">The string from the string table file that contains all the languages.</param>
         /// <returns>The list of languages that are contained with in the file.</returns>
         public static List<string> ParseLanguages(string languageString)
         {
-            var result = new List<string>();
-
             // replace any stray quotes, some files inexplicably have this
-            languageString = Regex.Replace(languageString, "\"", "");
+            languageString = Regex.Replace(languageString, "\"", string.Empty);
 
             // trim the whitespace
-            languageString = Regex.Replace(languageString, @"\s+", "");
+            languageString = Regex.Replace(languageString, @"\s+", string.Empty);
 
-            var languageArray = languageString.Split(new char[] { ',' });
+            var languageArray = languageString.Split(new[] { ',' });
 
             // remove the first entry
-            result = languageArray.ToList();
+            List<string> result = languageArray.ToList();
             result.RemoveAt(0);
 
             return result;
         }
 
         /// <summary>
-        /// Parses a line from the csv file and constructs akey from it.
+        /// Parses a line from the csv file and constructs a key from it.
         /// </summary>
         /// <param name="line">The line to be parsed.</param>
         /// <param name="languages">The languages</param>
@@ -157,7 +167,11 @@ namespace RHSStringTableTools
         public static Key ParseLine(string line, List<string> languages, bool fillMissing = false)
         {
             // return null if line is invalid or irrelevant
-            if (string.IsNullOrWhiteSpace(line) || line.Trim().StartsWith("//") || line.Trim().StartsWith("\"//") || line.Contains("LANGUAGE,")) return null;
+            if (string.IsNullOrWhiteSpace(line) || line.Trim().StartsWith("//") || line.Trim().StartsWith("\"//") ||
+                line.Contains("LANGUAGE,"))
+            {
+                return null;
+            }
 
             // replace all whitespace with spaces
             line = Regex.Replace(line, @"\s+", " ");
@@ -166,7 +180,7 @@ namespace RHSStringTableTools
             var resultArray = Regex.Split(line.Trim(), ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
             // the first value becomes the key
-            var result = new Key()
+            var result = new Key
             {
                 Id = resultArray[0]
             };

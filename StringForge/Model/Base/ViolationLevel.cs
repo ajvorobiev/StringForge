@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ViolationLevel.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="ViolationLevel" /> enum provides several levels of violation
+//   The  enum provides several levels of violation
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -14,7 +14,14 @@ namespace StringForge.Model
     /// </summary>
     public enum ViolationLevel
     {
+        /// <summary>
+        /// The warning.
+        /// </summary>
         Warning,
+
+        /// <summary>
+        /// The error.
+        /// </summary>
         Error
     }
 }

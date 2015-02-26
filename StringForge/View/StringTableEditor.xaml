@@ -88,11 +88,13 @@
                                                    IconSource="Images/project.png">
                                 <TreeView Name="projectTreeView"
                                           Margin="5"
-                                          ItemsSource="{Binding Project}"
+                                          ItemsSource="{Binding Projects}"
                                           PreviewMouseRightButtonDown="projectTreeView_PreviewMouseRightButtonDown"
                                           SelectedItemChanged="TreeView_SelectedItemChanged"
                                           dragDrop:DragDrop.IsDragSource="True"
-                                          dragDrop:DragDrop.IsDropTarget="True">
+                                          dragDrop:DragDrop.IsDropTarget="True"
+                                          dragDrop:DragDrop.DragHandler="{Binding}"
+                                          dragDrop:DragDrop.DropHandler="{Binding}">
                                     <TreeView.Resources>
                                         <ContextMenu x:Key="ProjectContext" StaysOpen="true">
                                             <MenuItem Command="{Binding EditProjectCommand}" Header="Edit Project..." />
@@ -136,7 +138,7 @@
                                                        Height="10"
                                                        Margin="3,0"
                                                        Source="Images\project.png" />
-                                                <TextBlock Text="{Binding NodeName}" ToolTip="{Binding FileName}" />
+                                                <TextBlock Text="{Binding NodeName, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding FileName}" />
                                             </StackPanel>
                                             <HierarchicalDataTemplate.ItemTemplate>
                                                 <HierarchicalDataTemplate ItemsSource="{Binding Containers}">
@@ -145,7 +147,7 @@
                                                                Height="10"
                                                                Margin="3,0"
                                                                Source="Images\package.png" />
-                                                        <TextBlock Text="{Binding Name}" />
+                                                        <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                                                     </StackPanel>
                                                     <HierarchicalDataTemplate.ItemTemplate>
                                                         <HierarchicalDataTemplate DataType="{x:Type Demo:Container}" ItemsSource="{Binding Keys}">
@@ -154,7 +156,7 @@
                                                                        Height="10"
                                                                        Margin="3,0"
                                                                        Source="Images\container.png" />
-                                                                <TextBlock Text="{Binding Name}" />
+                                                                <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                                                             </StackPanel>
                                                             <HierarchicalDataTemplate.ItemTemplate>
                                                                 <DataTemplate>
@@ -163,7 +165,7 @@
                                                                                Height="10"
                                                                                Margin="3,0"
                                                                                Source="Images\key.png" />
-                                                                        <TextBlock Text="{Binding Id}" />
+                                                                        <TextBlock Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" />
                                                                     </StackPanel>
                                                                 </DataTemplate>
                                                             </HierarchicalDataTemplate.ItemTemplate>

@@ -1,23 +1,23 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="StringTableConverterViewModel.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="StringTableConverterViewModel" /> view model for the converter
+//   The  view model for the converter
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace StringForge.ViewModel
 {
-    using Microsoft.WindowsAPICodePack.Dialogs;
-    using ReactiveUI;
-    using RHSStringTableTools;
-    using RHSStringTableTools.Model;
     using System;
     using System.IO;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
+    using Microsoft.WindowsAPICodePack.Dialogs;
+    using ReactiveUI;
+    using RHSStringTableTools;
+    using RHSStringTableTools.Model;
 
     /// <summary>
     /// The <see cref="StringTableConverterViewModel" /> view model for the converter
@@ -48,6 +48,10 @@ namespace StringForge.ViewModel
         /// The is progress visible
         /// </summary>
         private Visibility isProgressVisible;
+
+        /// <summary>
+        /// The is busy.
+        /// </summary>
         private bool isBusy;
 
         /// <summary>
@@ -78,7 +82,7 @@ namespace StringForge.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the fill missing
+        /// Gets or sets a value indicating whether fill missing.
         /// </summary>
         public bool FillMissing
         {
@@ -96,7 +100,7 @@ namespace StringForge.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets whether the dialog is busy
+        /// Gets or sets a value indicating whether is busy.
         /// </summary>
         public bool IsBusy
         {
@@ -104,12 +108,24 @@ namespace StringForge.ViewModel
             set { this.RaiseAndSetIfChanged(ref this.isBusy, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the browse source command.
+        /// </summary>
         public ReactiveCommand<object> BrowseSourceCommand { get; protected set; }
 
+        /// <summary>
+        /// Gets or sets the browse destination command.
+        /// </summary>
         public ReactiveCommand<object> BrowseDestinationCommand { get; protected set; }
 
+        /// <summary>
+        /// Gets or sets the ok command.
+        /// </summary>
         public ReactiveCommand<object> OkCommand { get; protected set; }
 
+        /// <summary>
+        /// Gets or sets the close command.
+        /// </summary>
         public ReactiveCommand<object> CloseCommand { get; protected set; }
 
         /// <summary>
@@ -198,9 +214,7 @@ namespace StringForge.ViewModel
         /// </summary>
         private void BrowseSourceExecute()
         {
-            var dlg = new CommonOpenFileDialog();
-
-            dlg.IsFolderPicker = true;
+            var dlg = new CommonOpenFileDialog { IsFolderPicker = true };
 
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
             {

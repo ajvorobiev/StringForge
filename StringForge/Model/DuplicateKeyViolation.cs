@@ -1,17 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViolationLevel.cs" company="RHS">
-//   Red Hammer Studios
+// <copyright file="DuplicateKeyViolation.cs" company="RHS">
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="DuplicateKeyViolation" /> provides a violation of duplicate key ids
+//   The  provides a violation of duplicate key ids
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace StringForge.Model
 {
-    using RHSStringTableTools.Model;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using RHSStringTableTools.Model;
 
     /// <summary>
     /// The <see cref="DuplicateKeyViolation" /> provides a violation of duplicate key ids
@@ -31,7 +31,7 @@ namespace StringForge.Model
         /// </summary>
         public string Message
         {
-            get { return CompileMessage(); }
+            get { return this.CompileMessage(); }
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace StringForge.Model
         /// <returns>The violation message</returns>
         private string CompileMessage()
         {
-            return string.Format("Duplicate Key ID: {0}", Keys[0].Id);
+            return string.Format("Duplicate Key ID: {0}", this.Keys[0].Id);
         }
 
         /// <summary>

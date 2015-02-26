@@ -1,18 +1,18 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ContainerEditViewModel.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="Container" /> class specifying the Container container
+//   The  class specifying the Container container
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace StringForge.ViewModel
 {
-    using ReactiveUI;
-    using RHSStringTableTools.Model;
     using System;
     using System.Windows;
+    using ReactiveUI;
+    using RHSStringTableTools.Model;
 
     /// <summary>
     /// The container edit view model
@@ -72,6 +72,9 @@ namespace StringForge.ViewModel
         /// <summary>
         /// Execute the ok command
         /// </summary>
+        /// <param name="window">
+        /// The window.
+        /// </param>
         private void OkCommandExecute(object window)
         {
             this.Thing.Name = this.Name;
@@ -80,9 +83,6 @@ namespace StringForge.ViewModel
             if (this.Parent != null)
             {
                 this.Parent.Containers.Add(this.Thing);
-
-                // add empty key with a magic id
-                this.Thing.Keys.Add(new Key { Id = string.Empty });
             }
 
             ((Window)window).Close();

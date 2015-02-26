@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EditViewModel.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="EditViewModel" /> base class
+//   The  base class
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 

@@ -1,26 +1,29 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="XmlDeSerializer.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="XmlDeSerializer" /> class provides the methods neede to serialize and deserialize xml stringtables
+//   The  class provides the methods neede to serialize and deserialize xml stringtables
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace RHSStringTableTools
 {
-    using RHSStringTableTools.Model;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Xml.Serialization;
+    using Model;
 
     /// <summary>
-    /// Deals with xml stringtables
+    /// Deals with xml string tables
     /// </summary>
-    public class XmlDeSerializer
+    public static class XmlDeSerializer
     {
+        /// <summary>
+        /// The allowed languages.
+        /// </summary>
         private static List<string> allowedLanguages = new List<string>() { "Original", "English", "Czech", "French", "Spanish", "Italian", "Polish", "Portuguese", "Russian", "German" };
 
         /// <summary>

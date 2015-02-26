@@ -1,18 +1,18 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Project.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="Project" /> class specifying the project
+//   The  class specifying the project
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace RHSStringTableTools.Model
 {
-    using ReactiveUI;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Xml.Serialization;
+    using ReactiveUI;
 
     /// <summary>
     /// The project class.
@@ -43,7 +43,7 @@ namespace RHSStringTableTools.Model
         [XmlAttribute("name")]
         public string Name
         {
-            get { return name; }
+            get { return this.name; }
             set { this.RaiseAndSetIfChanged(ref this.name, value); }
         }
 
@@ -54,13 +54,13 @@ namespace RHSStringTableTools.Model
         public ObservableCollection<Package> Packages { get; set; }
 
         /// <summary>
-        /// Gets or sets the filepath to the xml that the project belongs to
+        /// Gets or sets the file path to the xml that the project belongs to
         /// </summary>
         [XmlIgnore]
         public string FileName { get; set; }
-
+        
         /// <summary>
-        /// Gets the short path of the file
+        /// Gets or sets the node name.
         /// </summary>
         [XmlIgnore]
         public string NodeName
@@ -72,7 +72,6 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Creates a node name to be displayed in the tree
         /// </summary>
-        /// <returns>A node name suitable for a tree.</returns>
         public void RecalculateNodeName()
         {
             this.NodeName = string.Format("{0} ({1}\\{2})", this.Name, new DirectoryInfo(Path.GetDirectoryName(this.FileName)).Name, Path.GetFileName(this.FileName));

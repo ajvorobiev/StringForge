@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViolationLevel.cs" company="RHS">
-//   Red Hammer Studios
+// <copyright file="AboutViewModel.cs" company="RHS">
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="AboutViewModel" /> provides a the view model for the About dialog
+//   The  provides a the view model for the About dialog
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 

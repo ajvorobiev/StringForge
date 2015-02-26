@@ -1,16 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="IViolation.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="IViolation" /> class provides the interface for a violation
+//   The  class provides the interface for a violation
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace StringForge.Model
 {
-    using RHSStringTableTools.Model;
     using System.Collections.ObjectModel;
+    using RHSStringTableTools.Model;
 
     /// <summary>
     /// Provides an interface for a violation

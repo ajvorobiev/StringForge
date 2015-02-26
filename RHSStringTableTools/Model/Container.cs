@@ -1,23 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Container.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="Container" /> class specifying the container
+//   The  class specifying the container
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Windows;
-using GongSolutions.Wpf.DragDrop;
-
 namespace RHSStringTableTools.Model
 {
-    using ReactiveUI;
     using System.Collections.ObjectModel;
     using System.Xml.Serialization;
+    using ReactiveUI;
 
     /// <summary>
     /// The container class. Used for grouping.
@@ -43,7 +37,7 @@ namespace RHSStringTableTools.Model
         [XmlAttribute("name")]
         public string Name
         {
-            get { return name; }
+            get { return this.name; }
             set { this.RaiseAndSetIfChanged(ref this.name, value); }
         }
 

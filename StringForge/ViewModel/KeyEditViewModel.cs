@@ -1,41 +1,89 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="KeyEditViewModel.cs" company="RHS">
-//   Red Hammer Studios
+//   Copyright (c) 2015 Alex Vorobiev
 // </copyright>
 // <summary>
-//   The <see cref="KeyEditViewModel" /> viewmodel for the keys winddow
+//   The  viewmodel for the keys winddow
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace StringForge.ViewModel
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Forms;
     using ReactiveUI;
     using RHSStringTableTools.Model;
     using RHSStringTableTools.Services;
-    using System;
-    using System.Windows;
 
     /// <summary>
-    /// The <see cref="KeyEditViewModel" /> viewmodel for the keys winddow
+    /// The <see cref="KeyEditViewModel" /> view model for the keys window
     /// </summary>
-    internal class KeyEditViewModel : EditViewModel
+    public class KeyEditViewModel : EditViewModel
     {
         /// <summary>
         /// Backing fields fro the languages
         /// </summary>
         private string id;
 
+        /// <summary>
+        /// The original.
+        /// </summary>
         private string original;
+
+        /// <summary>
+        /// The english.
+        /// </summary>
         private string english;
+
+        /// <summary>
+        /// The czech.
+        /// </summary>
         private string czech;
+
+        /// <summary>
+        /// The french.
+        /// </summary>
         private string french;
+
+        /// <summary>
+        /// The spanish.
+        /// </summary>
         private string spanish;
+
+        /// <summary>
+        /// The italian.
+        /// </summary>
         private string italian;
+
+        /// <summary>
+        /// The polish.
+        /// </summary>
         private string polish;
+
+        /// <summary>
+        /// The portuguese.
+        /// </summary>
         private string portuguese;
+
+        /// <summary>
+        /// The russian.
+        /// </summary>
         private string russian;
+
+        /// <summary>
+        /// The german.
+        /// </summary>
         private string german;
+
+        /// <summary>
+        /// The auto fill.
+        /// </summary>
         private bool autoFill;
+
+        /// <summary>
+        /// The transliteration.
+        /// </summary>
         private bool translit;
 
         /// <summary>
@@ -138,7 +186,7 @@ namespace StringForge.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets whether the form is auto filling from <see cref="Original"/>
+        /// Gets or sets a value indicating whether auto fill.
         /// </summary>
         public bool AutoFill
         {
@@ -147,11 +195,11 @@ namespace StringForge.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets whether the russian key text is being transliterated in real time
+        /// Gets or sets a value indicating whether transliteration is enabled.
         /// </summary>
         public bool Translit
         {
-            get { return translit; }
+            get { return this.translit; }
             set { this.RaiseAndSetIfChanged(ref this.translit, value); }
         }
 
@@ -168,13 +216,21 @@ namespace StringForge.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyEditViewModel"/> class.
         /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="container">The container.</param>
-        public KeyEditViewModel(Key item, Container container)
+        /// <param name="item">
+        /// The item.
+        /// </param>
+        /// <param name="container">
+        /// The container.
+        /// </param>
+        /// <param name="position">
+        /// The position.
+        /// </param>
+        public KeyEditViewModel(Key item, Container container = null, int position = -1)
         {
             this.Thing = item;
             this.Thing.Parent = container;
             this.Parent = container;
+            this.InsertAfter = position;
 
             var canOk = this.WhenAny(x => x.Id, y => y.Original, z => z.English, (x, y, z) => !string.IsNullOrWhiteSpace(x.Value) && !string.IsNullOrWhiteSpace(y.Value) && !string.IsNullOrWhiteSpace(z.Value));
             this.OkCommand = ReactiveCommand.Create(canOk);
@@ -185,6 +241,11 @@ namespace StringForge.ViewModel
 
             this.SetProperties();
         }
+
+        /// <summary>
+        /// Gets or sets the index to insert after in the <see cref="Keys"/> collection of the <see cref="Container"/>
+        /// </summary>
+        public int InsertAfter { get; set; }
 
         /// <summary>
         /// Transliterates this instance.
@@ -240,6 +301,9 @@ namespace StringForge.ViewModel
         /// <summary>
         /// Execute the ok command
         /// </summary>
+        /// <param name="window">
+        /// The window.
+        /// </param>
         private void OkCommandExecute(object window)
         {
             this.Thing.Id = this.Id;
@@ -257,7 +321,14 @@ namespace StringForge.ViewModel
             // add the new container to the package at the very end
             if (this.Parent != null)
             {
-                this.Parent.Keys.Add(this.Thing);
+                if (this.InsertAfter == -1)
+                {
+                    this.Parent.Keys.Add(this.Thing);
+                }
+                else
+                {
+                    this.Parent.Keys.Insert(this.InsertAfter + 1, this.Thing);
+                }
             }
 
             ((Window)window).Close();
