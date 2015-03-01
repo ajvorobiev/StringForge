@@ -23,6 +23,7 @@ Icons used from: https://www.iconfinder.com/
 # Changelog
 
 v1.1
+- Key ID templates added
 - Model objects are now reactive, better reflecting updates
 - Improved Drag and Drop for the tree
 - Duplication of keys imporved
