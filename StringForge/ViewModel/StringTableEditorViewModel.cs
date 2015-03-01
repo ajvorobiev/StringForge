@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using StringForge.Model.Templates;
+
 namespace StringForge.ViewModel
 {
     using System;
@@ -213,6 +215,11 @@ namespace StringForge.ViewModel
         public ReactiveCommand<object> RemoveKeyCommand { get; protected set; }
 
         /// <summary>
+        /// Initiates the templates window
+        /// </summary>
+        public ReactiveCommand<object> TemplatesCommand { get; protected set; }
+
+        /// <summary>
         /// Gets the window title.
         /// </summary>
         public string WindowTitle
@@ -229,6 +236,7 @@ namespace StringForge.ViewModel
             set { this.RaiseAndSetIfChanged(ref this.violations, value); }
         }
 
+
         /// <summary>
         /// Backing field for the violations background worker
         /// </summary>
@@ -244,6 +252,8 @@ namespace StringForge.ViewModel
         /// </summary>
         public StringTableEditorViewModel()
         {
+            TemplateMaster.Instance.Load("templates.xml");
+
             this.violationsBackgroundWorker = new BackgroundWorker
             {
                 WorkerSupportsCancellation = true,
@@ -340,7 +350,16 @@ namespace StringForge.ViewModel
             this.RemoveKeyCommand = ReactiveCommand.Create();
             this.RemoveKeyCommand.Subscribe(_ => this.ExecuteRemoveKeyCommand());
 
+            this.TemplatesCommand = ReactiveCommand.Create();
+            this.TemplatesCommand.Subscribe(_ => this.ExecuteTemplatesCommand());
+
             this.SetPropertis();
+        }
+
+        private void ExecuteTemplatesCommand()
+        {
+            var templatesview = new TemplateView();
+            templatesview.ShowDialog();
         }
 
         /// <summary>

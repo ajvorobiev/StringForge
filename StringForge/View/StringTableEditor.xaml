@@ -37,6 +37,7 @@
                 </MenuItem>
                 <MenuItem Header="_Tools">
                     <MenuItem Command="{Binding StringTableConvertCommand}" Header="_Convert Csv to Xml..." />
+                    <MenuItem Command="{Binding TemplatesCommand}" Header="_Key ID Templates..." />
                 </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Command="{Binding AboutCommand}" Header="_About" />

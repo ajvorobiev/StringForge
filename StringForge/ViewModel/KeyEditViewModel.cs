@@ -7,14 +7,18 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using StringForge.Model.Templates;
+using System.Collections.ObjectModel;
+using System.Linq;
+
 namespace StringForge.ViewModel
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Forms;
     using ReactiveUI;
     using RHSStringTableTools.Model;
     using RHSStringTableTools.Services;
+    using System;
+    using System.Windows;
+    using System.Windows.Forms;
 
     /// <summary>
     /// The <see cref="KeyEditViewModel" /> view model for the keys window
@@ -85,6 +89,8 @@ namespace StringForge.ViewModel
         /// The transliteration.
         /// </summary>
         private bool translit;
+
+        private KeyTemplate selectedTemplate;
 
         /// <summary>
         /// Gets or sets the identifier.
@@ -204,6 +210,20 @@ namespace StringForge.ViewModel
         }
 
         /// <summary>
+        /// Gets or sets the list of templates
+        /// </summary>
+        public ObservableCollection<KeyTemplate> Templates { get; set; }
+
+        /// <summary>
+        /// Gets or sets the selected template
+        /// </summary>
+        public KeyTemplate SelectedTemplate
+        {
+            get { return this.selectedTemplate; }
+            set { this.RaiseAndSetIfChanged(ref this.selectedTemplate, value); }
+        }
+
+        /// <summary>
         /// Gets or sets the thing
         /// </summary>
         public Key Thing { get; set; }
@@ -227,6 +247,8 @@ namespace StringForge.ViewModel
         /// </param>
         public KeyEditViewModel(Key item, Container container = null, int position = -1)
         {
+            this.Templates = TemplateMaster.Instance.KeyTemplates;
+
             this.Thing = item;
             this.Thing.Parent = container;
             this.Parent = container;
@@ -238,8 +260,20 @@ namespace StringForge.ViewModel
 
             this.WhenAnyValue(vm => vm.Original).Subscribe(_ => this.FillLanguages());
             this.WhenAnyValue(vm => vm.Russian).Subscribe(_ => this.Transliterate());
+            this.WhenAny(vm => vm.SelectedTemplate, vm => vm.Value != null).Subscribe(_ => this.ApplyTemplate());
 
             this.SetProperties();
+        }
+
+        /// <summary>
+        /// Applies the template to the string id
+        /// </summary>
+        private void ApplyTemplate()
+        {
+            if (this.SelectedTemplate != null)
+            {
+                this.Id = this.SelectedTemplate.Template;
+            }
         }
 
         /// <summary>
@@ -296,6 +330,12 @@ namespace StringForge.ViewModel
 
             this.AutoFill = true;
             this.Translit = true;
+
+            if (string.IsNullOrWhiteSpace(this.Id))
+            {
+                this.SelectedTemplate = this.Templates.FirstOrDefault();
+            }
+
         }
 
         /// <summary>

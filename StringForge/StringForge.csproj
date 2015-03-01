@@ -157,6 +157,8 @@
     <Compile Include="Model\Base\IViolation.cs" />
     <Compile Include="Model\Base\ViolationLevel.cs" />
     <Compile Include="Model\DuplicateKeyViolation.cs" />
+    <Compile Include="Model\Templates\KeyTemplate.cs" />
+    <Compile Include="Model\Templates\TemplateMaster.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\ContainerEditViewModel.cs" />
     <Compile Include="ViewModel\EditViewModel.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="ViewModel\PackageEditViewModel.cs" />
     <Compile Include="ViewModel\StringTableConverterViewModel.cs" />
     <Compile Include="ViewModel\StringTableEditorViewModel.cs" />
+    <Compile Include="ViewModel\TemplateViewModel.cs" />
     <Compile Include="View\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="View\TemplateView.xaml.cs">
+      <DependentUpon>TemplateView.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\StringTableEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TemplateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
