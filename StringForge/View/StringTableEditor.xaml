@@ -48,6 +48,7 @@
                              AllowMixedOrientation="True"
                              BorderBrush="Black"
                              BorderThickness="1">
+
             <xcad:DockingManager.Theme>
                 <xcad:AeroTheme />
             </xcad:DockingManager.Theme>
@@ -92,10 +93,10 @@
                                           ItemsSource="{Binding Projects}"
                                           PreviewMouseRightButtonDown="projectTreeView_PreviewMouseRightButtonDown"
                                           SelectedItemChanged="TreeView_SelectedItemChanged"
-                                          dragDrop:DragDrop.IsDragSource="True"
-                                          dragDrop:DragDrop.IsDropTarget="True"
                                           dragDrop:DragDrop.DragHandler="{Binding}"
-                                          dragDrop:DragDrop.DropHandler="{Binding}">
+                                          dragDrop:DragDrop.DropHandler="{Binding}"
+                                          dragDrop:DragDrop.IsDragSource="True"
+                                          dragDrop:DragDrop.IsDropTarget="True">
                                     <TreeView.Resources>
                                         <ContextMenu x:Key="ProjectContext" StaysOpen="true">
                                             <MenuItem Command="{Binding EditProjectCommand}" Header="Edit Project..." />
@@ -179,6 +180,56 @@
                                         </HierarchicalDataTemplate>
                                     </TreeView.ItemTemplate>
                                 </TreeView>
+                            </xcad:LayoutAnchorable>
+                            <xcad:LayoutAnchorable Title="Search"
+                                                   CanClose="False"
+                                                   CanHide="False"
+                                                   ContentId="search"
+                                                   IconSource="Images/project.png">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0"
+                                               Grid.Column="0"
+                                               Content="Search:" />
+                                        <Label Grid.Row="2"
+                                               Grid.Column="0"
+                                               Content="Replace:" />
+                                        <Label Grid.Row="4"
+                                               Grid.ColumnSpan="2"
+                                               Content="{Binding SearchResults}" />
+                                        <TextBox Grid.Row="0"
+                                                 Grid.Column="1"
+                                                 Margin="5"
+                                                 Text="{Binding SearchString,
+                                                                UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBox Grid.Row="2"
+                                                 Grid.Column="1"
+                                                 Margin="5"
+                                                 Text="{Binding ReplaceString,
+                                                                UpdateSourceTrigger=PropertyChanged}" />
+                                        <Button Grid.Row="1"
+                                                Grid.Column="1"
+                                                Margin="5"
+                                                Command="{Binding SearchCommand}"
+                                                Content="Search" />
+                                        <Button Grid.Row="3"
+                                                Grid.Column="1"
+                                                Margin="5"
+                                                Command="{Binding ReplaceCommand}"
+                                                Content="Replace" />
+                                    </Grid>
+                                </StackPanel>
                             </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorablePane>
                     </xcad:LayoutAnchorablePaneGroup>

@@ -7,8 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using StringForge.Model.Templates;
-
 namespace StringForge.ViewModel
 {
     using System;
@@ -28,6 +26,7 @@ namespace StringForge.ViewModel
     using RHSStringTableTools;
     using RHSStringTableTools.Model;
     using Model;
+    using Model.Templates;
     using View;
 
     /// <summary>
@@ -155,9 +154,9 @@ namespace StringForge.ViewModel
         /// </summary>
         public ReactiveCommand<object> UnloadProjectCommand { get; protected set; }
 
-/*
-        public ReactiveCommand<object> FillMissingFromLanguageCommand { get; protected set; }
-*/
+        /*
+                public ReactiveCommand<object> FillMissingFromLanguageCommand { get; protected set; }
+        */
 
         /// <summary>
         /// Gets or sets the find in tree command.
@@ -215,9 +214,19 @@ namespace StringForge.ViewModel
         public ReactiveCommand<object> RemoveKeyCommand { get; protected set; }
 
         /// <summary>
-        /// Initiates the templates window
+        /// Gets or sets the templates window command
         /// </summary>
         public ReactiveCommand<object> TemplatesCommand { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the search command
+        /// </summary>
+        public ReactiveCommand<object> SearchCommand { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the replace command
+        /// </summary>
+        public ReactiveCommand<object> ReplaceCommand { get; protected set; }
 
         /// <summary>
         /// Gets the window title.
@@ -236,6 +245,32 @@ namespace StringForge.ViewModel
             set { this.RaiseAndSetIfChanged(ref this.violations, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the search string.
+        /// </summary>
+        public string SearchString
+        {
+            get { return this.searchString; }
+            set { this.RaiseAndSetIfChanged(ref this.searchString, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the search results.
+        /// </summary>
+        public string SearchResults
+        {
+            get { return this.searchResults; }
+            set { this.RaiseAndSetIfChanged(ref this.searchResults, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the replace string.
+        /// </summary>
+        public string ReplaceString
+        {
+            get { return this.replaceString; }
+            set { this.RaiseAndSetIfChanged(ref this.replaceString, value); }
+        }
 
         /// <summary>
         /// Backing field for the violations background worker
@@ -243,9 +278,29 @@ namespace StringForge.ViewModel
         private readonly BackgroundWorker violationsBackgroundWorker;
 
         /// <summary>
+        /// Backing field for the violations background worker
+        /// </summary>
+        private readonly BackgroundWorker searchBackgroundWorker;
+
+        /// <summary>
         /// Backing field for selected violation
         /// </summary>
         private IViolation selectedViolation;
+
+        /// <summary>
+        /// The backing field for the search string.
+        /// </summary>
+        private string searchString;
+
+        /// <summary>
+        /// The backing field for search results.
+        /// </summary>
+        private string searchResults;
+
+        /// <summary>
+        /// The backing field for the replace string.
+        /// </summary>
+        private string replaceString;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringTableEditorViewModel"/> class.
@@ -262,6 +317,15 @@ namespace StringForge.ViewModel
 
             this.violationsBackgroundWorker.DoWork += this.violationsBackgroundWorker_DoWork;
             this.violationsBackgroundWorker.RunWorkerCompleted += this.violationsBackgroundWorker_RunWorkerCompleted;
+
+            this.searchBackgroundWorker = new BackgroundWorker
+            {
+                WorkerSupportsCancellation = true,
+                WorkerReportsProgress = true
+            };
+
+            this.searchBackgroundWorker.DoWork += this.searchBackgroundWorker_DoWork;
+            this.searchBackgroundWorker.RunWorkerCompleted += this.searchBackgroundWorker_RunWorkerCompleted;
 
             this.Violations = new ObservableCollection<IViolation>();
 
@@ -353,9 +417,35 @@ namespace StringForge.ViewModel
             this.TemplatesCommand = ReactiveCommand.Create();
             this.TemplatesCommand.Subscribe(_ => this.ExecuteTemplatesCommand());
 
+            var canSearch = this.WhenAny(x => x.SearchString, x => !string.IsNullOrEmpty(x.Value));
+            this.SearchCommand = ReactiveCommand.Create(canSearch);
+            this.SearchCommand.Subscribe(_ => this.ExecuteSearchCommand());
+
+            this.ReplaceCommand = ReactiveCommand.Create(canSearch);
+            this.ReplaceCommand.Subscribe(_ => this.ExecuteReplaceCommand());
+
             this.SetPropertis();
         }
 
+        /// <summary>
+        /// Executes the search and replace
+        /// </summary>
+        private void ExecuteReplaceCommand()
+        {
+        }
+
+        /// <summary>
+        /// Executes the search
+        /// </summary>
+        private void ExecuteSearchCommand()
+        {
+            this.SearchResults = "Searching...";
+            this.searchBackgroundWorker.RunWorkerAsync(this.Projects);
+        }
+
+        /// <summary>
+        /// The execute templates command.
+        /// </summary>
         private void ExecuteTemplatesCommand()
         {
             var templatesview = new TemplateView();
@@ -412,6 +502,85 @@ namespace StringForge.ViewModel
             }
 
             e.Result = violationsList;
+        }
+
+        /// <summary>
+        /// The search background worker do work.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void searchBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var worker = sender as BackgroundWorker;
+
+            var resultList = new ObservableCollection<Key>();
+
+            foreach (var project in (ObservableCollection<Project>)e.Argument)
+            {
+                if (worker != null && worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+
+                foreach (var key in from package in project.Packages from container in package.Containers from key in container.Keys select key)
+                {
+                    try
+                    {
+                        if (searchKeyWithString(key, this.SearchString))
+                            resultList.Add(key);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ApplicationException(string.Format("Search returned an error: {0}", ex.Message));
+                    }
+                }
+            }
+
+            e.Result = resultList;
+        }
+
+        /// <summary>
+        /// Search key with string string.
+        /// </summary>
+        /// <param name="key">
+        /// The key.
+        /// </param>
+        /// <param name="searchString">
+        /// The search string.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/> specifying whether a match is found.
+        /// </returns>
+        public static bool searchKeyWithString(Key key, string searchString)
+        {
+            var properties = key.GetType().GetProperties();
+
+            return properties.Select(property => property.GetValue(key)).OfType<string>().Any(value => value.Contains(searchString));
+        }
+
+        /// <summary>
+        /// Handles the RunWorkerCompleted event of the searchBackgroundWorker control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RunWorkerCompletedEventArgs"/> instance containing the event data.</param>
+        private void searchBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+            {
+            }
+            else if (e.Error != null)
+            {
+            }
+            else
+            {
+                this.Keys = (ObservableCollection<Key>)e.Result;
+                this.SearchResults = string.Format("Found: {0} keys", this.Keys.Count);
+            }
         }
 
         /// <summary>
@@ -599,6 +768,7 @@ namespace StringForge.ViewModel
                 {
                     case MessageBoxResult.Cancel:
                         return;
+
                     case MessageBoxResult.Yes:
                         QuickSaveProject(selectedProject);
                         break;
