@@ -278,9 +278,14 @@ namespace StringForge.ViewModel
         private readonly BackgroundWorker violationsBackgroundWorker;
 
         /// <summary>
-        /// Backing field for the violations background worker
+        /// Backing field for the search background worker
         /// </summary>
         private readonly BackgroundWorker searchBackgroundWorker;
+
+        /// <summary>
+        /// Backing field for the replace
+        /// </summary>
+        private readonly BackgroundWorker replaceBackgroundWorker;
 
         /// <summary>
         /// Backing field for selected violation
@@ -326,6 +331,15 @@ namespace StringForge.ViewModel
 
             this.searchBackgroundWorker.DoWork += this.searchBackgroundWorker_DoWork;
             this.searchBackgroundWorker.RunWorkerCompleted += this.searchBackgroundWorker_RunWorkerCompleted;
+
+            this.replaceBackgroundWorker = new BackgroundWorker
+            {
+                WorkerSupportsCancellation = true,
+                WorkerReportsProgress = true
+            };
+
+            this.replaceBackgroundWorker.DoWork += this.replaceBackgroundWorker_DoWork;
+            this.replaceBackgroundWorker.RunWorkerCompleted += this.replaceBackgroundWorker_RunWorkerCompleted;
 
             this.Violations = new ObservableCollection<IViolation>();
 
@@ -428,10 +442,82 @@ namespace StringForge.ViewModel
         }
 
         /// <summary>
+        /// The replace background worker_ run worker completed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void replaceBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+            {
+            }
+            else if (e.Error != null)
+            {
+            }
+            else
+            {
+                this.Keys = (ObservableCollection<Key>)e.Result;
+                this.SearchResults = string.Format("Found: {0} keys", this.Keys.Count);
+            }
+        }
+
+        /// <summary>
+        /// The replace background worker do work.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        /// <exception cref="ApplicationException">
+        /// </exception>
+        private void replaceBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var worker = sender as BackgroundWorker;
+
+            var resultList = new ObservableCollection<Key>();
+
+            var keyProperties = typeof(Key).GetProperties();
+
+            foreach (var project in (ObservableCollection<Project>)e.Argument)
+            {
+                if (worker != null && worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                foreach (var key in from package in project.Packages from container in package.Containers from key in container.Keys select key)
+                {
+                    try
+                    {
+                        if (searchAndReplaceKeyWithString(key, keyProperties, this.SearchString, this.ReplaceString))
+                            resultList.Add(key);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ApplicationException(string.Format("Search returned an error: {0}", ex.Message));
+                    }
+                }
+            }
+
+            e.Result = resultList;
+        }
+
+        /// <summary>
         /// Executes the search and replace
         /// </summary>
         private void ExecuteReplaceCommand()
         {
+            if (this.Projects == null) return;
+
+            this.SearchResults = "Replacing...";
+            this.replaceBackgroundWorker.RunWorkerAsync(this.Projects);
         }
 
         /// <summary>
@@ -439,6 +525,8 @@ namespace StringForge.ViewModel
         /// </summary>
         private void ExecuteSearchCommand()
         {
+            if (this.Projects == null) return;
+
             this.SearchResults = "Searching...";
             this.searchBackgroundWorker.RunWorkerAsync(this.Projects);
         }
@@ -519,19 +607,21 @@ namespace StringForge.ViewModel
 
             var resultList = new ObservableCollection<Key>();
 
+            var keyProperties = typeof(Key).GetProperties();
+
             foreach (var project in (ObservableCollection<Project>)e.Argument)
             {
                 if (worker != null && worker.CancellationPending)
                 {
                     e.Cancel = true;
-                    break;
+                    return;
                 }
 
                 foreach (var key in from package in project.Packages from container in package.Containers from key in container.Keys select key)
                 {
                     try
                     {
-                        if (searchKeyWithString(key, this.SearchString))
+                        if (searchKeyWithString(key, keyProperties, this.SearchString))
                             resultList.Add(key);
                     }
                     catch (Exception ex)
@@ -550,17 +640,56 @@ namespace StringForge.ViewModel
         /// <param name="key">
         /// The key.
         /// </param>
+        /// <param name="properties">
+        /// The properties.
+        /// </param>
         /// <param name="searchString">
         /// The search string.
         /// </param>
         /// <returns>
         /// The <see cref="bool"/> specifying whether a match is found.
         /// </returns>
-        public static bool searchKeyWithString(Key key, string searchString)
+        public static bool searchKeyWithString(Key key, IEnumerable<PropertyInfo> properties, string searchString)
         {
-            var properties = key.GetType().GetProperties();
-
             return properties.Select(property => property.GetValue(key)).OfType<string>().Any(value => value.Contains(searchString));
+        }
+
+        /// <summary>
+        /// The search and replace key with string.
+        /// </summary>
+        /// <param name="key">
+        /// The key.
+        /// </param>
+        /// <param name="properties">
+        /// The properties.
+        /// </param>
+        /// <param name="searchString">
+        /// The search string.
+        /// </param>
+        /// <param name="replaceString">
+        /// The replace string.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        public static bool searchAndReplaceKeyWithString(Key key, IEnumerable<PropertyInfo> properties, string searchString, string replaceString)
+        {
+            var propertyInfos = properties as IList<PropertyInfo> ?? properties.ToList();
+            var foundPropertiesEnumerable = propertyInfos.Select(property => property.GetValue(key))
+                .OfType<string>();
+
+            var contains =
+                foundPropertiesEnumerable
+                    .Any(value => value.Contains(searchString));
+
+            if (!contains) return false;
+
+            foreach (var property in propertyInfos.Where(property => property.GetValue(key) is string))
+            {
+                property.SetValue(key, ((string)property.GetValue(key)).Replace(searchString, replaceString));
+            }
+
+            return true;
         }
 
         /// <summary>
