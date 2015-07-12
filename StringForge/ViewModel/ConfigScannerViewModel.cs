@@ -31,7 +31,7 @@ namespace StringForge.ViewModel
         /// <summary>
         /// The model.
         /// </summary>
-        private ClassForge.Model.Model model;
+        private Model model;
 
         /// <summary>
         /// The filter string.
@@ -117,18 +117,18 @@ namespace StringForge.ViewModel
         {
             this.ConsoleWriteLine(string.Format("Adding {0} to the stringtable.", this.SelectedProperty.Key.Value));
 
-            var newObject = new Key()
+            var newObject = new Key
             {
-                Id =
-                    string.Format("STR_{0}_{1}", this.AllProperties[this.SelectedProperty.Key].Name.ToUpper(),
+                Id = string.Format("STR_{0}_{1}", this.AllProperties[this.SelectedProperty.Key].Name.ToUpper(),
                         this.SelectedProperty.Key.Name.ToUpper()),
-                Original = this.SelectedProperty.Key.Value,
-                English = this.SelectedProperty.Key.Value
+                AutoFillFromOriginal = true,
+                Original = this.SelectedProperty.Key.Value.Trim('"'),
+                English = this.SelectedProperty.Key.Value.Trim('"')
             };
 
-            newObject.FillEmptyKeysWithEnglishOrOriginal();
+            //newObject.FillEmptyKeysWithEnglishOrOriginal();
 
-            var viewModel = new KeyEditViewModel(newObject, (RHSStringTableTools.Model.Container)this.ParentViewModel.SelectedNode);
+            var viewModel = new KeyEditViewModel(newObject, (Container)this.ParentViewModel.SelectedNode);
 
             var view = new KeyEditView { DataContext = viewModel };
 
@@ -197,7 +197,7 @@ namespace StringForge.ViewModel
         /// <summary>
         /// Gets or sets the <see cref="Model"/>.
         /// </summary>
-        public ClassForge.Model.Model Model 
+        public Model Model 
         {
             get { return this.model; }
             set { this.RaiseAndSetIfChanged(ref this.model, value); }

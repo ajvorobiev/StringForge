@@ -22,6 +22,11 @@ Icons used from: https://www.iconfinder.com/
 
 # Changelog
 
+v1.3
+- Added search and replace
+- Added config scanner
+- Some fixes related to transliteration
+
 v1.1
 - Key ID templates added
 - Model objects are now reactive, better reflecting updates

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project name="rhsusf">
   <Package name="rhsusf_c_fmtv">
     <Container name="Names">
@@ -427,16 +427,16 @@
         <German>M977A2</German>
       </Key>
       <Key ID="STR_RHS_HEMTT_977A2_CPK_NAME">
-        <Original>M977A2 (CPK)</Original>
-        <English>M977A2 (CPK)</English>
-        <Czech>M977A2 (CPK)</Czech>
-        <French>M977A2 (CPK)</French>
-        <Spanish>M977A2 (CPK)</Spanish>
-        <Italian>M977A2 (CPK)</Italian>
-        <Polish>M977A2 (CPK)</Polish>
-        <Portuguese>M977A2 (CPK)</Portuguese>
-        <Russian>М977А2 (ЦПК)</Russian>
-        <German>M977A2 (CPK)</German>
+        <Original>wewer</Original>
+        <English>wewer</English>
+        <Czech>wewer</Czech>
+        <French>wewer</French>
+        <Spanish>wewer</Spanish>
+        <Italian>wewer</Italian>
+        <Polish>wewer</Polish>
+        <Portuguese>wewer</Portuguese>
+        <Russian>вевер</Russian>
+        <German>wewer</German>
       </Key>
       <Key ID="STR_RHS_HEMTT_978A2_NAME">
         <Original>M978A2</Original>

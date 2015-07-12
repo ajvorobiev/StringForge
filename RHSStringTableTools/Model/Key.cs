@@ -76,7 +76,15 @@ namespace RHSStringTableTools.Model
         /// </summary>
         private string german;
 
+        /// <summary>
+        /// The russian strings get automatically transliterated
+        /// </summary>
         private bool russianAutoTranslit;
+
+        /// <summary>
+        /// The original string is used to fill other languages
+        /// </summary>
+        private bool autoFillFromOriginal;
 
         /// <summary>
         /// Gets or sets the id.
@@ -182,11 +190,23 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets whether the language is autotransated
         /// </summary>
-        [Category("Languages")]
+        [Category("Options")]
+        [XmlIgnore]
         public bool RussianAutoTranslit
         {
             get { return this.russianAutoTranslit; }
             set { this.RaiseAndSetIfChanged(ref this.russianAutoTranslit, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the language is autotransated
+        /// </summary>
+        [Category("Options")]
+        [XmlIgnore]
+        public bool AutoFillFromOriginal
+        {
+            get { return this.autoFillFromOriginal; }
+            set { this.RaiseAndSetIfChanged(ref this.autoFillFromOriginal, value); }
         }
 
         /// <summary>
@@ -212,6 +232,8 @@ namespace RHSStringTableTools.Model
         public Key()
         {
             this.WhenAnyValue(vm => vm.Russian).Subscribe(_ => this.Transliterate());
+            this.WhenAnyValue(vm => vm.Original).Subscribe(_ => this.FillAllKeysFromOriginal());
+            this.RussianAutoTranslit = false;
         }
 
         /// <summary>
@@ -219,7 +241,10 @@ namespace RHSStringTableTools.Model
         /// </summary>
         private void Transliterate()
         {
-            this.Russian = TranslitService.Singleton.Transliterate(this.Russian);
+            if (this.RussianAutoTranslit)
+            {
+                this.Russian = TranslitService.Singleton.Transliterate(this.Russian); 
+            }
         }
 
         /// <summary>
@@ -296,6 +321,41 @@ namespace RHSStringTableTools.Model
 
             if (string.IsNullOrWhiteSpace(this.German))
             {
+                this.German = replacement;
+            }
+        }
+
+        /// <summary>
+        /// Fills all empty values with english translation with english or original.
+        /// </summary>
+        public void FillAllKeysFromOriginal()
+        {
+            if (this.AutoFillFromOriginal)
+            {
+                if (string.IsNullOrWhiteSpace(this.Original))
+                {
+                    // if stringtable doesnt have english or original then you cannot fill empty languages
+                    return;
+                }
+
+                var replacement = this.Original;
+
+                this.English = replacement;
+
+                this.Czech = replacement;
+
+                this.French = replacement;
+
+                this.Spanish = replacement;
+
+                this.Italian = replacement;
+
+                this.Polish = replacement;
+
+                this.Portuguese = replacement;
+
+                this.Russian = replacement;
+
                 this.German = replacement;
             }
         }

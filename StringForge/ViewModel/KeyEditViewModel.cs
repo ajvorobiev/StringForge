@@ -328,8 +328,8 @@ namespace StringForge.ViewModel
             this.Russian = this.Thing.Russian;
             this.German = this.Thing.German;
 
-            this.AutoFill = true;
-            this.Translit = false;
+            this.AutoFill = this.Thing.AutoFillFromOriginal;
+            this.Translit = this.Thing.RussianAutoTranslit;
 
             if (string.IsNullOrWhiteSpace(this.Id))
             {
