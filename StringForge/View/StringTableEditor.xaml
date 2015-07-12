@@ -4,6 +4,7 @@
         xmlns:Demo="clr-namespace:RHSStringTableTools.Model;assembly=RHSStringTableTools"
         xmlns:ViewModel="clr-namespace:StringForge.ViewModel"
         xmlns:c="clr-namespace:StringForge.View.Extensions"
+        xmlns:ctrls="clr-namespace:StringForge.View"
         xmlns:dragDrop="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
@@ -187,6 +188,9 @@
                                                    ContentId="search"
                                                    IconSource="Images/project.png">
                                 <StackPanel>
+                                    <StackPanel.Background>
+                                        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+                                    </StackPanel.Background>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
@@ -281,7 +285,14 @@
                                     -->
                                 </xcdg:DataGridControl>
                             </xcad:LayoutDocument>
+                            <xcad:LayoutDocument Title="Config Scanner"
+                                                 CanClose="False"
+                                                 ContentId="scan">
+                                <ctrls:ConfigScannerView DataContext="{Binding ConfigScannerVm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            </xcad:LayoutDocument>
                         </xcad:LayoutDocumentPane>
+
                     </xcad:LayoutDocumentPaneGroup>
                     <xcad:LayoutAnchorablePane DockWidth="250">
                         <xcad:LayoutAnchorable Title="Properties"

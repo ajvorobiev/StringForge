@@ -15,7 +15,7 @@ namespace StringForge.Model
     /// <summary>
     /// Provides an interface for a violation
     /// </summary>
-    internal interface IViolation
+    public interface IViolation
     {
         /// <summary>
         /// Gets the level.

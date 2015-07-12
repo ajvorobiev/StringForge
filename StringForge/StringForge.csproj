@@ -79,6 +79,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="ClassForge">
+      <HintPath>packages\ClassForge.dll.1.12.0\lib\net45\ClassForge.dll</HintPath>
+    </Reference>
     <Reference Include="GongSolutions.Wpf.DragDrop">
       <HintPath>packages\gong-wpf-dragdrop.0.1.4.3\lib\net40\GongSolutions.Wpf.DragDrop.dll</HintPath>
     </Reference>
@@ -167,6 +170,7 @@
     <Compile Include="Model\Templates\KeyTemplate.cs" />
     <Compile Include="Model\Templates\TemplateMaster.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
+    <Compile Include="ViewModel\ConfigScannerViewModel.cs" />
     <Compile Include="ViewModel\ContainerEditViewModel.cs" />
     <Compile Include="ViewModel\EditViewModel.cs" />
     <Compile Include="ViewModel\KeyEditViewModel.cs" />
@@ -177,6 +181,9 @@
     <Compile Include="ViewModel\TemplateViewModel.cs" />
     <Compile Include="View\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ConfigScannerView.xaml.cs">
+      <DependentUpon>ConfigScannerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ContainerEditView.xaml.cs">
       <DependentUpon>ContainerEditView.xaml</DependentUpon>
@@ -205,6 +212,10 @@
       <DependentUpon>TemplateView.xaml</DependentUpon>
     </Compile>
     <Page Include="View\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ConfigScannerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -251,7 +262,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="StringForge_TemporaryKey.pfx" />
     <Resource Include="View\Images\violation.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

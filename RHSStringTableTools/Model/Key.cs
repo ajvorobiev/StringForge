@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.ComponentModel;
+
 namespace RHSStringTableTools.Model
 {
     using System;
@@ -74,10 +76,13 @@ namespace RHSStringTableTools.Model
         /// </summary>
         private string german;
 
+        private bool russianAutoTranslit;
+
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
         [XmlAttribute("ID")]
+        [Category("Key")]
         public string Id
         {
             get { return this.id; }
@@ -87,6 +92,7 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets the original language (default).
         /// </summary>
+        [Category("Languages")]
         public string Original
         {
             get { return this.original; }
@@ -96,6 +102,7 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets the english language.
         /// </summary>
+        [Category("Languages")]
         public string English
         {
             get { return this.english; }
@@ -105,6 +112,7 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets the czech language.
         /// </summary>
+        [Category("Languages")]
         public string Czech
         {
             get { return this.czech; }
@@ -114,6 +122,7 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets the french language.
         /// </summary>
+        [Category("Languages")]
         public string French
         {
             get { return this.french; }
@@ -123,6 +132,7 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets the spanish language.
         /// </summary>
+        [Category("Languages")]
         public string Spanish
         {
             get { return this.spanish; }
@@ -132,6 +142,7 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets the italian language.
         /// </summary>
+        [Category("Languages")]
         public string Italian
         {
             get { return this.italian; }
@@ -141,6 +152,7 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets the polish language.
         /// </summary>
+        [Category("Languages")]
         public string Polish
         {
             get { return this.polish; }
@@ -150,6 +162,7 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets the portuguese language.
         /// </summary>
+        [Category("Languages")]
         public string Portuguese
         {
             get { return this.portuguese; }
@@ -159,6 +172,7 @@ namespace RHSStringTableTools.Model
         /// <summary>
         /// Gets or sets the russian language.
         /// </summary>
+        [Category("Languages")]
         public string Russian
         {
             get { return this.russian; }
@@ -166,8 +180,19 @@ namespace RHSStringTableTools.Model
         }
 
         /// <summary>
+        /// Gets or sets whether the language is autotransated
+        /// </summary>
+        [Category("Languages")]
+        public bool RussianAutoTranslit
+        {
+            get { return this.russianAutoTranslit; }
+            set { this.RaiseAndSetIfChanged(ref this.russianAutoTranslit, value); }
+        }
+
+        /// <summary>
         /// Gets or sets the german language.
         /// </summary>
+        [Category("Languages")]
         public string German
         {
             get { return this.german; }
@@ -178,6 +203,7 @@ namespace RHSStringTableTools.Model
         /// Gets or sets the parent
         /// </summary>
         [XmlIgnore]
+        [Browsable(false)]
         public Container Parent { get; set; }
 
         /// <summary>
@@ -285,6 +311,9 @@ namespace RHSStringTableTools.Model
             }
         }
 
+        /// <summary>
+        /// Wipes all properties except <see cref="English"/> and <see cref="Original"/>
+        /// </summary>
         public void WipeAllExceptEnglishOrOriginal()
         {
             var replacement = string.Empty;

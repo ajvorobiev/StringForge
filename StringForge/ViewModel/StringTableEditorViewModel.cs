@@ -32,7 +32,7 @@ namespace StringForge.ViewModel
     /// <summary>
     /// The view model for the string table editor
     /// </summary>
-    internal class StringTableEditorViewModel : ReactiveObject, IDropTarget
+    public class StringTableEditorViewModel : ReactiveObject, IDropTarget
     {
         /// <summary>
         /// The selected key.
@@ -308,6 +308,11 @@ namespace StringForge.ViewModel
         private string replaceString;
 
         /// <summary>
+        /// The backing field for the config scanner viewmodel
+        /// </summary>
+        private ConfigScannerViewModel configScannerVm;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="StringTableEditorViewModel"/> class.
         /// </summary>
         public StringTableEditorViewModel()
@@ -438,7 +443,18 @@ namespace StringForge.ViewModel
             this.ReplaceCommand = ReactiveCommand.Create(canSearch);
             this.ReplaceCommand.Subscribe(_ => this.ExecuteReplaceCommand());
 
+            this.ConfigScannerVm = new ConfigScannerViewModel { ParentViewModel = this };
+
             this.SetPropertis();
+        }
+
+        /// <summary>
+        /// Gets or sets the viewmodel of the config scanner
+        /// </summary>
+        public ConfigScannerViewModel ConfigScannerVm
+        {
+            get { return this.configScannerVm; }
+            set { this.RaiseAndSetIfChanged(ref this.configScannerVm, value); }
         }
 
         /// <summary>
@@ -475,6 +491,7 @@ namespace StringForge.ViewModel
         /// The e.
         /// </param>
         /// <exception cref="ApplicationException">
+        /// If nything goes wrong the <see cref="ApplicationException"/> is thrown
         /// </exception>
         private void replaceBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {

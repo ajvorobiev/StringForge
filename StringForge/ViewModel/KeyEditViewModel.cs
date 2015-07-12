@@ -329,7 +329,7 @@ namespace StringForge.ViewModel
             this.German = this.Thing.German;
 
             this.AutoFill = true;
-            this.Translit = true;
+            this.Translit = false;
 
             if (string.IsNullOrWhiteSpace(this.Id))
             {
