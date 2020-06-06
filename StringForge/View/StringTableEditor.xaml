@@ -275,6 +275,10 @@
                                         <xcdg:Column Title="Polish" FieldName="Polish" />
                                         <xcdg:Column Title="Russian" FieldName="Russian" />
                                         <xcdg:Column Title="German" FieldName="German" />
+                                        <xcdg:Column Title="Korean" FieldName="Korean" />
+                                        <xcdg:Column Title="Japanese" FieldName="Japanese" />
+                                        <xcdg:Column Title="Chinese" FieldName="Chinese" />
+                                        <xcdg:Column Title="Chinese simp." FieldName="Chinesesimp" />
                                     </xcdg:DataGridControl.Columns>
                                     <!--
                                         <xcdg:DataGridControl.ContextMenu>

@@ -24,7 +24,7 @@ namespace RHSStringTableTools
         /// <summary>
         /// The allowed languages.
         /// </summary>
-        private static List<string> allowedLanguages = new List<string>() { "Original", "English", "Czech", "French", "Spanish", "Italian", "Polish", "Portuguese", "Russian", "German" };
+        private static List<string> allowedLanguages = new List<string>() { "Original", "English", "Czech", "French", "Spanish", "Italian", "Polish", "Portuguese", "Russian", "German", "Korean", "Japanese", "Chinese", "Chinesesimp", "Turkish" };
 
         /// <summary>
         /// Gets the list of allowed languages
