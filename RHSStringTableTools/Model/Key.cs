@@ -25,7 +25,7 @@ namespace RHSStringTableTools.Model
         /// Backing field for the <see cref="Russian"/> language.
         /// </summary>
         private string russian;
-
+        
         /// <summary>
         /// The id.
         /// </summary>
@@ -75,6 +75,31 @@ namespace RHSStringTableTools.Model
         /// The german.
         /// </summary>
         private string german;
+
+        /// <summary>
+        /// The Korean.
+        /// </summary>
+        private string korean;
+
+        /// <summary>
+        /// The Japanese.
+        /// </summary>
+        private string japanese;
+
+        /// <summary>
+        /// The Chinese.
+        /// </summary>
+        private string chinese;
+
+        /// <summary>
+        /// The Simplified Chinese.
+        /// </summary>
+        private string chinesesimp;
+
+        /// <summary>
+        /// The Turkish.
+        /// </summary>
+        private string turkish;
 
         /// <summary>
         /// The russian strings get automatically transliterated
@@ -217,6 +242,56 @@ namespace RHSStringTableTools.Model
         {
             get { return this.german; }
             set { this.RaiseAndSetIfChanged(ref this.german, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the korean language.
+        /// </summary>
+        [Category("Languages")]
+        public string Korean
+        {
+            get { return this.korean; }
+            set { this.RaiseAndSetIfChanged(ref this.korean, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the japanese language.
+        /// </summary>
+        [Category("Languages")]
+        public string Japanese
+        {
+            get { return this.japanese; }
+            set { this.RaiseAndSetIfChanged(ref this.japanese, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the chinese language.
+        /// </summary>
+        [Category("Languages")]
+        public string Chinese
+        {
+            get { return this.chinese; }
+            set { this.RaiseAndSetIfChanged(ref this.chinese, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the chinese simplified language.
+        /// </summary>
+        [Category("Languages")]
+        public string Chinesesimp
+        {
+            get { return this.chinesesimp; }
+            set { this.RaiseAndSetIfChanged(ref this.chinesesimp, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the turkish language.
+        /// </summary>
+        [Category("Languages")]
+        public string Turkish
+        {
+            get { return this.turkish; }
+            set { this.RaiseAndSetIfChanged(ref this.turkish, value); }
         }
 
         /// <summary>

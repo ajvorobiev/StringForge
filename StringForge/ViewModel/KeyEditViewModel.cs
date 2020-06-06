@@ -81,6 +81,31 @@ namespace StringForge.ViewModel
         private string german;
 
         /// <summary>
+        /// The Korean.
+        /// </summary>
+        private string korean;
+
+        /// <summary>
+        /// The Japanese.
+        /// </summary>
+        private string japanese;
+
+        /// <summary>
+        /// The Chinese.
+        /// </summary>
+        private string chinese;
+
+        /// <summary>
+        /// The Simplified Chinese.
+        /// </summary>
+        private string chinesesimp;
+
+        /// <summary>
+        /// The Turkish.
+        /// </summary>
+        private string turkish;
+
+        /// <summary>
         /// The auto fill.
         /// </summary>
         private bool autoFill;
@@ -189,6 +214,51 @@ namespace StringForge.ViewModel
         {
             get { return this.german; }
             set { this.RaiseAndSetIfChanged(ref this.german, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the korean language.
+        /// </summary>
+        public string Korean
+        {
+            get { return this.korean; }
+            set { this.RaiseAndSetIfChanged(ref this.korean, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the japanese language.
+        /// </summary>
+        public string Japanese
+        {
+            get { return this.japanese; }
+            set { this.RaiseAndSetIfChanged(ref this.japanese, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the chinese language.
+        /// </summary>
+        public string Chinese
+        {
+            get { return this.chinese; }
+            set { this.RaiseAndSetIfChanged(ref this.chinese, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the chinese simplified language.
+        /// </summary>
+        public string Chinesesimp
+        {
+            get { return this.chinesesimp; }
+            set { this.RaiseAndSetIfChanged(ref this.chinesesimp, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the turkish language.
+        /// </summary>
+        public string Turkish
+        {
+            get { return this.turkish; }
+            set { this.RaiseAndSetIfChanged(ref this.turkish, value); }
         }
 
         /// <summary>
@@ -308,6 +378,11 @@ namespace StringForge.ViewModel
                 this.Portuguese = this.Original;
                 this.Russian = this.Original;
                 this.German = this.Original;
+                this.Korean = this.Original;
+                this.Japanese = this.Original;
+                this.Chinese = this.Original;
+                this.Chinesesimp = this.Original;
+                this.Turkish = this.Original;
             }
         }
 
@@ -327,6 +402,11 @@ namespace StringForge.ViewModel
             this.Portuguese = this.Thing.Portuguese;
             this.Russian = this.Thing.Russian;
             this.German = this.Thing.German;
+            this.Korean = this.Thing.Korean;
+            this.Japanese = this.Thing.Japanese;
+            this.Chinese = this.Thing.Chinese;
+            this.Chinesesimp = this.Thing.Chinesesimp;
+            this.Turkish = this.Thing.Turkish;
 
             this.AutoFill = this.Thing.AutoFillFromOriginal;
             this.Translit = this.Thing.RussianAutoTranslit;
@@ -357,6 +437,11 @@ namespace StringForge.ViewModel
             this.Thing.Portuguese = this.Portuguese;
             this.Thing.Russian = this.Russian;
             this.Thing.German = this.German;
+            this.Thing.Korean = this.Korean;
+            this.Thing.Japanese = this.Japanese;
+            this.Thing.Chinese = this.Chinese;
+            this.Thing.Chinesesimp = this.Chinesesimp;
+            this.Thing.Turkish = this.Turkish;
 
             // add the new container to the package at the very end
             if (this.Parent != null)
